@@ -5,9 +5,21 @@ html {
   overflow-y: hidden!important;
 }
 
-.ign-background-dark {
+.ign-drawer-background-dark {
   background-color: $ign-dark!important;
 }
 
-.ign-background-light {
+.ign-drawer-background-light {
+}
+
+.ign-toolbar-background-dark {
+  background-color: $ign-secondary-dark!important;
+}
+
+.ign-toolbar-background-light {
+}
+
+.ign-toolbar-logo {
+  width: 32px;
+  height: 32px;
 }

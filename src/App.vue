@@ -6,12 +6,12 @@
       :mini-variant="isDrawerOpen"
       app
       clipped
-      :class="`ign-background-${theme}`"
+      :class="`ign-drawer-background-${theme}`"
     >
       <v-list dense>
         <v-list-item link>
           <v-list-item-action>
-            <v-icon>mdi-chat</v-icon>
+            <v-icon>mdi-message-text-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Conversations</v-list-item-title>
@@ -31,9 +31,16 @@
     <v-app-bar
       app
       clipped-left
+      elevation="0"
+      :class="`ign-toolbar-background-${theme}`"
     >
-      <v-app-bar-nav-icon @click="toggleDrawer" />
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-app-bar-nav-icon @click="toggleDrawer" >
+        <img
+          src="./assets/images/burn.svg"
+          class="ign-toolbar-logo"
+          alt="Burn Logo"/>
+      </v-app-bar-nav-icon>
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
 
       <v-spacer />
 
@@ -43,7 +50,7 @@
             icon
             v-on="on"
           >
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </template>
 
@@ -60,17 +67,7 @@
 
     </v-app-bar>
     <v-content>
-      <v-btn small color="primary">
-        <font-awesome-icon icon="comment" />Small Button</v-btn>
-      <v-btn color="warning">
-        <font-awesome-icon icon="user-secret" />Normal Button</v-btn>
-      <v-btn color="error" large>
-        <font-awesome-icon icon="user-secret" />Large Button</v-btn>
-      <v-btn x-large color="success" >
-        <font-awesome-icon icon="user-secret" />Extra large Button</v-btn>
-      <v-btn x-small color="secondary" >
-        <font-awesome-icon icon="user-secret" />
-      </v-btn>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
@@ -87,6 +84,9 @@ export default Vue.extend({
   computed: {
     theme() {
       return (this.$vuetify.theme.dark) ? 'dark' : 'light';
+    },
+    title() {
+      return this.$route.name;
     },
   },
 
