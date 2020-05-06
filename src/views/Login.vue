@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-
+        <v-form @submit.prevent="onLogin" id="check-login-form">
         <div>Login</div>
 
         <v-text-field
@@ -15,16 +15,37 @@
           label="Password"
         ></v-text-field>
 
-        <v-btn small @click="onLogin">Login</v-btn>
-
+          <v-btn type="submit" color="success" form="check-login-form">Login</v-btn>
+        </v-form>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
 <script>
+import { mapGetters } from 'vuex';
+// eslint-disable-next-line import/no-cycle
+import router from '@/router';
 
 export default {
   name: 'Login',
+
+  computed: {
+    ...mapGetters({
+      authData: 'authData',
+    }),
+    checkIfTokenIsOk() {
+      console.log('this.authData', this.authData?.accessToken);
+      return this.authData?.accessToken;
+    },
+  },
+  watch: {
+    checkIfTokenIsOk(token) {
+      if (token.length > 0) {
+        router.push('/conversations');
+      }
+    },
+  },
 
   data() {
     return {
@@ -35,7 +56,11 @@ export default {
 
   methods: {
     onLogin() {
-      this.$store.dispatch('auth/login', { userName: this.userName, password: this.password });
+      this.$store
+        .dispatch('login', {
+          userName: this.userName,
+          password: this.password,
+        });
     },
   },
 };

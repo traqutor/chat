@@ -26,21 +26,34 @@ export default {
         .build();
 
       // // Chat Hub events
-      // connection.on('NewMessageNotification', (payload: any) => {
-      //   console.log('on NewMessageNotification:', payload);
-      //   chatHub.$emit('JoinConversation', conversationId);
-      // });
+      connection.on('NewMessageNotification', (payload: any) => {
+        console.log('on NewMessageNotification:', payload);
+        // chatHub.$emit('NewMessageNotification', payload);
+      });
+
+      connection.on('NewConversationNotification', (payload: any) => {
+        console.log('on NewConversationNotification:', payload);
+      });
+
+      connection.on('MarkedAsReadNotification', (payload: any) => {
+        console.log('on MarkedAsReadNotification:', payload);
+      });
+
+      connection.on('MarkAsAcknowledgedNotification', (payload: any) => {
+        console.log('on MarkAsAcknowledgedNotification:', payload);
+      });
+
 
       // Establish the connection
       function start() {
         startedPromise = connection.start()
           .catch((err: any) => {
             console.error('Failed to connect with hub', err);
-            // return new Promise((resolve, reject) => setTimeout(
-            //   () => start()
-            //     .then(resolve)
-            //     .catch(reject), 15000,
-            // ));
+            return new Promise((resolve, reject) => setTimeout(
+              () => start()
+                .then(resolve)
+                .catch(reject), 15000,
+            ));
           });
         return startedPromise;
       }

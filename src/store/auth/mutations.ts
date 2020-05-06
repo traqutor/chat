@@ -1,16 +1,14 @@
 import { MutationTree } from 'vuex';
 import JwtHelper from '@/helpers/JwtHelper';
-import { IAuthState, IAuthData, IAuthUser } from './types';
+import { AuthState, AuthData, AuthUser } from '@/store/auth/types';
 
-const mutations: MutationTree<IAuthState> = {
-  authUser(state, authData: IAuthData) {
-    console.log('authData', authData);
+const mutations: MutationTree<AuthState> = {
+  authUser(state, authData: AuthData) {
     state.authData = authData;
   },
 
   setUser(state, token: string) {
-    console.log('token', token);
-    const userData: IAuthUser = JwtHelper.decodeToken(token);
+    const userData: AuthUser = JwtHelper.decodeToken(token);
     state.user = userData;
   },
 

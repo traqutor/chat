@@ -1,10 +1,20 @@
 import { GetterTree } from 'vuex';
-import { IAuthState, IAuthUser } from './types';
-import { RootState } from '../types';
+import { AuthState, AuthData, AuthUser } from '@/store/auth/types';
+import { RootState } from '@/store/types';
 
-const getters: GetterTree<IAuthState, RootState> = {
+const getters: GetterTree<AuthState, RootState> = {
 
-  loggedUser(state): IAuthUser {
+  authData(state): AuthData {
+    return state.authData || {
+      accessToken: '',
+      expiresIn: 0,
+      refreshToken: '',
+      scope: '',
+      tokenType: '',
+    };
+  },
+
+  loggedUser(state): AuthUser {
     return state.user || {
       avatar: '',
       email: '',
@@ -19,6 +29,7 @@ const getters: GetterTree<IAuthState, RootState> = {
       userName: '',
     };
   },
+
 };
 
 export default getters;

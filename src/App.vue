@@ -9,7 +9,7 @@
       :class="`ign-drawer-background-${theme}`"
     >
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link to="/conversations">
           <v-list-item-action>
             <v-icon>mdi-message-text-outline</v-icon>
           </v-list-item-action>
@@ -17,7 +17,7 @@
             <v-list-item-title>Conversations</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/">
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
