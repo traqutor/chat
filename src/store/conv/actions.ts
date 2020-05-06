@@ -15,6 +15,12 @@ const actions: ActionTree<ConversationsState, RootState> = {
       })
       .catch((error) => console.log(error));
   },
+
+  setSelectedConversationAction: ({ commit, dispatch }, payload) => {
+    commit('setSelectedConversation', payload);
+    // dispatch('fetchMessages', payload.conversationId);
+  },
+
 };
 
 export default actions;

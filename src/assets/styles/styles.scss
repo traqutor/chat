@@ -23,3 +23,86 @@ html {
   width: 32px;
   height: 32px;
 }
+
+.ign-avatar {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  justify-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: $ign-primary;
+  img {
+    border-radius: 50%;
+  }
+
+}
+
+.ign-avatar-small {
+  font-size: 13px;
+  font-weight: 400;
+  height: 24px;
+  width: 24px;
+  background: $ign-meeting;
+  color: $ign-white;
+  box-shadow: rgb(24, 34, 45) 0px 0px 0px 2.88px;
+  z-index: 2;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.ign-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: flex-start;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.ign-item:hover:not(.active) {
+  background-color: $ign-secondary-dark;
+}
+
+.ign-item-info-wrap {
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  padding: 0 0 0 16px;
+}
+
+.ign-item-info-row {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+
+  .title {
+    flex: 1;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .second-line {
+    padding: 0;
+    color: $ign-color-opacity-more;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+  }
+
+}
+
+.active {
+  background-color: $ign-primary
+}
