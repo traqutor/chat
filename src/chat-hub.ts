@@ -19,17 +19,17 @@ export default {
     Vue.prototype.startSignalR = (accessToken: string) => {
       connection = new HubConnectionBuilder()
         .withUrl(
-          `${hub.defaults.baseURL}/chat/`,
+          `${hub.defaults.baseURL}/chat`,
           { accessTokenFactory: () => accessToken },
         )
         .configureLogging(LogLevel.Information)
         .build();
 
       // // Chat Hub events
-      connection.on('NewMessageNotification', (payload: any) => {
-        console.log('on NewMessageNotification:', payload);
-        // chatHub.$emit('JoinConversation', conversationId);
-      });
+      // connection.on('NewMessageNotification', (payload: any) => {
+      //   console.log('on NewMessageNotification:', payload);
+      //   chatHub.$emit('JoinConversation', conversationId);
+      // });
 
       // Establish the connection
       function start() {
