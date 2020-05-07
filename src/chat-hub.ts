@@ -1,4 +1,6 @@
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import { Message } from '@/store/chat/types';
+import store from '@/store';
 import hub from './axios-hub';
 
 export default {
@@ -8,7 +10,7 @@ export default {
     // can listen to events or send new events using this.$questionHub
     const chatHub = new Vue();
     // eslint-disable-next-line no-param-reassign
-    Vue.prototype.$questionHub = chatHub;
+    Vue.prototype.$chatHub = chatHub;
 
     // Provide methods to connect/disconnect from the SignalR hub
     let connection: any = null;
@@ -27,8 +29,7 @@ export default {
 
       // // Chat Hub events
       connection.on('NewMessageNotification', (payload: any) => {
-        console.log('on NewMessageNotification:', payload);
-        // chatHub.$emit('NewMessageNotification', payload);
+        store.dispatch('postNewMessageAction', payload);
       });
 
       connection.on('NewConversationNotification', (payload: any) => {
@@ -43,6 +44,9 @@ export default {
         console.log('on MarkAsAcknowledgedNotification:', payload);
       });
 
+      connection.on('UserIsTyping', (payload: any) => {
+        console.log('User is Typing', JSON.parse(payload));
+      });
 
       // Establish the connection
       function start() {
@@ -81,20 +85,33 @@ export default {
     };
 
     // Methods for components to send messages back to server
-    chatHub.conversationOpened = (questionId: string) => {
+    chatHub.sendMessage = (message: Message) => {
       if (!startedPromise) return;
+      const stringMessage = JSON.stringify(message);
 
       // eslint-disable-next-line consistent-return
       return startedPromise
-        .then(() => connection.invoke('JoinConversation', questionId))
+        .then(() => connection.invoke('SendMessage', stringMessage))
         .catch(console.error);
     };
-    chatHub.conversationClosed = (questionId: string) => {
+
+    chatHub.conversationOpened = (conversationId: string) => {
       if (!startedPromise) return;
+      console.log('conversationOpened', conversationId);
 
       // eslint-disable-next-line consistent-return
       return startedPromise
-        .then(() => connection.invoke('JoinConversation', questionId))
+        .then(() => connection.invoke('JoinConversation', conversationId))
+        .catch(console.error);
+    };
+
+    chatHub.conversationClosed = (conversationId: string) => {
+      if (!startedPromise) return;
+
+      console.log('conversationClosed', conversationId);
+      // eslint-disable-next-line consistent-return
+      return startedPromise
+        .then(() => connection.invoke('JoinConversation', conversationId))
         .catch(console.error);
     };
   },

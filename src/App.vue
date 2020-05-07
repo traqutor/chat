@@ -44,26 +44,7 @@
 
       <v-spacer />
 
-      <v-menu bottom left>
-        <template v-slot:activator="{ on }">
-          <v-btn
-            icon
-            v-on="on"
-          >
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item>
-            <v-switch
-              v-model="$vuetify.theme.dark"
-              primary
-              label="Dark"
-            />
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <logged-user />
 
     </v-app-bar>
     <v-content>
@@ -74,11 +55,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import LoggedUser from '@/components/user/LoggedUser.vue';
 
 export default Vue.extend({
   name: 'App',
 
   components: {
+    'logged-user': LoggedUser,
   },
 
   computed: {
@@ -92,7 +75,7 @@ export default Vue.extend({
 
   data: () => ({
     drawer: null,
-    isDrawerOpen: false,
+    isDrawerOpen: true,
   }),
 
   created() {

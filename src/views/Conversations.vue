@@ -2,13 +2,19 @@
   <div class="content">
 
       <v-col cols="4">
+
+        <div class="ign-conv-header-wrapper">
+
           <v-text-field
-            solo-inverted
+            solo
+            background-color="#3d464f"
             dense
             label="Search"
             append-icon="mdi-magnify"
             @click:append="search"
           ></v-text-field>
+
+        </div>
 
           <template v-for="conversation of conversations">
 
@@ -29,11 +35,18 @@
           </conversation-list-item>
           </template>
 
-
       </v-col>
 
-      <v-col cols="8">
+      <v-col cols="8" v-if="selectedConversation.conversationId !== ''">
 
+        <div class="ign-conv-header-wrapper">
+          <conversation-list-item
+            :conversation="selectedConversation" />
+        </div>
+
+        <chat-view />
+
+        <chat-footer :conversation="selectedConversation" />
 
       </v-col>
 
@@ -45,6 +58,8 @@ import { mapGetters, mapActions } from 'vuex';
 import ConversationListItem from '@/components/conversation/ConversationListItem.vue';
 import ConversationItemStatus from '@/components/conversation/ConversationItemStatus.vue';
 import ConversationItemDetails from '@/components/conversation/ConversationItemDetails.vue';
+import ChatView from '@/components/chat/ChatView.vue';
+import ChatFooter from '@/components/chat/ChatFooter.vue';
 
 export default {
   name: 'Conversations',
@@ -53,6 +68,8 @@ export default {
     'conversation-list-item': ConversationListItem,
     'conversation-item-status': ConversationItemStatus,
     'conversation-item-details': ConversationItemDetails,
+    'chat-view': ChatView,
+    'chat-footer': ChatFooter,
   },
 
   computed: {

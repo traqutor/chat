@@ -38,6 +38,8 @@ html {
   background-color: $ign-primary;
   img {
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
   }
 
 }
@@ -105,4 +107,48 @@ html {
 
 .active {
   background-color: $ign-primary
+}
+
+.ign-conv-header-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 82px;
+  width: 100%;
+  border-bottom: 1px solid $ign-secondary;
+
+}
+
+
+.ign-post-left-item {
+  display: inline-block;
+  margin-left: 54px;
+  background-color: $ign-secondary-dark;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: rgb(248, 249, 250);
+  font-size: 13.008px;
+  font-weight: 400;
+  min-height: 45px;
+  line-height: 19.512px;
+  margin-bottom: 4px;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.ign-post-right-item {
+  display: inline-block;
+  margin-left: auto;
+  background-color: $ign-primary;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: rgb(248, 249, 250);
+  font-size: 13.008px;
+  font-weight: 400;
+  min-height: 45px;
+  line-height: 19.512px;
+  margin-bottom: 4px;
+  padding: 12px 16px;
+  text-align: left;
 }

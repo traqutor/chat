@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
+    <v-row class="text-center" justify="center">
+      <v-col cols="4">
         <v-form @submit.prevent="onLogin" id="check-login-form">
         <div>Login</div>
 

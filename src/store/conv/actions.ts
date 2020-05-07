@@ -6,11 +6,14 @@ import { RootState } from '@/store/types';
 
 const actions: ActionTree<ConversationsState, RootState> = {
 
-  fetchConversations: ({ commit, rootState }, page = 0, len = 10) => {
+  fetchConversations: ({ commit, dispatch, rootState }, page = 0, len = 10) => {
     console.log('rootState', rootState);
     axios.get(`/Conversations?Page=${page}&ItemsPerPage=${len}`,
       { headers: { Authorization: `Bearer ${rootState.auth.authData?.accessToken}` } })
       .then((resData) => {
+        // if (rootState.conv.selectedConversation.conversationId === '') {
+        //   commit('setSelectedConversation', resData.data.value.pagedResults[0]);
+        // }
         commit('storeConversations', resData.data);
       })
       .catch((error) => console.log(error));
@@ -18,7 +21,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
 
   setSelectedConversationAction: ({ commit, dispatch }, payload) => {
     commit('setSelectedConversation', payload);
-    // dispatch('fetchMessages', payload.conversationId);
+    dispatch('fetchMessages', payload.conversationId);
   },
 
 };

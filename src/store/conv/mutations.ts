@@ -2,6 +2,7 @@ import { MutationTree } from 'vuex';
 import { ConversationsResponse, ConversationsState, Conversation } from '@/store/conv/types';
 
 const mutations: MutationTree<ConversationsState> = {
+
   storeConversations: (state, payload: ConversationsResponse) => {
     if (payload.hasErrors) {
       state.hasErrors = payload.hasErrors;
@@ -17,6 +18,7 @@ const mutations: MutationTree<ConversationsState> = {
   setSelectedConversation: (state, payload: Conversation) => {
     state.selectedConversation = payload;
   },
+
 };
 
 export default mutations;

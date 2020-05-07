@@ -4,7 +4,7 @@
 
     {{ conversation.lastActivityTimeOffset }}
 
-    <jumping-dots v-if="conversation.typing === 'Typing'"/>
+    <jumping-dots/>
 
   </div>
 </template>
