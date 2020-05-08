@@ -40,6 +40,14 @@ export interface ConversationsResponse {
   hasErrors: boolean;
 }
 
+export interface NewConversation{
+  topic: string;
+  roleIds: string[];
+  groupsIds: string[];
+  messageText: string;
+  clientMessageId: number;
+}
+
 export interface ConversationsState {
   unreadCount: number;
   conversations: {
