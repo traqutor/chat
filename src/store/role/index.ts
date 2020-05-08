@@ -7,7 +7,7 @@ import { RootState } from '../types';
 
 export const state: RoleState = roleInitialState;
 
-export const conv: Module<RoleState, RootState> = {
+export const role: Module<RoleState, RootState> = {
   state,
   getters,
   actions,

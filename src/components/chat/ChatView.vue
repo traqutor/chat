@@ -29,7 +29,7 @@
             <span class="ign-post-status icon-mark-active">
 
             <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
-            {{ post.createdTimeOffset }}
+            {{ post.createdTimeOffse | moment('') }}
           </span>
 
           </div>
@@ -44,6 +44,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import moment from 'moment';
 import UserListItem from '../user/UserListItem.vue';
 
 export default {

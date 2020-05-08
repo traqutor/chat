@@ -2,7 +2,7 @@
   <div class="cli-status">
     <v-icon>mdi-check</v-icon>
 
-    {{ conversation.lastActivityTimeOffset }}
+    {{ conversation.lastActivityTimeOffset | timeOffsetFilter }}
 
     <jumping-dots/>
 

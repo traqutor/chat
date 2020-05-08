@@ -7,6 +7,6 @@ export interface RootState {
   version: string,
   auth: AuthState,
   conv: ConversationsState,
-  chat: ChatState
-  role: RoleState
+  chat: ChatState,
+  role: RoleState,
 }

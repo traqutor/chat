@@ -36,4 +36,4 @@ export const roleInitialState: RoleState = {
   },
   errors: [],
   hasErrors: false,
-}
+};

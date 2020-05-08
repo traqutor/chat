@@ -6,7 +6,7 @@ import { RootState } from '@/store/types';
 const actions: ActionTree<RoleState, RootState> = {
 
   fetchRoles: ({ commit, rootState }, text, page = 0, len = 10) => {
-    if (!rootState.auth.authData?.accessToken ) {
+    if (!rootState.auth.authData?.accessToken) {
       return;
     }
     axios.get(`/Roles/RolesAndGroups?SearchText=${text}&Page=${page}&ItemsPerPage=${len}`,
