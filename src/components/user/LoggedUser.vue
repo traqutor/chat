@@ -21,7 +21,7 @@
         <v-list-item>
           <v-list-item-title>Settings</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="logout">
+        <v-list-item @click="onLogOut">
           <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
         <v-list-item>
@@ -52,6 +52,10 @@ export default {
     ...mapActions({
       logout: 'logout',
     }),
+    onLogOut() {
+      this.logout();
+      this.$router.push('/login');
+    },
   },
   components: {
     'user-item': UserListItem,

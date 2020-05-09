@@ -8,8 +8,10 @@ const mutations: MutationTree<ConversationsState> = {
       state.hasErrors = payload.hasErrors;
       state.errors = payload.errors;
     } else {
+      state.conversations.currentPage = payload.value.currentPage;
       state.conversations.pageCount = payload.value.pageCount;
-      state.conversations.pagedResults = payload.value.pagedResults;
+      state.conversations.pagedResults = state.conversations.pagedResults
+        .concat(payload.value.pagedResults);
       state.conversations.pageSize = payload.value.pageSize;
       state.conversations.rowCount = payload.value.rowCount;
     }
@@ -17,6 +19,10 @@ const mutations: MutationTree<ConversationsState> = {
 
   setSelectedConversation: (state, payload: Conversation) => {
     state.selectedConversation = payload;
+  },
+
+  setConversationsLoading: (state, payload: boolean) => {
+    state.isLoading = payload;
   },
 
 };

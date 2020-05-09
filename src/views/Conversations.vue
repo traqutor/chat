@@ -11,29 +11,40 @@
             dense
             label="Search"
             append-icon="mdi-magnify"
+            v-model="searchText"
             @click:append="search"
           ></v-text-field>
 
         </div>
 
-          <template v-for="conversation of conversations">
+        <v-container
+          id="scroll-target"
+          class="conversation-list overflow-y-auto"
+        >
+          <div v-scroll:#scroll-target="onScroll">
 
-          <conversation-list-item
-            :key="conversation.id"
-            :conversation="conversation"
-            :class="(selectedConversation
+            <template v-for="conversation of conversations.pagedResults">
+
+              <conversation-list-item
+                :key="conversation.id"
+                :conversation="conversation"
+                :class="(selectedConversation
             && conversation.conversationId === selectedConversation.conversationId)
             ? 'active'
             : ''"
-            @click.native="setActiveConversation(conversation)"
-          >
+                @click.native="setActiveConversation(conversation)"
+              >
 
-            <conversation-item-status slot="status" :conversation="conversation"/>
+                <conversation-item-status slot="status" :conversation="conversation"/>
 
-            <conversation-item-details slot="details" :conversation="conversation"/>
+                <conversation-item-details slot="details" :conversation="conversation"/>
 
-          </conversation-list-item>
-          </template>
+              </conversation-list-item>
+            </template>
+
+          </div>
+        </v-container>
+
 
       </v-col>
 
@@ -46,7 +57,7 @@
 
         <chat-view />
 
-        <chat-footer :conversation="selectedConversation" />
+        <chat-footer />
 
       </v-col>
 
@@ -64,6 +75,12 @@ import ChatFooter from '@/components/chat/ChatFooter.vue';
 export default {
   name: 'Conversations',
 
+  data() {
+    return {
+      searchText: '',
+      tmpScrollTop: 0,
+    };
+  },
   components: {
     'conversation-list-item': ConversationListItem,
     'conversation-item-status': ConversationItemStatus,
@@ -74,7 +91,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      conversations: 'getAllConversations',
+      isLoading: 'getIsLoadingConversation',
+      conversations: 'getConversations',
       selectedConversation: 'getSelectedConversation',
     }),
   },
@@ -82,18 +100,40 @@ export default {
   methods: {
     ...mapActions({
       setActiveConversation: 'setSelectedConversationAction',
+      loadMoreConversations: 'fetchConversations',
     }),
-    search() {
-      console.log('Search');
+
+    search(event) {
+      console.log('Search', this.searchText);
     },
+
+    onScroll(e) {
+      if (this.tmpScrollTop < e.target.scrollTop
+        && e.target.scrollTop > e.target.scrollHeight / 2) {
+        this.tmpScrollTop = e.target.scrollTop;
+        if (!this.isLoading
+          && this.conversations.pageCount > this.conversations.currentPage) {
+          const page = this.conversations.currentPage + 1;
+          this.loadMoreConversations(page);
+        }
+      }
+    },
+
   },
 };
 </script>
 
 <style lang="scss" scoped>
+
   .content {
     display: flex;
     flex-wrap: wrap;
     flex: 1 1 auto;
   }
+
+  .conversation-list{
+    margin-top: 14px;
+    height: calc(100vh - 82px - 94px);
+  }
+
 </style>

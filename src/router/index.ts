@@ -30,6 +30,13 @@ const routes: Array<RouteConfig> = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    beforeEnter(from, to, next) {
+      if (store.state.auth.authData?.accessToken) {
+        next();
+      } else {
+        next('/login');
+      }
+    },
   },
   {
     path: '/conversations',

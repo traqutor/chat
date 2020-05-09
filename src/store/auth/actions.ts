@@ -27,11 +27,8 @@ const actions: ActionTree<AuthState, RootState> = {
       });
   },
 
-  logout({ commit, state }): any {
-    commit('authUser', {});
-    // router.push('/').then(() => {
-    //   return Vue.prototype.stopSignalR();
-    // });
+  logout({ commit }): any {
+    commit('logOut');
   },
 };
 

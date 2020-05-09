@@ -6,10 +6,10 @@
       v-model="text"
       solo
       background-color="#3d464f"
-      rounded
       rows="2"
       name="text"
       label="Type a message..."
+      @keydown.enter.prevent="onNewPost"
     ></v-textarea>
 
     <v-btn
@@ -27,15 +27,20 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { emptyMessage } from '@/store/chat/types';
 
 export default {
   name: 'ChatFooter',
-  props: ['conversation'],
+  computed: {
+    ...mapGetters({
+      loggedUser: 'loggedUser',
+      conversation: 'getSelectedConversation',
+    }),
+  },
   data() {
     return {
-      text: null,
+      text: '',
     };
   },
   methods: {
@@ -47,6 +52,7 @@ export default {
         ...emptyMessage,
         text: this.text,
         conversationId: this.conversation.conversationId,
+        authorParticipantId: this.loggedUser.id,
       };
       this.$chatHub.sendMessage(newMessage);
       this.text = null;
@@ -59,6 +65,9 @@ export default {
   @import "../../assets/styles/variables";
 
   .wrapper {
+    max-width: $ign-readable-width;
     padding: $ign-padding-normal;
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>

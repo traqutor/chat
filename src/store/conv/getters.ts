@@ -4,9 +4,11 @@ import { RootState } from '@/store/types';
 
 const getters: GetterTree<ConversationsState, RootState> = {
 
-  getAllConversations: (state) => state.conversations.pagedResults,
+  getConversations: (state) => state.conversations,
 
   getSelectedConversation: (state) => state.selectedConversation,
+
+  getIsLoadingConversation: (state) => state.isLoading,
 
 };
 

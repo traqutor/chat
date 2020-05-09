@@ -7,7 +7,7 @@
 
     <div class="user-info">
       <p class="name">
-        {{user.name}}
+        {{user.userName}}
       </p>
       <span class="role">{{user.role[0]}}</span>
     </div>

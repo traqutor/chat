@@ -8,10 +8,27 @@ const mutations: MutationTree<AuthState> = {
   },
 
   setUser(state, token: string) {
-    const userData: AuthUser = JwtHelper.decodeToken(token);
+    const res = JwtHelper.decodeToken(token);
+    const userData: AuthUser = {
+      id: res.sub,
+      email: res.email,
+      familyName: res.family_name,
+      givenName: res.given_name,
+      userName: res.name,
+      preferredUsername: res.preferred_username,
+      avatar: '',
+      role: res.role,
+      scope: res.scope,
+      systemRole: JSON.parse(res.SystemRolesJson),
+      roleName: res.role[0],
+    };
     state.user = userData;
   },
 
+  logOut(state) {
+    state.authData = undefined;
+    state.user = undefined;
+  },
 };
 
 export default mutations;

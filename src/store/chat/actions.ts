@@ -5,7 +5,12 @@ import { RootState } from '@/store/types';
 
 const actions: ActionTree<ChatState, RootState> = {
 
-  fetchMessages: ({ commit, rootState }, conversationId, page = 0, len = 10) => {
+  fetchMessages: (
+    { commit, rootState },
+    conversationId,
+    page = 0,
+    len = 20,
+  ) => {
     if (!rootState.auth.authData?.accessToken || !conversationId) {
       return;
     }

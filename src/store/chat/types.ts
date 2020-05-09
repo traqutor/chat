@@ -31,6 +31,7 @@ export interface Message {
 // attachmentIds
 
 export interface ChatState {
+  isLoading: boolean;
   value: {
     pagedResults: Message[];
     currentPage: number;
@@ -43,6 +44,7 @@ export interface ChatState {
 }
 
 export const chatInitial: ChatState = {
+  isLoading: false,
   value: {
     pagedResults: [],
     currentPage: 0,

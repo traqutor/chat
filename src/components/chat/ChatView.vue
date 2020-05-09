@@ -1,5 +1,9 @@
 <template>
-  <div class="chat-wrapper">
+  <div
+    id="chat-container"
+    v-scroll:#chat-container="onScroll"
+    ref="chatContainer"
+    class="chat-wrapper">
 
     <div class="chat-readable-space">
 
@@ -12,9 +16,9 @@
           <div class="ign-post-right-item">
             <span>{{ post.text }}</span>
             <span class="ign-post-status icon-mark">
-            <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
-            {{ post.createdTimeOffset }}
-          </span>
+              <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
+              {{ post.createdTimeOffset }}
+            </span>
           </div>
 
         </div>
@@ -29,7 +33,7 @@
             <span class="ign-post-status icon-mark-active">
 
             <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
-            {{ post.createdTimeOffse | moment('') }}
+            {{ post.createdTimeOffset | timeOffsetFilter }}
           </span>
 
           </div>
@@ -44,19 +48,54 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import moment from 'moment';
 import UserListItem from '../user/UserListItem.vue';
 
 export default {
   name: 'ChatView',
+
+  data() {
+    return {
+      tmpScrollTop: 0,
+    };
+  },
+
   computed: {
+
     ...mapGetters({
       loggedUser: 'loggedUser',
       messages: 'allMessages',
     }),
+
+    scrollToEndOnMessages() {
+      return this.messages;
+    },
   },
+
   components: {
     'user-list-item': UserListItem,
+  },
+
+  watch: {
+
+    scrollToEndOnMessages() {
+      this.$nextTick(() => {
+        this.scrollToEnd();
+      });
+    },
+  },
+
+  methods: {
+
+    onScroll(e) {
+      console.log('scrollTop', e.target.scrollTop);
+      console.log('scrollHeight', e.target.scrollHeight);
+    },
+
+    scrollToEnd() {
+      console.log('scrollToEnd');
+      const container = this.$refs.chatContainer;
+      container.scrollTop = container.scrollHeight + 120;
+    },
   },
 };
 </script>
@@ -69,7 +108,7 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding-bottom: 32px;
+    padding-bottom: 4px;
   }
 
   .logged-user-posts {
@@ -77,7 +116,7 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-bottom: 32px;
+    padding-bottom: 4px;
   }
 
   .chat-day-divider {
@@ -116,14 +155,13 @@ export default {
   .chat-wrapper {
     padding: $ign-padding-normal;
     height: calc(100vh - 274px);
-    max-height: calc(100vh - 274px);
     overflow-y: auto;
   }
 
   .chat-readable-space {
     margin-left: auto;
     margin-right: auto;
-    max-width: 750px;
+    max-width: $ign-readable-width;
   }
 
 </style>

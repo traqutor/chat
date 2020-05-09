@@ -11,6 +11,7 @@
         ></v-text-field>
 
         <v-text-field
+          type="password"
           v-model="password"
           label="Password"
         ></v-text-field>
@@ -35,7 +36,6 @@ export default {
       authData: 'authData',
     }),
     checkIfTokenIsOk() {
-      console.log('this.authData', this.authData?.accessToken);
       return this.authData?.accessToken;
     },
   },

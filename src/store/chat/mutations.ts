@@ -9,6 +9,7 @@ const mutations: MutationTree<ChatState> = {
       state.errors = payload.errors;
     } else {
       state.value.pagedResults = payload.pagedResults.reverse();
+      state.value.currentPage = payload.currentPage;
       state.value.pageCount = payload.pageCount;
       state.value.pagedResults = payload.pagedResults;
       state.value.pageSize = payload.pageSize;

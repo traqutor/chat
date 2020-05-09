@@ -49,6 +49,7 @@ export interface NewConversation{
 }
 
 export interface ConversationsState {
+  isLoading: boolean;
   unreadCount: number;
   conversations: {
     pagedResults: Conversation[];
@@ -65,6 +66,7 @@ export interface ConversationsState {
 }
 
 export const convInitial: ConversationsState = {
+  isLoading: false,
   unreadCount: 0,
   conversations: {
     currentPage: 0,
