@@ -29,7 +29,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
 
   setSelectedConversationAction: ({ commit, dispatch }, payload) => {
     commit('setSelectedConversation', payload);
-    dispatch('fetchMessages', payload.conversationId);
+    dispatch('fetchMessages', { conversationId: payload.conversationId });
   },
 
 };

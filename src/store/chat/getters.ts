@@ -4,7 +4,10 @@ import { RootState } from '@/store/types';
 
 const getters: GetterTree<ChatState, RootState> = {
 
-  allMessages: (state) => state.value.pagedResults,
+  getMessages: (state) => state.value.pagedResults,
+  getMessagesIsLoading: (state) => state.isLoading,
+  getMessagesCurrentPage: (state) => state.value.currentPage,
+  getMessagesPageCount: (state) => state.value.pageCount,
 
 };
 

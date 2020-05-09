@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import UserListItem from '../user/UserListItem.vue';
 
 export default {
@@ -63,7 +63,11 @@ export default {
 
     ...mapGetters({
       loggedUser: 'loggedUser',
-      messages: 'allMessages',
+      conversation: 'getSelectedConversation',
+      messages: 'getMessages',
+      isLoading: 'getMessagesIsLoading',
+      currentPage: 'getMessagesCurrentPage',
+      pageCount: 'getMessagesPageCount',
     }),
 
     scrollToEndOnMessages() {
@@ -86,15 +90,28 @@ export default {
 
   methods: {
 
+    ...mapActions({
+      loadMoreMessages: 'fetchMessages',
+    }),
+
     onScroll(e) {
-      console.log('scrollTop', e.target.scrollTop);
-      console.log('scrollHeight', e.target.scrollHeight);
+      if (this.tmpScrollTop > e.target.scrollTop) {
+        console.log('tmpScrollTop', this.tmpScrollTop);
+        console.log('scrollTop', e.target.scrollTop);
+        this.tmpScrollTop = e.target.scrollTop;
+        if (!this.isLoading
+          && this.pageCount > this.currentPage) {
+          const page = this.currentPage + 1;
+          const { conversationId } = this.conversation;
+          this.loadMoreMessages({ conversationId, page });
+        }
+      }
     },
 
     scrollToEnd() {
-      console.log('scrollToEnd');
       const container = this.$refs.chatContainer;
       container.scrollTop = container.scrollHeight + 120;
+      this.tmpScrollTop = container.scrollTop;
     },
   },
 };

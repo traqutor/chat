@@ -103,7 +103,7 @@ export default {
       loadMoreConversations: 'fetchConversations',
     }),
 
-    search(event) {
+    search() {
       console.log('Search', this.searchText);
     },
 

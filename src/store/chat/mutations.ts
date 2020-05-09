@@ -4,11 +4,13 @@ import { ChatState, Message } from '@/store/chat/types';
 const mutations: MutationTree<ChatState> = {
 
   storeMessages: (state, payload) => {
+    console.log('payload', payload);
     if (payload.hasErrors) {
       state.hasErrors = payload.hasErrors;
       state.errors = payload.errors;
     } else {
-      state.value.pagedResults = payload.pagedResults.reverse();
+      state.value.pagedResults = state.value.pagedResults
+        .concat(payload.pagedResults.reverse);
       state.value.currentPage = payload.currentPage;
       state.value.pageCount = payload.pageCount;
       state.value.pagedResults = payload.pagedResults;
@@ -21,6 +23,10 @@ const mutations: MutationTree<ChatState> = {
     const message: Message = JSON.parse(payload);
     console.log('message', message);
     state.value.pagedResults.push(message);
+  },
+
+  setMessagesLoading: (state, payload: boolean) => {
+    state.isLoading = payload;
   },
 
 };
