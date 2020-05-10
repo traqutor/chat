@@ -9,15 +9,24 @@ const mutations: MutationTree<ChatState> = {
       state.hasErrors = payload.hasErrors;
       state.errors = payload.errors;
     } else {
-      state.value.pagedResults = state.value.pagedResults
-        .concat(payload.pagedResults.reverse);
+      state.value.pagedResults = payload.pagedResults.reverse().concat(state.value.pagedResults);
       state.value.currentPage = payload.currentPage;
       state.value.pageCount = payload.pageCount;
-      state.value.pagedResults = payload.pagedResults;
       state.value.pageSize = payload.pageSize;
       state.value.rowCount = payload.rowCount;
     }
   },
+
+  emptyMessages: (state) => {
+    state.hasErrors = false;
+    state.errors = [];
+    state.value.pagedResults = [];
+    state.value.currentPage = 0;
+    state.value.pageCount = 0;
+    state.value.pageSize = 0;
+    state.value.rowCount = 0;
+  },
+
 
   postNewMessage: (state, payload) => {
     const message: Message = JSON.parse(payload);

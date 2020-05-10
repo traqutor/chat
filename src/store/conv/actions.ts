@@ -28,6 +28,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
   },
 
   setSelectedConversationAction: ({ commit, dispatch }, payload) => {
+    commit('emptyMessages');
     commit('setSelectedConversation', payload);
     dispatch('fetchMessages', { conversationId: payload.conversationId });
   },

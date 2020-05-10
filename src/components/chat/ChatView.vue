@@ -55,6 +55,7 @@ export default {
 
   data() {
     return {
+      isScrollUp: false,
       tmpScrollTop: 0,
     };
   },
@@ -99,6 +100,7 @@ export default {
         console.log('tmpScrollTop', this.tmpScrollTop);
         console.log('scrollTop', e.target.scrollTop);
         this.tmpScrollTop = e.target.scrollTop;
+        this.isScrollUp = true;
         if (!this.isLoading
           && this.pageCount > this.currentPage) {
           const page = this.currentPage + 1;
@@ -109,9 +111,11 @@ export default {
     },
 
     scrollToEnd() {
-      const container = this.$refs.chatContainer;
-      container.scrollTop = container.scrollHeight + 120;
-      this.tmpScrollTop = container.scrollTop;
+      if (!this.isScrollUp) {
+        const container = this.$refs.chatContainer;
+        container.scrollTop = container.scrollHeight + 120;
+        this.tmpScrollTop = container.scrollTop;
+      }
     },
   },
 };
