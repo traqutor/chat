@@ -27,8 +27,12 @@ const actions: ActionTree<ChatState, RootState> = {
       });
   },
 
-  postNewMessageAction: ({ commit }, payload) => {
-    commit('postNewMessage', payload);
+  postNewMessageAction: ({ commit, rootState }, payload) => {
+    console.log('postNewMessageAction payload', payload);
+    console.log('rootState.conv.selectedConversation', rootState.conv.selectedConversation);
+    if (rootState.conv.selectedConversation.conversationId === JSON.parse(payload).conversationId) {
+      commit('postNewMessage', payload);
+    }
   },
 
 };
