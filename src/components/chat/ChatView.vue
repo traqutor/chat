@@ -97,8 +97,6 @@ export default {
 
     onScroll(e) {
       if (this.tmpScrollTop > e.target.scrollTop) {
-        console.log('tmpScrollTop', this.tmpScrollTop);
-        console.log('scrollTop', e.target.scrollTop);
         this.tmpScrollTop = e.target.scrollTop;
         this.isScrollUp = true;
         if (!this.isLoading
@@ -106,6 +104,8 @@ export default {
           const page = this.currentPage + 1;
           const { conversationId } = this.conversation;
           this.loadMoreMessages({ conversationId, page });
+        } else {
+          this.isScrollUp = false;
         }
       }
     },
