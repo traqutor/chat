@@ -10,21 +10,32 @@
       <div
         v-for="(post, idx) of messages"
         :key="post.messageId">
+
         <div v-if="conversation.authorId === post.authorParticipantId"
              class="logged-user-posts">
+
+          <div v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
+          class="ma-3"
+          ></div>
 
           <div class="ign-post-right-item">
             <span>{{ post.text }}</span>
             <span class="ign-post-status icon-mark">
               <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
-              {{ post.createdTimeOffset }}
+              {{ post.createdTimeOffset | timeOffsetFilter }}
             </span>
           </div>
 
         </div>
 
         <div v-else class="other-user-posts">
-          <user-list-item v-if="idx === 0" :user="post.user"/>
+
+          <div v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
+          class="ma-3">
+            {{ getParticipant(post.authorParticipantId).userName }}
+          </div>
+
+          <user-list-item :user="getParticipant(post.authorParticipantId)"/>
 
           <div class="ign-post-left-item">
 
@@ -115,6 +126,10 @@ export default {
     ...mapActions({
       loadMoreMessages: 'fetchMessages',
     }),
+
+    getParticipant(userId) {
+      return this.conversation.conversationParticipantDtos.find((usr) => usr.id === userId);
+    },
 
     onScroll(e) {
       const container = this.$refs.chatContainer;

@@ -6,12 +6,13 @@
       v-model="text"
       solo
       background-color="#3d464f"
-      rows="2"
+      rows="1"
       name="text"
       label="Type a message..."
       @keydown.enter.prevent="onNewPost"
       prepend-inner-icon="mdi-dots-vertical"
       @click:prepend-inner="onPrependMenuOpen"
+      height="56px"
     ></v-textarea>
 
     <v-btn
@@ -78,4 +79,5 @@ export default {
     margin-left: auto;
     margin-right: auto;
   }
+
 </style>
