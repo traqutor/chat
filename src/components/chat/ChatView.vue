@@ -10,7 +10,7 @@
       <div
         v-for="(post, idx) of messages"
         :key="post.messageId">
-        <div v-if="loggedUser && loggedUser.id === post.authorParticipantId"
+        <div v-if="conversation.authorId === post.authorParticipantId"
              class="logged-user-posts">
 
           <div class="ign-post-right-item">

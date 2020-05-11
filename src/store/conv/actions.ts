@@ -1,7 +1,8 @@
 import { ActionTree } from 'vuex';
 import axios from '@/axios';
-import { ConversationsState } from '@/store/conv/types';
 import { RootState } from '@/store/types';
+import { ConversationsResponse, ConversationsState, Conversation } from '@/store/conv/types';
+import UserHelper from '@/helpers/UserHelper';
 
 
 const actions: ActionTree<ConversationsState, RootState> = {
@@ -15,10 +16,16 @@ const actions: ActionTree<ConversationsState, RootState> = {
     axios.get(`/Conversations?Page=${page}&ItemsPerPage=${len}`,
       { headers: { Authorization: `Bearer ${rootState.auth.authData?.accessToken}` } })
       .then((resData) => {
+        // find Id of the author of messages
+        const { data } = resData;
+        data.value.pagedResults = resData.data.value.pagedResults
+          .map((conversation: Conversation) => UserHelper
+            .getId(rootState.auth.user.userId, conversation));
+        console.log('data', data);
         // if (rootState.conv.selectedConversation.conversationId === '') {
-        //   commit('setSelectedConversation', resData.data.value.pagedResults[0]);
+        //   commit('setSelectedConversation', data.value.pagedResults[0]);
         // }
-        commit('storeConversations', resData.data);
+        commit('storeConversations', data);
         commit('setConversationsLoading', false);
       })
       .catch((error) => {

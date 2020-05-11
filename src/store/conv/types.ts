@@ -25,6 +25,7 @@ export interface Conversation {
   readLastMessageConversationMessagesCount: number;
   countOfLastMessageRecipients: number;
   conversationParticipantDtos: Participant[];
+  authorId: string;
 }
 
 export interface ConversationsResponse {
@@ -96,5 +97,6 @@ export const convInitial: ConversationsState = {
     readLastMessageConversationMessagesCount: 0,
     topic: '',
     unreadConversationMessagesCount: 0,
+    authorId: '',
   },
 };

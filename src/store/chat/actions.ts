@@ -2,6 +2,7 @@ import { ActionTree } from 'vuex';
 import axios from '@/axios';
 import { ChatState } from '@/store/chat/types';
 import { RootState } from '@/store/types';
+import UserHelper from '@/helpers/UserHelper';
 
 const actions: ActionTree<ChatState, RootState> = {
 

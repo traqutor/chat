@@ -4,7 +4,7 @@ export interface LoginData {
 }
 
 export interface AuthUser {
-  id: string;
+  userId: string;
   email: string;
   familyName: string;
   givenName: string;
@@ -26,11 +26,29 @@ export interface AuthData {
 }
 
 export interface AuthState {
-  user?: AuthUser;
-  authData?: AuthData;
+  user: AuthUser;
+  authData: AuthData;
 }
 
 export const authInitial: AuthState = {
-  user: undefined,
-  authData: undefined,
+  user: {
+    avatar: '',
+    email: '',
+    familyName: '',
+    givenName: '',
+    preferredUsername: '',
+    role: [],
+    roleName: '',
+    scope: [],
+    systemRole: [],
+    userId: '',
+    userName: '',
+  },
+  authData: {
+    accessToken: '',
+    expiresIn: 0,
+    refreshToken: '',
+    scope: '',
+    tokenType: '',
+  },
 };

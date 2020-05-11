@@ -27,7 +27,6 @@ const mutations: MutationTree<ChatState> = {
     state.value.rowCount = 0;
   },
 
-
   postNewMessage: (state, payload) => {
     const message: Message = JSON.parse(payload);
     console.log('message', message);

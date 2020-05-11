@@ -1,6 +1,11 @@
 import { MutationTree } from 'vuex';
 import JwtHelper from '@/helpers/JwtHelper';
-import { AuthState, AuthData, AuthUser } from '@/store/auth/types';
+import {
+  AuthState,
+  AuthData,
+  AuthUser,
+  authInitial,
+} from '@/store/auth/types';
 
 const mutations: MutationTree<AuthState> = {
   authUser(state, authData: AuthData) {
@@ -10,7 +15,7 @@ const mutations: MutationTree<AuthState> = {
   setUser(state, token: string) {
     const res = JwtHelper.decodeToken(token);
     const userData: AuthUser = {
-      id: res.sub,
+      userId: res.sub,
       email: res.email,
       familyName: res.family_name,
       givenName: res.given_name,
@@ -25,9 +30,8 @@ const mutations: MutationTree<AuthState> = {
     state.user = userData;
   },
 
-  logOut(state) {
-    state.authData = undefined;
-    state.user = undefined;
+  logOut() {
+    return authInitial;
   },
 };
 
