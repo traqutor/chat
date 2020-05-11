@@ -18,18 +18,6 @@ export interface Message {
   attachmentIds: [];
 }
 
-// messageId
-// conversationId
-// authorParticipantId
-// text
-// clientMessageId
-// whisperParticipantIds
-// requestAcknowledgeParticipantIds
-// isWhisper
-// whisperRoleIds
-// requestAcknowledgeRoleIds
-// attachmentIds
-
 export interface ChatState {
   isLoading: boolean;
   value: {

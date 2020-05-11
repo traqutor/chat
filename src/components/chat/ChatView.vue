@@ -42,7 +42,21 @@
 
       </div>
 
+      <v-tooltip v-if="isScrollUp" top>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            @click="onToTheBottom "
+            class="scroll-down-btn"
+            v-on="on"
+            icon fab small>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </template>
+        <span>To the bottom</span>
+      </v-tooltip>
+
     </div>
+
   </div>
 </template>
 
@@ -71,6 +85,9 @@ export default {
       pageCount: 'getMessagesPageCount',
     }),
 
+    changeConversation() {
+      return this.conversation;
+    },
     scrollToEndOnMessages() {
       return this.messages;
     },
@@ -81,6 +98,10 @@ export default {
   },
 
   watch: {
+
+    changeConversation() {
+      this.isScrollUp = false;
+    },
 
     scrollToEndOnMessages() {
       this.$nextTick(() => {
@@ -96,24 +117,41 @@ export default {
     }),
 
     onScroll(e) {
+      const container = this.$refs.chatContainer;
+
       if (this.tmpScrollTop > e.target.scrollTop) {
-        this.tmpScrollTop = e.target.scrollTop;
-        this.isScrollUp = true;
-        if (!this.isLoading
-          && this.pageCount > this.currentPage) {
-          const page = this.currentPage + 1;
-          const { conversationId } = this.conversation;
-          this.loadMoreMessages({ conversationId, page });
-        } else {
+        console.log('scroll UP');
+        if (this.tmpScrollTop > e.target.scrollTop) {
+          this.tmpScrollTop = e.target.scrollTop;
+          this.isScrollUp = true;
+          if (!this.isLoading
+            && this.pageCount > this.currentPage) {
+            const page = this.currentPage + 1;
+            const { conversationId } = this.conversation;
+            this.loadMoreMessages({
+              conversationId,
+              page,
+            });
+          }
+        }
+      } else {
+        console.log('scroll DOWN');
+        if (container.clientHeight + e.target.scrollTop >= container.scrollHeight - 50) {
           this.isScrollUp = false;
         }
       }
+      this.tmpScrollTop = e.target.scrollTop;
+    },
+
+    onToTheBottom() {
+      this.isScrollUp = false;
+      this.scrollToEnd();
     },
 
     scrollToEnd() {
       if (!this.isScrollUp) {
         const container = this.$refs.chatContainer;
-        container.scrollTop = container.scrollHeight + 120;
+        container.scrollTop = container.scrollHeight;
         this.tmpScrollTop = container.scrollTop;
       }
     },
@@ -185,4 +223,9 @@ export default {
     max-width: $ign-readable-width;
   }
 
+  .scroll-down-btn {
+    position: absolute;
+    bottom: 150px;
+    right: 50px;
+  }
 </style>

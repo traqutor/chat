@@ -10,6 +10,8 @@
       name="text"
       label="Type a message..."
       @keydown.enter.prevent="onNewPost"
+      prepend-inner-icon="mdi-dots-vertical"
+      @click:prepend-inner="onPrependMenuOpen"
     ></v-textarea>
 
     <v-btn
@@ -43,10 +45,12 @@ export default {
       text: '',
     };
   },
+
   methods: {
     ...mapActions({
       postMessage: 'postNewMessageAction',
     }),
+
     onNewPost() {
       const newMessage = {
         ...emptyMessage,
@@ -56,6 +60,10 @@ export default {
       };
       this.$chatHub.sendMessage(newMessage);
       this.text = null;
+    },
+
+    onPrependMenuOpen() {
+      console.log('open menu ');
     },
   },
 };

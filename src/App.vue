@@ -11,7 +11,13 @@
       <v-list dense>
         <v-list-item link to="/conversations">
           <v-list-item-action>
+            <v-badge
+              :value="unreadCount"
+              color="red"
+              :content="unreadCount"
+            >
             <v-icon>mdi-message-text-outline</v-icon>
+            </v-badge>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Conversations</v-list-item-title>
@@ -55,6 +61,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
 import LoggedUser from '@/components/user/LoggedUser.vue';
 
 export default Vue.extend({
@@ -65,6 +72,10 @@ export default Vue.extend({
   },
 
   computed: {
+    ...mapGetters({
+      unreadCount: 'getUnreadCount',
+    }),
+
     theme() {
       return (this.$vuetify.theme.dark) ? 'dark' : 'light';
     },

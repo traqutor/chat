@@ -6,6 +6,8 @@ const getters: GetterTree<ConversationsState, RootState> = {
 
   getConversations: (state) => state.conversations,
 
+  getUnreadCount: (state) => state.unreadCount,
+
   getSelectedConversation: (state) => state.selectedConversation,
 
   getIsLoadingConversation: (state) => state.isLoading,

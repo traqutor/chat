@@ -8,6 +8,7 @@ const mutations: MutationTree<ConversationsState> = {
       state.hasErrors = payload.hasErrors;
       state.errors = payload.errors;
     } else {
+      state.unreadCount = payload.unreadCount;
       state.conversations.currentPage = payload.value.currentPage;
       state.conversations.pageCount = payload.value.pageCount;
       state.conversations.pagedResults = state.conversations.pagedResults
