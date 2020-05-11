@@ -3,7 +3,8 @@
     id="chat-container"
     v-scroll:#chat-container="onScroll"
     ref="chatContainer"
-    class="chat-wrapper">
+    class="chat-wrapper"
+    >
 
     <div class="chat-readable-space">
 
@@ -229,6 +230,10 @@ export default {
   .chat-wrapper {
     padding: $ign-padding-normal;
     height: calc(100vh - 274px);
+    overflow-y: hidden;
+  }
+
+  .chat-wrapper:hover {
     overflow-y: auto;
   }
 

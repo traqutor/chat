@@ -17,11 +17,10 @@
 
         </div>
 
-        <v-container
-          id="scroll-target"
-          class="conversation-list overflow-y-auto"
-        >
-          <div v-scroll:#scroll-target="onScroll">
+        <v-container>
+          <div
+            v-scroll:#scroll-target="onScroll"
+            class="conversation-list">
 
             <template v-for="conversation of conversations.pagedResults">
 
@@ -134,6 +133,11 @@ export default {
   .conversation-list{
     margin-top: 14px;
     height: calc(100vh - 82px - 94px);
+    overflow-y: hidden;
+  }
+
+  .conversation-list:hover{
+    overflow-y: auto;
   }
 
 </style>

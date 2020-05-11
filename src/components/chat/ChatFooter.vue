@@ -18,8 +18,9 @@
     <v-btn
       :disabled="!text"
       @click="onNewPost"
-      class="mx-2"
+      class="ma-2"
       fab
+      small
       color="blue">
       <v-icon dark>mdi-send</v-icon>
     </v-btn>
