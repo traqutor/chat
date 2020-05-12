@@ -6,8 +6,8 @@
     <div class="ign-item-info-wrap">
 
       <div class="ign-item-info-row">
-        <div class="title">{{conversation.topic}}</div>
-        <slot name="status"/>
+        <div class="ign-title">{{conversation.topic}}</div>
+        <slot name="ign-status"/>
       </div>
 
       <div class="ign-item-info-row">

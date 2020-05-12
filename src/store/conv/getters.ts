@@ -12,6 +12,8 @@ const getters: GetterTree<ConversationsState, RootState> = {
 
   getIsLoadingConversation: (state) => state.isLoading,
 
+  getConversationViewMode: (state) => state.viewMode,
+
 };
 
 export default getters;

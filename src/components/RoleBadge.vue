@@ -16,7 +16,7 @@ export default {
   @import "src/assets/styles/variables";
 
   .ign-role-badge {
-    height: 22px;
+    height: 20px;
     font-size: 13px;
     font-weight: 400;
     background-color: $ign-secondary-dark;

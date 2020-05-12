@@ -49,6 +49,12 @@ export interface NewConversation{
   clientMessageId: number;
 }
 
+export const VIEW_MODE = {
+  CHAT: 0,
+  INFO: 1,
+  NEW: 2,
+};
+
 export interface ConversationsState {
   isLoading: boolean;
   unreadCount: number;
@@ -62,12 +68,13 @@ export interface ConversationsState {
   selectedConversation: Conversation;
   errors: [string];
   hasErrors: boolean;
-  isChatMode: boolean;
-  isInfoMode: boolean;
+  viewMode: number;
 }
+
 
 export const convInitial: ConversationsState = {
   isLoading: false,
+  viewMode: VIEW_MODE.CHAT,
   unreadCount: 0,
   conversations: {
     currentPage: 0,
@@ -78,8 +85,6 @@ export const convInitial: ConversationsState = {
   },
   hasErrors: false,
   errors: [''],
-  isChatMode: true,
-  isInfoMode: false,
   selectedConversation: {
     conversationId: '',
     conversationParticipantDtos: [],

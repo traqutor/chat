@@ -1,6 +1,6 @@
 <template>
 
-  <v-row class="wrapper">
+  <div class="wrapper">
 
     <v-textarea
       v-model="text"
@@ -10,7 +10,9 @@
       name="text"
       label="Type a message..."
       @keydown.enter.prevent="onNewPost"
+      apend-inner-icon="mdi-send"
       prepend-inner-icon="mdi-dots-vertical"
+      @click:apend-inner="onNewPost"
       @click:prepend-inner="onPrependMenuOpen"
       height="56px"
     ></v-textarea>
@@ -26,7 +28,7 @@
     </v-btn>
 
 
-  </v-row>
+  </div>
 
 </template>
 
@@ -75,8 +77,10 @@ export default {
   @import "../../assets/styles/variables";
 
   .wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     max-width: $ign-readable-width;
-    padding: $ign-padding-normal;
     margin-left: auto;
     margin-right: auto;
   }

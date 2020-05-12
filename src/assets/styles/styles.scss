@@ -68,7 +68,7 @@ html {
   margin-bottom: 4px;
 }
 
-.ign-item:hover:not(.active) {
+.ign-item:hover:not(.ign-active) {
   background-color: $ign-secondary-dark;
 }
 
@@ -87,7 +87,7 @@ html {
   padding: 0;
   margin: 0;
 
-  .title {
+  .ign-title {
     flex: 1;
     font-weight: bold;
     white-space: nowrap;
@@ -95,7 +95,7 @@ html {
     text-overflow: ellipsis;
   }
 
-  .second-line {
+  .ign-second-line {
     padding: 0;
     color: $ign-color-opacity-more;
     font-size: 13px;
@@ -105,21 +105,9 @@ html {
 
 }
 
-.active {
+.ign-active {
   background-color: $ign-primary
 }
-
-.ign-conv-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  height: 82px;
-  width: 100%;
-  border-bottom: 1px solid $ign-secondary;
-
-}
-
 
 .ign-post-left-item {
   display: inline-block;

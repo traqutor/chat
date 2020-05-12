@@ -40,6 +40,10 @@ const actions: ActionTree<ConversationsState, RootState> = {
     dispatch('fetchMessages', { conversationId: payload.conversationId });
   },
 
+  setConversationMode: ({ commit }, payload) => {
+    commit('setConversationViewMode', payload);
+  },
+
 };
 
 export default actions;

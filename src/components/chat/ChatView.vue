@@ -1,50 +1,65 @@
 <template>
-  <perfect-scrollbar
-    id="chat-container"
-    v-scroll:#chat-container="onScroll"
-    ref="chatContainer"
-    class="chat-wrapper"
-    >
+  <div>
+    <perfect-scrollbar
+      id="chat-container"
+      v-scroll:#chat-container="onScroll"
+      ref="chatContainer"
+      class="chat-wrapper"
+      >
 
-    <div class="chat-readable-space">
 
-      <div
-        v-for="(post, idx) of messages"
-        :key="post.messageId">
+      <div class="chat-readable-space">
 
-        <div v-if="conversation.authorId === post.authorParticipantId"
-             class="logged-user-posts">
 
-          <div v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
-          class="ma-3"
-          ></div>
+        <div
+          v-for="(post, idx) of messages"
+          :key="post.messageId">
 
-          <div class="ign-post-right-item">
-            <span>{{ post.text }}</span>
-            <span class="ign-post-status icon-mark">
+          <div
+            v-if="idx === 0 || getIfNextPeriodToDisplay(
+              post.createdTimeOffset,
+              messages[idx - 1].createdTimeOffset)"
+            class="chat-day-divider">
+            {{ post.createdTimeOffset | timeOffsetFilter }}
+          </div>
+
+          <div v-if="conversation.authorId === post.authorParticipantId"
+               class="logged-user-posts">
+
+            <div
+              v-if="idx ===0 || post.authorParticipantId !== messages[idx - 1].authorParticipantId"
+              class="ma-3"
+            ></div>
+
+            <div class="ign-post-right-item">
+              <span>{{ post.text }}</span>
+              <span class="ign-post-status icon-mark">
+                <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
+                {{ post.createdTimeOffset | timeOffsetFilter }}
+              </span>
+            </div>
+
+          </div>
+
+          <div v-else class="other-user-posts">
+
+            <div
+              v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
+              class="ma-3">
+              {{ getParticipant(post.authorParticipantId).userName }}
+            </div>
+
+            <div class="ign-post-left-item">
+
+              <span>{{ post.text }}</span>
+
+              <span class="ign-post-status icon-mark-active">
+
               <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
               {{ post.createdTimeOffset | timeOffsetFilter }}
             </span>
-          </div>
 
-        </div>
-
-        <div v-else class="other-user-posts">
-
-          <div v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
-          class="ma-3">
-            {{ getParticipant(post.authorParticipantId).userName }}
-          </div>
-
-          <div class="ign-post-left-item">
-
-            <span>{{ post.text }}</span>
-
-            <span class="ign-post-status icon-mark-active">
-
-            <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
-            {{ post.createdTimeOffset | timeOffsetFilter }}
-          </span>
+            </div>
 
           </div>
 
@@ -52,11 +67,14 @@
 
       </div>
 
-      <v-tooltip v-if="isScrollUp" top>
+
+    </perfect-scrollbar>
+
+    <div v-if="isScrollUp" class="scroll-down-btn">
+      <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn
             @click="onToTheBottom "
-            class="scroll-down-btn"
             v-on="on"
             icon fab small>
             <v-icon>mdi-chevron-down</v-icon>
@@ -64,10 +82,9 @@
         </template>
         <span>To the bottom</span>
       </v-tooltip>
-
     </div>
 
-  </perfect-scrollbar>
+  </div>
 </template>
 
 <script>
@@ -121,17 +138,20 @@ export default {
       loadMoreMessages: 'fetchMessages',
     }),
 
+    getIfNextPeriodToDisplay(createdTimeOffset, nextCreatedTimeOffset) {
+      return this.$options.filters.timeOffsetFilter(createdTimeOffset)
+        !== this.$options.filters.timeOffsetFilter(nextCreatedTimeOffset);
+    },
+
     getParticipant(userId) {
       return this.conversation.conversationParticipantDtos.find((usr) => usr.id === userId);
     },
 
     onScroll(e) {
-      console.log('onScroll', e.target.scrollTop);
       const container = this.$refs.chatContainer.$el;
 
       if (e.target.scrollTop !== 0) {
         if (this.tmpScrollTop > e.target.scrollTop) {
-          console.log('scroll UP');
           if (this.tmpScrollTop > e.target.scrollTop) {
             this.tmpScrollTop = e.target.scrollTop;
             this.isScrollUp = true;
@@ -145,11 +165,8 @@ export default {
               });
             }
           }
-        } else {
-          console.log('scroll DOWN');
-          if (container.clientHeight + e.target.scrollTop >= container.scrollHeight - 50) {
-            this.isScrollUp = false;
-          }
+        } else if (container.clientHeight + e.target.scrollTop >= container.scrollHeight - 50) {
+          this.isScrollUp = false;
         }
         this.tmpScrollTop = e.target.scrollTop;
       }
@@ -161,7 +178,6 @@ export default {
     },
 
     scrollToEnd() {
-      console.log('scrollToEnd', this.isScrollUp);
       if (!this.isScrollUp) {
         const container = this.$refs.chatContainer.$el;
         container.scrollTop = container.scrollHeight;
@@ -227,12 +243,8 @@ export default {
   .chat-wrapper {
     position: relative;
     padding: $ign-padding-normal;
-    height: calc(100vh - 274px);
+    height: calc(100vh - 234px);
   }
-
-  /*.chat-wrapper:hover {*/
-  /*  overflow-y: auto;*/
-  /*}*/
 
   .chat-readable-space {
     margin-left: auto;
@@ -242,7 +254,7 @@ export default {
 
   .scroll-down-btn {
     position: absolute;
-    bottom: 150px;
-    right: 50px;
+    bottom: 170px;
+    right:50px;
   }
 </style>

@@ -3,7 +3,7 @@
 
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="isDrawerOpen"
+      expand-on-hover
       app
       clipped
       :class="`ign-drawer-background-${theme}`"

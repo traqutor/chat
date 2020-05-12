@@ -26,6 +26,10 @@ const mutations: MutationTree<ConversationsState> = {
     state.isLoading = payload;
   },
 
+  setConversationViewMode: (state, payload: number) => {
+    state.viewMode = payload;
+  },
+
 };
 
 export default mutations;

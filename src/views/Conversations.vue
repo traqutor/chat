@@ -3,25 +3,14 @@
 
       <v-col cols="4">
 
-        <div class="ign-conv-header-wrapper">
-
-          <v-text-field
-            solo
-            background-color="#3d464f"
-            dense
-            label="Search"
-            append-icon="mdi-magnify"
-            v-model="searchText"
-            @click:append="search"
-          ></v-text-field>
-
-        </div>
-
+        <selector-header />
+        {{viewMode}}
         <v-container>
+
           <perfect-scrollbar
             id="scroll-target"
             v-scroll:#scroll-target="onScroll"
-            class="conversation-list">
+            class="conversation-list pr-3">
 
             <template v-for="conversation of conversations.pagedResults">
 
@@ -30,7 +19,7 @@
                 :conversation="conversation"
                 :class="(selectedConversation
             && conversation.conversationId === selectedConversation.conversationId)
-            ? 'active'
+            ? 'ign-active'
             : ''"
                 @click.native="setActiveConversation(conversation)"
               >
@@ -50,14 +39,13 @@
 
       <v-col cols="8" v-if="selectedConversation.conversationId !== ''">
 
-        <div class="ign-conv-header-wrapper">
-          <conversation-list-item
-            :conversation="selectedConversation" />
+        <conversation-header :conversation="selectedConversation" />
+
+        <div v-if="viewMode === VIEW_MODE.CHAT">
+          <chat-view />
+          <chat-footer />
         </div>
 
-        <chat-view />
-
-        <chat-footer />
 
       </v-col>
 
@@ -71,17 +59,23 @@ import ConversationItemStatus from '@/components/conversation/ConversationItemSt
 import ConversationItemDetails from '@/components/conversation/ConversationItemDetails.vue';
 import ChatView from '@/components/chat/ChatView.vue';
 import ChatFooter from '@/components/chat/ChatFooter.vue';
+import SelectorHeader from '@/components/selector/SelectorHeader.vue';
+import ConversationHeader from '@/components/conversation/ConversationHeader.vue';
+import { VIEW_MODE } from '@/store/conv/types';
 
 export default {
   name: 'Conversations',
 
   data() {
     return {
+      VIEW_MODE,
       searchText: '',
       tmpScrollTop: 0,
     };
   },
   components: {
+    'selector-header': SelectorHeader,
+    'conversation-header': ConversationHeader,
     'conversation-list-item': ConversationListItem,
     'conversation-item-status': ConversationItemStatus,
     'conversation-item-details': ConversationItemDetails,
@@ -92,6 +86,7 @@ export default {
   computed: {
     ...mapGetters({
       isLoading: 'getIsLoadingConversation',
+      viewMode: 'getConversationViewMode',
       conversations: 'getConversations',
       selectedConversation: 'getSelectedConversation',
     }),
@@ -102,10 +97,6 @@ export default {
       setActiveConversation: 'setSelectedConversationAction',
       loadMoreConversations: 'fetchConversations',
     }),
-
-    search() {
-      console.log('Search', this.searchText);
-    },
 
     onScroll(e) {
       if (this.tmpScrollTop < e.target.scrollTop
