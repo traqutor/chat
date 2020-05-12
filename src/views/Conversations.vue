@@ -18,7 +18,8 @@
         </div>
 
         <v-container>
-          <div
+          <perfect-scrollbar
+            id="scroll-target"
             v-scroll:#scroll-target="onScroll"
             class="conversation-list">
 
@@ -41,7 +42,7 @@
               </conversation-list-item>
             </template>
 
-          </div>
+          </perfect-scrollbar>
         </v-container>
 
 
@@ -131,13 +132,13 @@ export default {
   }
 
   .conversation-list{
+    position: relative;
     margin-top: 14px;
     height: calc(100vh - 82px - 94px);
-    overflow-y: hidden;
   }
 
-  .conversation-list:hover{
-    overflow-y: auto;
-  }
+  /*.conversation-list:hover{*/
+  /*  overflow-y: auto;*/
+  /*}*/
 
 </style>

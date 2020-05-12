@@ -1,5 +1,5 @@
 <template>
-  <div
+  <perfect-scrollbar
     id="chat-container"
     v-scroll:#chat-container="onScroll"
     ref="chatContainer"
@@ -36,8 +36,6 @@
             {{ getParticipant(post.authorParticipantId).userName }}
           </div>
 
-          <user-list-item :user="getParticipant(post.authorParticipantId)"/>
-
           <div class="ign-post-left-item">
 
             <span>{{ post.text }}</span>
@@ -69,12 +67,11 @@
 
     </div>
 
-  </div>
+  </perfect-scrollbar>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import UserListItem from '../user/UserListItem.vue';
 
 export default {
   name: 'ChatView',
@@ -105,10 +102,6 @@ export default {
     },
   },
 
-  components: {
-    'user-list-item': UserListItem,
-  },
-
   watch: {
 
     changeConversation() {
@@ -133,30 +126,33 @@ export default {
     },
 
     onScroll(e) {
-      const container = this.$refs.chatContainer;
+      console.log('onScroll', e.target.scrollTop);
+      const container = this.$refs.chatContainer.$el;
 
-      if (this.tmpScrollTop > e.target.scrollTop) {
-        console.log('scroll UP');
+      if (e.target.scrollTop !== 0) {
         if (this.tmpScrollTop > e.target.scrollTop) {
-          this.tmpScrollTop = e.target.scrollTop;
-          this.isScrollUp = true;
-          if (!this.isLoading
-            && this.pageCount > this.currentPage) {
-            const page = this.currentPage + 1;
-            const { conversationId } = this.conversation;
-            this.loadMoreMessages({
-              conversationId,
-              page,
-            });
+          console.log('scroll UP');
+          if (this.tmpScrollTop > e.target.scrollTop) {
+            this.tmpScrollTop = e.target.scrollTop;
+            this.isScrollUp = true;
+            if (!this.isLoading
+              && this.pageCount > this.currentPage) {
+              const page = this.currentPage + 1;
+              const { conversationId } = this.conversation;
+              this.loadMoreMessages({
+                conversationId,
+                page,
+              });
+            }
+          }
+        } else {
+          console.log('scroll DOWN');
+          if (container.clientHeight + e.target.scrollTop >= container.scrollHeight - 50) {
+            this.isScrollUp = false;
           }
         }
-      } else {
-        console.log('scroll DOWN');
-        if (container.clientHeight + e.target.scrollTop >= container.scrollHeight - 50) {
-          this.isScrollUp = false;
-        }
+        this.tmpScrollTop = e.target.scrollTop;
       }
-      this.tmpScrollTop = e.target.scrollTop;
     },
 
     onToTheBottom() {
@@ -165,8 +161,9 @@ export default {
     },
 
     scrollToEnd() {
+      console.log('scrollToEnd', this.isScrollUp);
       if (!this.isScrollUp) {
-        const container = this.$refs.chatContainer;
+        const container = this.$refs.chatContainer.$el;
         container.scrollTop = container.scrollHeight;
         this.tmpScrollTop = container.scrollTop;
       }
@@ -228,14 +225,14 @@ export default {
   }
 
   .chat-wrapper {
+    position: relative;
     padding: $ign-padding-normal;
     height: calc(100vh - 274px);
-    overflow-y: hidden;
   }
 
-  .chat-wrapper:hover {
-    overflow-y: auto;
-  }
+  /*.chat-wrapper:hover {*/
+  /*  overflow-y: auto;*/
+  /*}*/
 
   .chat-readable-space {
     margin-left: auto;
