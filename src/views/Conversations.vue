@@ -82,7 +82,6 @@ export default {
           item.isActive = false;
         }
       });
-      console.log('this.menuItems', this.menuItems);
     },
 
   },

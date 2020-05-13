@@ -7,9 +7,7 @@
       class="chat-wrapper"
       >
 
-
-      <div class="chat-readable-space">
-
+      <div class="pb-3 chat-readable-space">
 
         <div
           v-for="(post, idx) of messages"
@@ -84,11 +82,14 @@
       </v-tooltip>
     </div>
 
+    <chat-footer />
+
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import ChatFooter from '@/components/chat/ChatFooter.vue';
 
 export default {
   name: 'ChatView',
@@ -98,6 +99,10 @@ export default {
       isScrollUp: false,
       tmpScrollTop: 0,
     };
+  },
+
+  components: {
+    'chat-footer': ChatFooter,
   },
 
   computed: {
@@ -243,7 +248,7 @@ export default {
   .chat-wrapper {
     position: relative;
     padding: $ign-padding-normal;
-    height: calc(100vh - 234px);
+    height: calc(100vh - 245px);
   }
 
   .chat-readable-space {

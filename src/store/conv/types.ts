@@ -51,8 +51,7 @@ export interface NewConversation{
 
 export const VIEW_MODE = {
   CHAT: 0,
-  INFO: 1,
-  NEW: 2,
+  NEW: 1,
 };
 
 export interface ConversationsState {

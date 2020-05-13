@@ -1,6 +1,6 @@
 <template>
 
-  <div class="wrapper">
+  <div class="wrapper mt-2">
 
     <v-textarea
       v-model="text"
