@@ -21,7 +21,6 @@ const actions: ActionTree<ConversationsState, RootState> = {
         data.value.pagedResults = resData.data.value.pagedResults
           .map((conversation: Conversation) => UserHelper
             .getId(rootState.auth.user.userId, conversation));
-        console.log('data', data);
         // if (rootState.conv.selectedConversation.conversationId === '') {
         //   commit('setSelectedConversation', data.value.pagedResults[0]);
         // }

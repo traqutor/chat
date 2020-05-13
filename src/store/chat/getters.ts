@@ -8,6 +8,8 @@ const getters: GetterTree<ChatState, RootState> = {
   getMessagesIsLoading: (state) => state.isLoading,
   getMessagesCurrentPage: (state) => state.value.currentPage,
   getMessagesPageCount: (state) => state.value.pageCount,
+  getMessagesChatViewMode: (state) => state.chatViewMode,
+  getSelectedMessage: (state) => state.selectedMessage,
 
 };
 

@@ -71,7 +71,6 @@ export default {
   methods: {
 
     setActive(index) {
-      console.log('index', index);
       // eslint-disable-next-line array-callback-return
       this.menuItems.map((item, i) => {
         if (i === index) {

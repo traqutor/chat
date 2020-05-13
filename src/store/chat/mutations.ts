@@ -29,12 +29,19 @@ const mutations: MutationTree<ChatState> = {
 
   postNewMessage: (state, payload) => {
     const message: Message = JSON.parse(payload);
-    console.log('message', message);
     state.value.pagedResults.push(message);
   },
 
   setMessagesLoading: (state, payload: boolean) => {
     state.isLoading = payload;
+  },
+
+  setSelectedMessage: (state, payload: Message) => {
+    state.selectedMessage = payload;
+  },
+
+  setMessagesChatViewMode: (state, payload: number) => {
+    state.chatViewMode = payload;
   },
 
 };

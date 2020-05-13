@@ -18,8 +18,17 @@ export interface Message {
   attachmentIds: [];
 }
 
+export const CHAT_VIEW_MODE = {
+  CHAT: 0,
+  INFO: 1,
+  WHISPER: 2,
+  ADD_PEOPLE: 3,
+};
+
 export interface ChatState {
   isLoading: boolean;
+  chatViewMode: number;
+  selectedMessage: Message;
   value: {
     pagedResults: Message[];
     currentPage: number;
@@ -30,19 +39,6 @@ export interface ChatState {
   errors: [];
   hasErrors: boolean;
 }
-
-export const chatInitial: ChatState = {
-  isLoading: false,
-  value: {
-    pagedResults: [],
-    currentPage: 0,
-    pageCount: 0,
-    pageSize: 0,
-    rowCount: 0,
-  },
-  errors: [],
-  hasErrors: false,
-};
 
 export const emptyMessage: Message = {
   messageId: '',
@@ -57,4 +53,19 @@ export const emptyMessage: Message = {
   messageAcknowledgeDtos: [{ recipientParticipantId: '', status: 0 }],
   expectedAttachmentsCount: 0,
   attachmentIds: [],
+};
+
+export const chatInitial: ChatState = {
+  isLoading: false,
+  chatViewMode: CHAT_VIEW_MODE.CHAT,
+  selectedMessage: emptyMessage,
+  value: {
+    pagedResults: [],
+    currentPage: 0,
+    pageCount: 0,
+    pageSize: 0,
+    rowCount: 0,
+  },
+  errors: [],
+  hasErrors: false,
 };

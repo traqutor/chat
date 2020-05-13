@@ -3,11 +3,11 @@
     <conversation-list-item
       :conversation="conversation" />
 
-    <div class="ign-secondary-wrapper">
+    <div class="ign-secondary-wrapper" v-if="chatViewMode === CHAT_VIEW_MODE.CHAT">
 
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
+          <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.ADD_PEOPLE)" icon v-on="on">
             <v-icon>mdi-account-plus-outline</v-icon>
           </v-btn>
         </template>
@@ -16,7 +16,7 @@
 
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
+          <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.WHISPER)" icon v-on="on">
             <v-icon>mdi-access-point</v-icon>
           </v-btn>
         </template>
@@ -25,7 +25,7 @@
 
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
+          <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.INFO)" icon v-on="on">
             <v-icon>mdi-alert-circle-outline</v-icon>
           </v-btn>
         </template>
@@ -33,17 +33,41 @@
       </v-tooltip>
 
     </div>
+
+    <div class="ign-secondary-wrapper" v-else>
+      <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.CHAT)">
+        <v-icon>mdi-chevron-left</v-icon>
+        Back
+      </v-btn>
+    </div>
+
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { CHAT_VIEW_MODE } from '@/store/chat/types';
 import ConversationListItem from './ConversationListItem.vue';
 
 export default {
   name: 'ConversationHeader',
-  props: ['conversation'],
+
+  props: ['conversation', 'chatViewMode'],
+
+  data() {
+    return {
+      CHAT_VIEW_MODE,
+    };
+  },
+
   components: {
     'conversation-list-item': ConversationListItem,
+  },
+
+  methods: {
+    ...mapActions({
+      setChatViewMode: 'setMessagesChatViewMode',
+    }),
   },
 };
 </script>

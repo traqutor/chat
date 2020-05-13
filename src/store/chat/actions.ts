@@ -13,7 +13,6 @@ const actions: ActionTree<ChatState, RootState> = {
     if (!rootState.auth.authData?.accessToken || !conversationId) {
       return;
     }
-    console.log('fetchMessages( page)', page);
 
     commit('setMessagesLoading', true);
     axios.get(`/Messages?ConversationId=${conversationId}&Page=${page}&ItemsPerPage=${len}`,
@@ -29,11 +28,17 @@ const actions: ActionTree<ChatState, RootState> = {
   },
 
   postNewMessageAction: ({ commit, rootState }, payload) => {
-    console.log('postNewMessageAction payload', payload);
-    console.log('rootState.conv.selectedConversation', rootState.conv.selectedConversation);
     if (rootState.conv.selectedConversation.conversationId === JSON.parse(payload).conversationId) {
       commit('postNewMessage', payload);
     }
+  },
+
+  setSelectedMessage: ({ commit }, payload) => {
+    commit('setSelectedMessage', payload);
+  },
+
+  setMessagesChatViewMode: ({ commit }, payload) => {
+    commit('setMessagesChatViewMode', payload);
   },
 
 };

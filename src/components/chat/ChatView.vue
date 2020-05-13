@@ -94,6 +94,8 @@ import ChatFooter from '@/components/chat/ChatFooter.vue';
 export default {
   name: 'ChatView',
 
+  props: ['conversation'],
+
   data() {
     return {
       isScrollUp: false,
@@ -109,7 +111,6 @@ export default {
 
     ...mapGetters({
       loggedUser: 'loggedUser',
-      conversation: 'getSelectedConversation',
       messages: 'getMessages',
       isLoading: 'getMessagesIsLoading',
       currentPage: 'getMessagesCurrentPage',
