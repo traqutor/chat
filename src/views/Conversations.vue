@@ -3,10 +3,11 @@
 
       <v-col cols="4">
 
-        <selector-header />
-        {{viewMode}}
-        <v-container>
+      <div class="selector-wrapper pr-3">
 
+        <selector-header :view-mode="viewMode" :menu-items="menuItems" @set-active="setActive" />
+
+        <div>
           <perfect-scrollbar
             id="scroll-target"
             v-scroll:#scroll-target="onScroll"
@@ -32,20 +33,19 @@
             </template>
 
           </perfect-scrollbar>
-        </v-container>
+        </div>
 
+      </div>
 
       </v-col>
 
       <v-col cols="8" v-if="selectedConversation.conversationId !== ''">
 
-        <conversation-header :conversation="selectedConversation" />
+        <conversation-view
+          v-show="viewMode === VIEW_MODE.CHAT"
+          :conversation="selectedConversation" />
 
-        <div v-if="viewMode === VIEW_MODE.CHAT">
-          <chat-view />
-          <chat-footer />
-        </div>
-
+        <conversation-new v-show="viewMode === VIEW_MODE.NEW"/>
 
       </v-col>
 
@@ -54,13 +54,12 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import ConversationView from '@/components/conversation/ConversationView.vue';
 import ConversationListItem from '@/components/conversation/ConversationListItem.vue';
 import ConversationItemStatus from '@/components/conversation/ConversationItemStatus.vue';
 import ConversationItemDetails from '@/components/conversation/ConversationItemDetails.vue';
-import ChatView from '@/components/chat/ChatView.vue';
-import ChatFooter from '@/components/chat/ChatFooter.vue';
+import NewConversation from '@/components/conversation/new/NewConversation.vue';
 import SelectorHeader from '@/components/selector/SelectorHeader.vue';
-import ConversationHeader from '@/components/conversation/ConversationHeader.vue';
 import { VIEW_MODE } from '@/store/conv/types';
 
 export default {
@@ -71,16 +70,21 @@ export default {
       VIEW_MODE,
       searchText: '',
       tmpScrollTop: 0,
+      menuItems: [
+        { name: 'Conversations', isActive: true },
+        { name: 'People', isActive: false },
+        { name: 'Groups', isActive: false },
+      ],
     };
   },
+
   components: {
     'selector-header': SelectorHeader,
-    'conversation-header': ConversationHeader,
+    'conversation-view': ConversationView,
+    'conversation-new': NewConversation,
     'conversation-list-item': ConversationListItem,
     'conversation-item-status': ConversationItemStatus,
     'conversation-item-details': ConversationItemDetails,
-    'chat-view': ChatView,
-    'chat-footer': ChatFooter,
   },
 
   computed: {
@@ -110,11 +114,27 @@ export default {
       }
     },
 
+    setActive(index) {
+      console.log('index', index);
+      // eslint-disable-next-line array-callback-return
+      this.menuItems.map((item, i) => {
+        if (i === index) {
+          // eslint-disable-next-line no-param-reassign
+          item.isActive = true;
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          item.isActive = false;
+        }
+      });
+      console.log('this.menuItems', this.menuItems);
+    },
+
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/styles/variables';
 
   .content {
     display: flex;
@@ -126,6 +146,10 @@ export default {
     position: relative;
     margin-top: 14px;
     height: calc(100vh - 82px - 94px);
+  }
+
+  .selector-wrapper {
+    border-right: 1px solid $ign-secondary;
   }
 
   /*.conversation-list:hover{*/

@@ -31,7 +31,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    height: 82px;
+    height: $ign-header-height;
     border-bottom: 1px solid $ign-secondary;
     margin-left: auto;
     margin-right: auto;
