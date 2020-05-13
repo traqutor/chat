@@ -51,7 +51,7 @@ import { VIEW_MODE } from '@/store/conv/types';
 export default {
   name: 'SelectorHeader',
 
-  props: ['menuItems', 'viewMode'],
+  props: ['menuItems'],
 
   data() {
     return {
