@@ -8,11 +8,41 @@
       class="chat-wrapper"
       >
 
-      <div class="pb-3 chat-readable-space">
+      <v-row class="pb-3 chat-readable-space">
 
-        Chat Info
+        <v-col cols="6">
+          <v-subheader>Administrator</v-subheader>
 
-      </div>
+          <userListItem :user="getConversationCreator"></userListItem>
+
+        </v-col>
+
+        <v-col cols="6">
+
+
+          <div>
+            <v-subheader>
+              Participants ({{ conversation.conversationParticipantDtos.length }})
+
+              <v-btn icon class="ml-auto">
+                <v-icon>mdi-account-plus-outline</v-icon>
+              </v-btn>
+
+            </v-subheader>
+
+            <template v-for="participant of conversation.conversationParticipantDtos">
+
+                <userListItem
+                  :user="participant"
+                  :key="participant.id" ></userListItem>
+
+            </template>
+
+          </div>
+
+        </v-col>
+
+      </v-row>
 
 
     </perfect-scrollbar>
@@ -22,6 +52,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import UserListItem from '@/components/user/UserListItem.vue';
 
 export default {
   name: 'ChatInfo',
@@ -35,11 +66,20 @@ export default {
     };
   },
 
+  components: {
+    userListItem: UserListItem,
+  },
+
   computed: {
 
     ...mapGetters({
 
     }),
+
+    getConversationCreator() {
+      return this.conversation.conversationParticipantDtos
+        .find((participant) => participant.isConversationCreator);
+    },
 
   },
 

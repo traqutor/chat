@@ -82,8 +82,6 @@ export default {
     align-items: center;
     height: $ign-header-height;
     border-bottom: 1px solid $ign-secondary;
-    margin-left: auto;
-    margin-right: auto;
     max-width: $ign-readable-width;
   }
 

@@ -79,6 +79,7 @@ export default Vue.extend({
     theme() {
       return (this.$vuetify.theme.dark) ? 'dark' : 'light';
     },
+
     title() {
       return this.$route.name;
     },

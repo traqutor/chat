@@ -1,6 +1,6 @@
 <template>
 
-  <div class="wrapper mt-2">
+  <div class="chat-text-area-wrapper mt-2">
 
     <v-textarea
       v-model="text"
@@ -76,13 +76,12 @@ export default {
 <style scoped lang="scss">
   @import "../../assets/styles/variables";
 
-  .wrapper {
+  .chat-text-area-wrapper {
+    max-height: 60px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     max-width: $ign-readable-width;
-    margin-left: auto;
-    margin-right: auto;
   }
 
 </style>

@@ -6,10 +6,11 @@
     </div>
 
     <div class="user-info">
-      <p class="name">
-        {{user.userName}}
+      <p v-if="user" class="name">
+        {{ user.userName }}
       </p>
-      <span class="role">{{user.role[0]}}</span>
+      <span v-if="user.role" class="role">{{user.role[0]}}</span>
+      <span v-else class="role">{{user.roleName}}</span>
     </div>
 
     <slot></slot>

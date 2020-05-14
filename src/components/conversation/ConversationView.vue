@@ -1,27 +1,27 @@
 <template>
-  <div>
+  <section class="flex-fill chat-section-content">
 
-    <conversation-header
-      :chatViewMode="chatViewMode"
-      :conversation="conversation"/>
+      <conversation-header
+        :chatViewMode="chatViewMode"
+        :conversation="conversation"/>
 
-    <chat-view
-      :conversation="conversation"
-      v-if="chatViewMode === CHAT_VIEW_MODE.CHAT"/>
+      <chat-view
+        :conversation="conversation"
+        v-if="chatViewMode === CHAT_VIEW_MODE.CHAT"/>
 
-    <chat-info
-      :conversation="conversation"
-      v-if="chatViewMode === CHAT_VIEW_MODE.INFO"/>
+      <chat-info
+        :conversation="conversation"
+        v-if="chatViewMode === CHAT_VIEW_MODE.INFO"/>
 
-    <chat-whisper
-      :conversation="conversation"
-      v-if="chatViewMode === CHAT_VIEW_MODE.WHISPER"/>
+      <chat-whisper
+        :conversation="conversation"
+        v-if="chatViewMode === CHAT_VIEW_MODE.WHISPER"/>
 
-    <chat-add-people
-      :conversation="conversation"
-      v-if="chatViewMode === CHAT_VIEW_MODE.ADD_PEOPLE"/>
+      <chat-add-people
+        :conversation="conversation"
+        v-if="chatViewMode === CHAT_VIEW_MODE.ADD_PEOPLE"/>
 
-  </div>
+  </section>
 </template>
 
 <script>
@@ -60,5 +60,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .chat-section-content {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 870px;
+  }
 </style>

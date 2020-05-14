@@ -1,63 +1,61 @@
 <template>
-  <div>
+  <div class="chat-sub-header-section">
+
     <perfect-scrollbar
       id="chat-container"
       v-scroll:#chat-container="onScroll"
       ref="chatContainer"
-      class="chat-wrapper"
-      >
+      class="chat-chat-perfect-scrollbar"
+    >
 
-      <div class="pb-3 chat-readable-space">
+      <div
+        v-for="(post, idx) of messages"
+        :key="post.messageId">
 
         <div
-          v-for="(post, idx) of messages"
-          :key="post.messageId">
-
-          <div
-            v-if="idx === 0 || getIfNextPeriodToDisplay(
+          v-if="idx === 0 || getIfNextPeriodToDisplay(
               post.createdTimeOffset,
               messages[idx - 1].createdTimeOffset)"
-            class="chat-day-divider">
-            {{ post.createdTimeOffset | timeOffsetFilter }}
-          </div>
+          class="chat-day-divider">
+          {{ post.createdTimeOffset | timeOffsetFilter }}
+        </div>
 
-          <div v-if="conversation.authorId === post.authorParticipantId"
-               class="logged-user-posts">
+        <div v-if="conversation.authorId === post.authorParticipantId"
+             class="logged-user-posts">
 
-            <div
-              v-if="idx ===0 || post.authorParticipantId !== messages[idx - 1].authorParticipantId"
-              class="ma-3"
-            ></div>
+          <div
+            v-if="idx ===0 || post.authorParticipantId !== messages[idx - 1].authorParticipantId"
+            class="ma-3"
+          ></div>
 
-            <div class="ign-post-right-item">
-              <span>{{ post.text }}</span>
-              <span class="ign-post-status icon-mark">
+          <div class="ign-post-right-item">
+            <span>{{ post.text }}</span>
+            <span class="ign-post-status icon-mark">
                 <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
                 {{ post.createdTimeOffset | timeOffsetFilter }}
               </span>
-            </div>
-
           </div>
 
-          <div v-else class="other-user-posts">
+        </div>
 
-            <div
-              v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
-              class="ma-3">
-              {{ getParticipant(post.authorParticipantId).userName }}
-            </div>
+        <div v-else class="other-user-posts">
 
-            <div class="ign-post-left-item">
+          <div
+            v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
+            class="ma-3">
+            {{ getParticipant(post.authorParticipantId) &&
+            getParticipant(post.authorParticipantId).userName }}
+          </div>
 
-              <span>{{ post.text }}</span>
+          <div class="ign-post-left-item">
 
-              <span class="ign-post-status icon-mark-active">
+            <span>{{ post.text }}</span>
+
+            <span class="ign-post-status icon-mark-active">
 
               <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
               {{ post.createdTimeOffset | timeOffsetFilter }}
             </span>
-
-            </div>
 
           </div>
 
@@ -82,7 +80,7 @@
       </v-tooltip>
     </div>
 
-    <chat-footer />
+    <chat-footer/>
 
   </div>
 </template>
@@ -120,6 +118,7 @@ export default {
     changeConversation() {
       return this.conversation;
     },
+
     scrollToEndOnMessages() {
       return this.messages;
     },
@@ -146,7 +145,7 @@ export default {
 
     getIfNextPeriodToDisplay(createdTimeOffset, nextCreatedTimeOffset) {
       return this.$options.filters.timeOffsetFilter(createdTimeOffset)
-        !== this.$options.filters.timeOffsetFilter(nextCreatedTimeOffset);
+          !== this.$options.filters.timeOffsetFilter(nextCreatedTimeOffset);
     },
 
     getParticipant(userId) {
@@ -162,7 +161,7 @@ export default {
             this.tmpScrollTop = e.target.scrollTop;
             this.isScrollUp = true;
             if (!this.isLoading
-              && this.pageCount > this.currentPage) {
+                && this.pageCount > this.currentPage) {
               const page = this.currentPage + 1;
               const { conversationId } = this.conversation;
               this.loadMoreMessages({
@@ -196,6 +195,19 @@ export default {
 
 <style scoped lang="scss">
   @import "../../assets/styles/variables";
+
+  .chat-sub-header-section {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 170px);
+    max-height: calc(100vh - 170px);
+  }
+
+  .chat-chat-perfect-scrollbar {
+    flex: auto;
+    position: relative;
+    padding: $ign-padding-normal;
+  }
 
   .other-user-posts {
     display: flex;
@@ -246,21 +258,9 @@ export default {
     cursor: pointer;
   }
 
-  .chat-wrapper {
-    position: relative;
-    padding: $ign-padding-normal;
-    height: calc(100vh - 245px);
-  }
-
-  .chat-readable-space {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: $ign-readable-width;
-  }
-
   .scroll-down-btn {
     position: absolute;
     bottom: 170px;
-    right:50px;
+    right: 50px;
   }
 </style>
