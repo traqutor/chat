@@ -1,31 +1,35 @@
 <template>
   <div class="content">
 
-      <v-col cols="4">
+    <v-col cols="4">
 
-      <div class="selector-wrapper pr-3">
+    <div class="selector-wrapper pr-3">
 
-        <selector-header :menu-items="menuItems" @set-active="setActive" />
+      <selector-header :menu-items="menuItems" @set-active="setActive" />
 
-        <selector-tabs :menu-items="menuItems" v-show="viewMode === VIEW_MODE.CHAT">
-        </selector-tabs>
+      <selector-tabs :menu-items="menuItems" v-show="viewMode === VIEW_MODE.CHAT">
+      </selector-tabs>
 
-        <selector-participants v-show="viewMode === VIEW_MODE.NEW">
-        </selector-participants>
+      <selector-participants v-show="viewMode === VIEW_MODE.NEW">
+      </selector-participants>
 
-      </div>
+    </div>
 
-      </v-col>
+    </v-col>
 
-      <v-col cols="8" v-if="selectedConversation.conversationId !== ''">
+    <v-col cols="8" v-if="selectedConversation.conversationId !== '' || viewMode === VIEW_MODE.NEW">
 
-        <conversation-view
-          v-show="viewMode === VIEW_MODE.CHAT"
-          :conversation="selectedConversation" />
+      <conversation-view
+        v-show="viewMode === VIEW_MODE.CHAT"
+        :conversation="selectedConversation" />
 
-        <conversation-new v-show="viewMode === VIEW_MODE.NEW"/>
+      <conversation-new v-show="viewMode === VIEW_MODE.NEW"/>
 
-      </v-col>
+    </v-col>
+
+    <v-col v-else cols="8">
+      <conversation-hello />
+    </v-col>
 
   </div>
 </template>
@@ -37,6 +41,7 @@ import NewConversation from '@/components/conversation/new/NewConversation.vue';
 import SelectorHeader from '@/components/selector/SelectorHeader.vue';
 import SelectorTabs from '@/components/selector/SelectorTabs.vue';
 import SelectorParticipants from '@/components/selector/SelectorParticipants.vue';
+import Hello from '@/components/Hello.vue';
 import { VIEW_MODE } from '@/store/conv/types';
 
 export default {
@@ -59,6 +64,7 @@ export default {
     'selector-participants': SelectorParticipants,
     'conversation-view': ConversationView,
     'conversation-new': NewConversation,
+    'conversation-hello': Hello,
   },
 
   computed: {
