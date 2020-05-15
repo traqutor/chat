@@ -5,6 +5,7 @@ import {
   Conversation,
   Participant,
 } from '@/store/conv/types';
+import JwtHelper from '@/helpers/JwtHelper';
 
 const mutations: MutationTree<ConversationsState> = {
 
@@ -28,7 +29,7 @@ const mutations: MutationTree<ConversationsState> = {
     const participants: Participant[] = [...state.availableParticipants];
     payload.value.pagedResults.forEach((conversation) => {
       conversation.conversationParticipantDtos.forEach((user) => {
-        if (participants.find((prtcp) => prtcp.userId === user.userId)) {
+        if (participants.find((part) => part.userId === user.userId)) {
           // do nothing
         } else {
           participants.push(user);
@@ -41,9 +42,14 @@ const mutations: MutationTree<ConversationsState> = {
   toggleParticipantSelection(state, payload: Participant) {
     const idx = state.selectedParticipants.findIndex((prt) => prt.id === payload.id);
     if (idx !== -1) {
+      const i = state.newConversation.roleIds.findIndex((role) => role === payload.roleId);
+      if (i !== -1) {
+        state.newConversation.roleIds.splice(i, 1);
+      }
       state.selectedParticipants.splice(idx, 1);
     } else {
       state.selectedParticipants.push(payload);
+      state.newConversation.roleIds.push(payload.roleId);
     }
   },
 
@@ -57,6 +63,38 @@ const mutations: MutationTree<ConversationsState> = {
 
   setConversationViewMode: (state, payload: number) => {
     state.viewMode = payload;
+  },
+
+  setNewConversationClientMessageId: (state, token: string) => {
+    const res = JwtHelper.decodeToken(token);
+    state.newConversation.clientMessageId = res.sub;
+  },
+
+  setNewConversationTopic: (state, payload: string) => {
+    state.newConversation.topic = payload;
+  },
+
+  setNewConversationMessageText: (state, payload: string) => {
+    state.newConversation.messageText = payload;
+  },
+
+  setNewConversationRoleIds: (state, payload: string[]) => {
+    state.newConversation.roleIds = payload;
+  },
+
+  setNewConversationGroupIds: (state, payload: string[]) => {
+    state.newConversation.roleIds = payload;
+  },
+
+  resetNewConversation: (state) => {
+    const { newConversation } = state;
+    state.newConversation = {
+      ...newConversation,
+      roleIds: [],
+      messageText: '',
+      topic: '',
+      groupsIds: [],
+    };
   },
 
 };

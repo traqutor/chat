@@ -2,21 +2,22 @@
 
   <div class="wrapper">
 
-    <v-textarea
+    <v-text-field
       v-model="text"
+      @change="setNewConversationMessageText(text)"
       solo
       background-color="#3d464f"
       rows="1"
+      single-line
       name="text"
       label="Enter a message..."
-      @keydown.enter.prevent="onNewConversationPost"
-      apend-inner-icon="mdi-send"
-      @click:apend-inner="onNewConversationPost"
       height="56px"
-    ></v-textarea>
+    ></v-text-field>
 
     <v-btn
-      :disabled="!text"
+      :disabled="!newConversation.topic ||
+      !newConversation.messageText ||
+      newConversation.roleIds.length <= 0"
       @click="onNewConversationPost"
       class="ma-2"
       fab
@@ -31,14 +32,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { VIEW_MODE } from '@/store/conv/types';
 
 export default {
   name: 'NewConversationFooter',
   computed: {
     ...mapGetters({
       loggedUser: 'loggedUser',
-      conversation: 'getSelectedConversation',
+      newConversation: 'getNewConversation',
+      selectedParticipants: 'getConversationSelectedParticipants',
     }),
   },
   data() {
@@ -49,20 +52,18 @@ export default {
 
   methods: {
     ...mapActions({
-      postMessage: 'postNewMessageAction',
+      createConversation: 'createNewConversation',
+      setConversationMode: 'setConversationMode',
+    }),
+
+    ...mapMutations({
+      setNewConversationMessageText: 'setNewConversationMessageText',
     }),
 
     onNewConversationPost() {
-      // const newMessage = {
-      //   ...emptyMessage,
-      //   text: this.text,
-      //   conversationId: this.conversation.conversationId,
-      //   authorParticipantId: this.loggedUser.id,
-      // };
-      // this.$chatHub.sendMessage(newMessage);
-      this.text = null;
+      this.createConversation();
+      this.setConversationMode(VIEW_MODE.CHAT);
     },
-
   },
 };
 </script>

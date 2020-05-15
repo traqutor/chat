@@ -67,6 +67,7 @@ export interface ConversationsState {
   selectedConversation: Conversation;
   availableParticipants: Participant[];
   selectedParticipants: Participant[];
+  newConversation: NewConversation;
   errors: [string];
   hasErrors: boolean;
   viewMode: number;
@@ -102,6 +103,13 @@ export const convInitial: ConversationsState = {
     topic: '',
     unreadConversationMessagesCount: 0,
     authorId: '',
+  },
+  newConversation: {
+    topic: '',
+    roleIds: [],
+    groupsIds: [],
+    messageText: '',
+    clientMessageId: 0,
   },
   availableParticipants: [],
   selectedParticipants: [],

@@ -1,11 +1,12 @@
 import { ActionTree } from 'vuex';
 import axios from '@/axios';
 import { RootState } from '@/store/types';
-import { ConversationsResponse, ConversationsState, Conversation } from '@/store/conv/types';
+import { ConversationsState, Conversation } from '@/store/conv/types';
 import UserHelper from '@/helpers/UserHelper';
 
 
 const actions: ActionTree<ConversationsState, RootState> = {
+
   fetchConversations: (
     { commit, dispatch, rootState },
     page = 0,
@@ -31,6 +32,17 @@ const actions: ActionTree<ConversationsState, RootState> = {
       .catch((error) => {
         commit('setConversationsLoading', false);
         console.log(error);
+      });
+  },
+
+  createNewConversation: ({ rootState }) => {
+    console.log('New conversation state:', rootState.conv.newConversation);
+    const { newConversation } = rootState.conv;
+    axios.post('/Conversations',
+      { ...newConversation },
+      { headers: { Authorization: `Bearer ${rootState.auth.authData?.accessToken}` } })
+      .then((resData) => {
+        console.log('Response new conversation:', resData);
       });
   },
 

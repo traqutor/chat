@@ -10,10 +10,11 @@
         type="text"
         id="text"
         v-model="text"
+        @change="setNewConversationTopic(text)"
         placeholder="Enter a topic">
     </div>
 
-    <v-btn @click="toggleConversationMode" class="mr-3">
+    <v-btn @click="cancelConversation" class="mr-3">
       Cancel
     </v-btn>
   </div>
@@ -21,7 +22,7 @@
 
 <script>
 
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations, mapGetters } from 'vuex';
 import { VIEW_MODE } from '@/store/conv/types';
 
 export default {
@@ -33,12 +34,22 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters({
+      newConversation: 'getNewConversation',
+    }),
+  },
+
   methods: {
     ...mapActions({
       setConversationMode: 'setConversationMode',
     }),
 
-    toggleConversationMode() {
+    ...mapMutations({
+      setNewConversationTopic: 'setNewConversationTopic',
+    }),
+
+    cancelConversation() {
       const mode = this.viewMode === VIEW_MODE.CHAT
         ? VIEW_MODE.NEW : VIEW_MODE.CHAT;
       this.setConversationMode(mode);
