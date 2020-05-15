@@ -15,10 +15,10 @@ Vue.use(Vuex);
 const store: StoreOptions<RootState> = {
   state: {
     version: '1.0.0',
-    auth: authInitial,
-    conv: convInitial,
-    chat: chatInitial,
-    role: roleInitialState,
+    auth: { ...authInitial },
+    conv: { ...convInitial },
+    chat: { ...chatInitial },
+    role: { ...roleInitialState },
   },
   modules: {
     auth,

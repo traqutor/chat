@@ -20,11 +20,12 @@ const actions: ActionTree<ConversationsState, RootState> = {
         const { data } = resData;
         data.value.pagedResults = resData.data.value.pagedResults
           .map((conversation: Conversation) => UserHelper
-            .getId(rootState.auth.user.userId, conversation));
+            .getId(rootState.auth.authUser.userId, conversation));
         // if (rootState.conv.selectedConversation.conversationId === '') {
         //   commit('setSelectedConversation', data.value.pagedResults[0]);
         // }
         commit('storeConversations', data);
+        commit('selectAvailableParticipants', data);
         commit('setConversationsLoading', false);
       })
       .catch((error) => {

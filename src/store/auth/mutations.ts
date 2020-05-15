@@ -27,11 +27,30 @@ const mutations: MutationTree<AuthState> = {
       systemRole: JSON.parse(res.SystemRolesJson),
       roleName: res.role[0],
     };
-    state.user = userData;
+    state.authUser = userData;
   },
 
-  logOut() {
-    return authInitial;
+  logOut(state) {
+    state.authData = {
+      accessToken: '',
+      expiresIn: 0,
+      refreshToken: '',
+      scope: '',
+      tokenType: '',
+    };
+    state.authUser = {
+      avatar: '',
+      email: '',
+      familyName: '',
+      givenName: '',
+      preferredUsername: '',
+      role: [],
+      roleName: '',
+      scope: [],
+      systemRole: [],
+      userId: '',
+      userName: '',
+    };
   },
 };
 

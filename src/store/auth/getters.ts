@@ -15,7 +15,7 @@ const getters: GetterTree<AuthState, RootState> = {
   },
 
   loggedUser(state): AuthUser {
-    return state.user || {
+    return state.authUser || {
       avatar: '',
       email: '',
       familyName: '',

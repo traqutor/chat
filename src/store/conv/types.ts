@@ -65,6 +65,8 @@ export interface ConversationsState {
     rowCount: number;
   };
   selectedConversation: Conversation;
+  availableParticipants: Participant[];
+  selectedParticipants: Participant[];
   errors: [string];
   hasErrors: boolean;
   viewMode: number;
@@ -82,8 +84,6 @@ export const convInitial: ConversationsState = {
     pageSize: 0,
     rowCount: 0,
   },
-  hasErrors: false,
-  errors: [''],
   selectedConversation: {
     conversationId: '',
     conversationParticipantDtos: [],
@@ -103,4 +103,8 @@ export const convInitial: ConversationsState = {
     unreadConversationMessagesCount: 0,
     authorId: '',
   },
+  availableParticipants: [],
+  selectedParticipants: [],
+  hasErrors: false,
+  errors: [''],
 };

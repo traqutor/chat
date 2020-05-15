@@ -5,28 +5,59 @@
     v-scroll:#scroll-on-participants="onScroll"
     class="selector-list-section pr-3">
 
-    List of available participants
+    <v-subheader>List of available participants</v-subheader>
+
+    <template v-for="(participant) of availableParticipants">
+
+      <div
+        @click="toggleParticipantSelection(participant)"
+        class="row mr-6 pl-2 participant-list-item"
+        :key="participant.id">
+
+        <v-icon v-if="selectedParticipants.find(prt => participant.id === prt.id)"
+                color="green" class="ma-3">
+          mdi-check-circle-outline
+        </v-icon>
+
+        <v-icon v-else class="ma-3">
+          mdi-checkbox-blank-circle-outline
+        </v-icon>
+
+
+        <userListItem
+          :user="participant"
+        ></userListItem>
+
+      </div>
+
+    </template>
+
 
   </perfect-scrollbar>
 
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import UserListItem from '@/components/user/UserListItem.vue';
 
 export default {
   name: 'SelectorParticipants',
 
   components: {
+    userListItem: UserListItem,
   },
 
   computed: {
     ...mapGetters({
+      availableParticipants: 'getConversationAvailableParticipants',
+      selectedParticipants: 'getConversationSelectedParticipants',
     }),
   },
 
   methods: {
-    ...mapActions({
+    ...mapMutations({
+      toggleParticipantSelection: 'toggleParticipantSelection',
     }),
 
     onScroll(e) {

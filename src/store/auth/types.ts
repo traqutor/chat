@@ -26,12 +26,12 @@ export interface AuthData {
 }
 
 export interface AuthState {
-  user: AuthUser;
+  authUser: AuthUser;
   authData: AuthData;
 }
 
 export const authInitial: AuthState = {
-  user: {
+  authUser: {
     avatar: '',
     email: '',
     familyName: '',

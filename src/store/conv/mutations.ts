@@ -1,5 +1,10 @@
 import { MutationTree } from 'vuex';
-import { ConversationsResponse, ConversationsState, Conversation } from '@/store/conv/types';
+import {
+  ConversationsResponse,
+  ConversationsState,
+  Conversation,
+  Participant,
+} from '@/store/conv/types';
 
 const mutations: MutationTree<ConversationsState> = {
 
@@ -15,6 +20,30 @@ const mutations: MutationTree<ConversationsState> = {
         .concat(payload.value.pagedResults);
       state.conversations.pageSize = payload.value.pageSize;
       state.conversations.rowCount = payload.value.rowCount;
+    }
+  },
+
+  // collect all users from
+  selectAvailableParticipants(state, payload: ConversationsResponse) {
+    const participants: Participant[] = [...state.availableParticipants];
+    payload.value.pagedResults.forEach((conversation) => {
+      conversation.conversationParticipantDtos.forEach((user) => {
+        if (participants.find((prtcp) => prtcp.userId === user.userId)) {
+          // do nothing
+        } else {
+          participants.push(user);
+        }
+      });
+    });
+    state.availableParticipants = [...state.availableParticipants.concat(participants)];
+  },
+
+  toggleParticipantSelection(state, payload: Participant) {
+    const idx = state.selectedParticipants.findIndex((prt) => prt.id === payload.id);
+    if (idx !== -1) {
+      state.selectedParticipants.splice(idx, 1);
+    } else {
+      state.selectedParticipants.push(payload);
     }
   },
 

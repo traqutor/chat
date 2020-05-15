@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user" class="user-simple-item">
+  <div v-if="user.userId !== ''" class="user-simple-item">
 
     <div class="ign-avatar">
       <img src="../../assets/images/avatar-3.jpg">

@@ -18,11 +18,11 @@
             :key="participant.id">
 
             <v-icon v-if="selectedParticipants.find(prt => participant.id === prt.id)"
-                    color="green" class="mr-3">
+                    color="green" class="ma-3">
               mdi-check-circle-outline
             </v-icon>
 
-            <v-icon v-else class="mr-3">
+            <v-icon v-else class="ma-3">
               mdi-checkbox-blank-circle-outline
             </v-icon>
 
