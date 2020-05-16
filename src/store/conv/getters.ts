@@ -12,6 +12,15 @@ const getters: GetterTree<ConversationsState, RootState> = {
   getConversationViewMode: (state) => state.viewMode,
   getConversationAvailableParticipants: (state) => state.availableParticipants,
   getConversationSelectedParticipants: (state) => state.selectedParticipants,
+  getUserAvatarUrlById: (state) => (userId: string) => {
+    let url = '';
+    state.availableParticipants.forEach((participant) => {
+      if (participant.userId === userId) {
+        url = participant.avatarUrl;
+      }
+    });
+    return url;
+  },
 
 };
 

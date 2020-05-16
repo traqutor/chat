@@ -6,6 +6,7 @@ export interface Participant {
   userId: string;
   roleId: string;
   userName: string;
+  avatarUrl: string;
 }
 
 export interface Conversation {

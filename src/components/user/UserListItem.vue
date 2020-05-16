@@ -1,8 +1,8 @@
 <template>
   <div v-if="user.userId !== ''" class="user-simple-item">
 
-    <div class="ign-avatar">
-      <img src="../../assets/images/avatar-3.jpg">
+    <div class="ign-avatar" >
+      <img :src="getUserAvatarUrlById(user.userId)">
     </div>
 
     <div class="user-info">
@@ -19,9 +19,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'UserListItem',
+
   props: ['user'],
+
+  computed: {
+    ...mapGetters({
+      getUserAvatarUrlById: 'getUserAvatarUrlById',
+    }),
+  },
+
+
 };
 </script>
 
@@ -49,14 +60,14 @@ export default {
   .role {
     color: $ign-color-opacity-middle;
     font-size: 12px;
-    box-sizing:border-box;
-    display:block;
-    font-weight:400;
-    height:18px;
-    line-height:18px;
-    text-align:left;
-    text-size-adjust:100%;
-    visibility:visible;
+    box-sizing: border-box;
+    display: block;
+    font-weight: 400;
+    height: 18px;
+    line-height: 18px;
+    text-align: left;
+    text-size-adjust: 100%;
+    visibility: visible;
   }
 
 </style>

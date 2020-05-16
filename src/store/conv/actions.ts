@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
-import axios from '@/axios';
+import { instance } from '@/axios';
 import { RootState } from '@/store/types';
-import { ConversationsState, Conversation } from '@/store/conv/types';
+import { ConversationsState, Conversation, Participant } from '@/store/conv/types';
 import UserHelper from '@/helpers/UserHelper';
 
 
@@ -14,8 +14,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
   ) => {
     commit('setConversationsLoading', true);
 
-    axios.get(`/Conversations?Page=${page}&ItemsPerPage=${len}`,
-      { headers: { Authorization: `Bearer ${rootState.auth.authData?.accessToken}` } })
+    instance.get(`/Conversations?Page=${page}&ItemsPerPage=${len}`)
       .then((resData) => {
         // find Id of the author of messages
         const { data } = resData;
@@ -28,6 +27,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
         commit('storeConversations', data);
         commit('selectAvailableParticipants', data);
         commit('setConversationsLoading', false);
+        dispatch('getUsersAvatars');
       })
       .catch((error) => {
         commit('setConversationsLoading', false);
@@ -35,12 +35,28 @@ const actions: ActionTree<ConversationsState, RootState> = {
       });
   },
 
+  getUsersAvatars: ({ commit, dispatch, rootState }) => {
+    rootState.conv.availableParticipants.forEach((participant, index) => {
+      instance.get(`/Users/GetAvatar?UserId=${participant.userId}`,
+        {
+          responseType: 'blob',
+          headers: { accept: 'application/octet-stream' },
+        })
+        .then((response) => {
+          const blob = new Blob([response.data]);
+          const avatarUrl = window.URL.createObjectURL(blob);
+          commit('setAvailableParticipantAvatar', {
+            index,
+            avatarUrl,
+          });
+        });
+    });
+  },
+
   createNewConversation: ({ rootState }) => {
-    console.log('New conversation state:', rootState.conv.newConversation);
     const { newConversation } = rootState.conv;
-    axios.post('/Conversations',
-      { ...newConversation },
-      { headers: { Authorization: `Bearer ${rootState.auth.authData?.accessToken}` } })
+    instance.post('/Conversations',
+      { ...newConversation })
       .then((resData) => {
         console.log('Response new conversation:', resData);
       });

@@ -3,6 +3,7 @@ import { ActionTree } from 'vuex';
 import { AuthState, AuthData, LoginData } from '@/store/auth/types';
 import { RootState } from '@/store/types';
 import axios from '@/axios-auth';
+import { setJWT } from '@/axios';
 
 const actions: ActionTree<AuthState, RootState> = {
   login({ commit, dispatch }, authData: LoginData): any {
@@ -22,6 +23,7 @@ const actions: ActionTree<AuthState, RootState> = {
         };
         commit('authUser', payload);
         commit('setUser', payload.accessToken);
+        setJWT(payload.accessToken);
         dispatch('fetchConversations');
         Vue.prototype.startSignalR(payload.accessToken);
       });

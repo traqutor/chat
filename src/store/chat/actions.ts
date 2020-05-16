@@ -1,5 +1,5 @@
 import { ActionTree } from 'vuex';
-import axios from '@/axios';
+import { instance } from '@/axios';
 import { ChatState } from '@/store/chat/types';
 import { RootState } from '@/store/types';
 import UserHelper from '@/helpers/UserHelper';
@@ -15,8 +15,7 @@ const actions: ActionTree<ChatState, RootState> = {
     }
 
     commit('setMessagesLoading', true);
-    axios.get(`/Messages?ConversationId=${conversationId}&Page=${page}&ItemsPerPage=${len}`,
-      { headers: { Authorization: `Bearer ${rootState.auth.authData.accessToken}` } })
+    instance.get(`/Messages?ConversationId=${conversationId}&Page=${page}&ItemsPerPage=${len}`)
       .then((resData) => {
         commit('storeMessages', resData.data.value);
         commit('setMessagesLoading', false);

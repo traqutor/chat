@@ -29,14 +29,21 @@ const mutations: MutationTree<ConversationsState> = {
     const participants: Participant[] = [...state.availableParticipants];
     payload.value.pagedResults.forEach((conversation) => {
       conversation.conversationParticipantDtos.forEach((user) => {
+        const tmp: Participant = { ...user, avatarUrl: '' };
         if (participants.find((part) => part.userId === user.userId)) {
           // do nothing
         } else {
-          participants.push(user);
+          participants.push(tmp);
         }
       });
     });
     state.availableParticipants = [...state.availableParticipants.concat(participants)];
+  },
+
+  setAvailableParticipantAvatar(state, payload) {
+    const participant = { ...state.availableParticipants[payload.index] };
+    participant.avatarUrl = payload.avatarUrl;
+    state.availableParticipants[payload.index] = participant;
   },
 
   toggleParticipantSelection(state, payload: Participant) {

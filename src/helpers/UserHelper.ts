@@ -1,4 +1,4 @@
-import { Conversation, Participant } from '@/store/conv/types';
+import { Conversation } from '@/store/conv/types';
 
 class UserHelper {
   static getId(userId: string, conversation: Conversation): Conversation {
