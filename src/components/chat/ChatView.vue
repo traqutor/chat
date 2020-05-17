@@ -17,7 +17,7 @@
               post.createdTimeOffset,
               messages[idx - 1].createdTimeOffset)"
           class="chat-day-divider">
-          {{ post.createdTimeOffset | timeOffsetFilter }}
+          {{ post.createdTimeOffset | timeDividerFilter }}
         </div>
 
         <div v-if="conversation.authorId === post.authorParticipantId"
@@ -144,8 +144,8 @@ export default {
     }),
 
     getIfNextPeriodToDisplay(createdTimeOffset, nextCreatedTimeOffset) {
-      return this.$options.filters.timeOffsetFilter(createdTimeOffset)
-          !== this.$options.filters.timeOffsetFilter(nextCreatedTimeOffset);
+      return this.$options.filters.timeDividerFilter(createdTimeOffset)
+          !== this.$options.filters.timeDividerFilter(nextCreatedTimeOffset);
     },
 
     getParticipant(userId) {

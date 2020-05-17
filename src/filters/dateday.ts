@@ -1,5 +1,18 @@
 import moment from 'moment';
 
-const timeOffsetFilter = (value: string) => moment(value).fromNow(true);
+export const timeOffsetFilter = (value: string) => moment(value).fromNow();
 
-export default timeOffsetFilter;
+export const timeDividerFilter = (value: string) => {
+  let text = '';
+  const TODAY = moment().startOf('day');
+  const YESTERDAY = TODAY.clone().subtract(1, 'days').startOf('day');
+
+  if (moment(value).isSame(TODAY, 'd')) {
+    text = 'Today';
+  } else if (moment(value).isSame(YESTERDAY, 'd')) {
+    text = 'Yesterday';
+  } else {
+    text = moment(value).fromNow(true);
+  }
+  return text;
+};
