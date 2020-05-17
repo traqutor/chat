@@ -64,6 +64,10 @@ const mutations: MutationTree<ConversationsState> = {
     }
   },
 
+  postNewConversation: (state, payload: Conversation) => {
+    state.conversations.pagedResults.splice(0, 0, payload);
+  },
+
   setSelectedConversation: (state, payload: Conversation) => {
     state.selectedConversation = payload;
   },

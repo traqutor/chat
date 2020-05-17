@@ -62,8 +62,20 @@ const actions: ActionTree<ConversationsState, RootState> = {
       { ...newConversation })
       .then((resData) => {
         console.log('Response new conversation:', resData);
-      });
+      })
+      .catch((error) => console.error(error));
   },
+
+  postNewConversationAction: ({ commit, dispatch, rootState }, payload) => {
+    const conversation = JSON.parse(payload);
+    const { authorId } = { ...UserHelper.getId(rootState.auth.authUser.userId, conversation) };
+    conversation.authorId = authorId;
+    commit('postNewConversation', conversation);
+    commit('emptyMessages');
+    commit('setSelectedConversation', conversation);
+    dispatch('fetchMessages', { conversationId: conversation.conversationId });
+  },
+
 
   setSelectedConversationAction: ({ commit, dispatch }, payload) => {
     commit('emptyMessages');

@@ -33,7 +33,7 @@ export default {
       });
 
       connection.on('NewConversationNotification', (payload: any) => {
-        console.log('on NewConversationNotification:', payload);
+        store.dispatch('postNewConversationAction', payload);
       });
 
       connection.on('MarkedAsReadNotification', (payload: any) => {
