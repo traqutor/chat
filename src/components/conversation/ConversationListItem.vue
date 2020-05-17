@@ -1,7 +1,7 @@
 <template>
   <div class="ign-item">
 
-    <conversation-avatar />
+    <conversation-avatar :conversation="conversation" />
 
     <div class="ign-item-info-wrap">
 

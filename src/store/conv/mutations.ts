@@ -44,7 +44,6 @@ const mutations: MutationTree<ConversationsState> = {
     const participantsAvatars: ParticipantAvatar[] = [...state.availableAvatars];
     const idx = participantsAvatars
       .findIndex((user) => user.userId === payload.userId);
-    console.log(idx, payload);
     if (idx === -1) {
       participantsAvatars.push(payload);
     }

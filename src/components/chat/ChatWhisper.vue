@@ -27,9 +27,9 @@
             </v-icon>
 
 
-            <userListItem
+            <user-list-item
               :user="participant"
-            ></userListItem>
+            ></user-list-item>
 
           </div>
 
@@ -48,9 +48,7 @@
           <v-icon color="red" class="pr-3">
             mdi-minus-circle-outline
           </v-icon>
-          <div class="ign-avatar">
-            <img src="../../assets/images/avatar-3.jpg">
-          </div>
+          <user-avatar :userId="sel.userId" />
         </v-row>
         <span>{{ sel.userName }}</span>
       </div>
@@ -67,6 +65,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import UserListItem from '@/components/user/UserListItem.vue';
+import UserAvatar from '@/components/user/UserAvatar.vue';
 
 export default {
   name: 'ChatWhisper',
@@ -82,7 +81,8 @@ export default {
   },
 
   components: {
-    userListItem: UserListItem,
+    'user-list-item': UserListItem,
+    'user-avatar': UserAvatar,
   },
 
   computed: {

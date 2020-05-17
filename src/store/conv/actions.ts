@@ -36,7 +36,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
   },
 
   getUsersAvatars: ({ commit, dispatch, rootState }) => {
-    rootState.conv.availableParticipants.forEach((participant, index) => {
+    rootState.conv.availableParticipants.forEach((participant) => {
       instance.get(`/Users/GetAvatar?UserId=${participant.userId}`,
         {
           responseType: 'blob',
@@ -49,6 +49,9 @@ const actions: ActionTree<ConversationsState, RootState> = {
             userId: participant.userId,
             avatarUrl,
           });
+        })
+        .catch((error) => {
+          console.error(error);
         });
     });
   },

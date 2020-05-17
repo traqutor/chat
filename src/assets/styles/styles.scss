@@ -46,8 +46,8 @@ html {
   background-color: $ign-primary;
   img {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: inherit;
+    height: inherit;
   }
 
 }

@@ -3,17 +3,26 @@
     <div
       class="ign-avatar">
       <v-icon>mdi-account-multiple</v-icon>
-      <img class="small-avatar"
-           src="../../assets/images/avatar-4.jpg">
+      <div class="small-avatar">
+        <user-avatar :userId="conversation.lastConversationMessageSenderUserId" />
+      </div>
     </div>
 
   </div>
 </template>
 
 <script>
+import UserAvatar from '@/components/user/UserAvatar.vue';
+
 export default {
   name: 'ConversationAvatar',
+
   props: ['conversation'],
+
+  components: {
+    'user-avatar': UserAvatar,
+  },
+
 };
 </script>
 
@@ -33,5 +42,9 @@ export default {
     transform: translate(50%, 50%);
     border-radius: 50%;
     cursor: pointer;
+    .ign-avatar {
+      height: 24px !important;
+      width: 24px !important;
+    }
   }
 </style>

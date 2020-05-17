@@ -5,7 +5,14 @@
     v-scroll:#scroll-on-people="onScroll"
     class="selector-list-section pr-3">
 
-    List of people
+    <v-subheader>Active People</v-subheader>
+
+    <template v-for="(participant) of availableParticipants">
+
+       <user-list-item :key="participant.userId" :user="participant" />
+
+    </template>
+
 
   </perfect-scrollbar>
 
@@ -13,15 +20,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import UserListItem from '@/components/user/UserListItem.vue';
 
 export default {
   name: 'SelectorPeople',
 
   components: {
+    'user-list-item': UserListItem,
   },
 
   computed: {
     ...mapGetters({
+      availableParticipants: 'getConversationAvailableParticipants',
     }),
   },
 
