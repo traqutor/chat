@@ -46,7 +46,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
           const blob = new Blob([response.data]);
           const avatarUrl = window.URL.createObjectURL(blob);
           commit('setAvailableParticipantAvatar', {
-            index,
+            userId: participant.userId,
             avatarUrl,
           });
         });

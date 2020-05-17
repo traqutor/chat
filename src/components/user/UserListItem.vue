@@ -1,9 +1,7 @@
 <template>
   <div v-if="user.userId !== ''" class="user-simple-item">
 
-    <div class="ign-avatar" >
-      <img :src="getUserAvatarUrlById(user.userId)">
-    </div>
+    <user-avatar :userId="user.userId" />
 
     <div class="user-info">
       <p v-if="user" class="name">
@@ -19,19 +17,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import UserAvatar from '@/components/user/UserAvatar.vue';
 
 export default {
   name: 'UserListItem',
 
   props: ['user'],
 
-  computed: {
-    ...mapGetters({
-      getUserAvatarUrlById: 'getUserAvatarUrlById',
-    }),
+  components: {
+    'user-avatar': UserAvatar,
   },
-
 
 };
 </script>

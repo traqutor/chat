@@ -14,9 +14,9 @@ const getters: GetterTree<ConversationsState, RootState> = {
   getConversationSelectedParticipants: (state) => state.selectedParticipants,
   getUserAvatarUrlById: (state) => (userId: string) => {
     let url = '';
-    state.availableParticipants.forEach((participant) => {
-      if (participant.userId === userId) {
-        url = participant.avatarUrl;
+    state.availableAvatars.forEach((avatar) => {
+      if (avatar.userId === userId) {
+        url = avatar.avatarUrl;
       }
     });
     return url;

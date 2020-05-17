@@ -6,6 +6,10 @@ export interface Participant {
   userId: string;
   roleId: string;
   userName: string;
+}
+
+export interface ParticipantAvatar {
+  userId: string;
   avatarUrl: string;
 }
 
@@ -67,6 +71,7 @@ export interface ConversationsState {
   };
   selectedConversation: Conversation;
   availableParticipants: Participant[];
+  availableAvatars: ParticipantAvatar[];
   selectedParticipants: Participant[];
   newConversation: NewConversation;
   errors: [string];
@@ -113,6 +118,7 @@ export const convInitial: ConversationsState = {
     clientMessageId: 0,
   },
   availableParticipants: [],
+  availableAvatars: [],
   selectedParticipants: [],
   hasErrors: false,
   errors: [''],

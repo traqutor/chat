@@ -4,6 +4,7 @@ import {
   ConversationsState,
   Conversation,
   Participant,
+  ParticipantAvatar,
 } from '@/store/conv/types';
 import JwtHelper from '@/helpers/JwtHelper';
 
@@ -29,10 +30,9 @@ const mutations: MutationTree<ConversationsState> = {
     const participants: Participant[] = [...state.availableParticipants];
     payload.value.pagedResults.forEach((conversation) => {
       conversation.conversationParticipantDtos.forEach((user) => {
-        const tmp: Participant = { ...user, avatarUrl: '' };
-        if (participants.find((part) => part.userId === user.userId)) {
-          // do nothing
-        } else {
+        const tmp: Participant = { ...user };
+        const idx = participants.findIndex((part) => part.userId === user.userId);
+        if (idx === -1) {
           participants.push(tmp);
         }
       });
@@ -41,9 +41,14 @@ const mutations: MutationTree<ConversationsState> = {
   },
 
   setAvailableParticipantAvatar(state, payload) {
-    const participant = { ...state.availableParticipants[payload.index] };
-    participant.avatarUrl = payload.avatarUrl;
-    state.availableParticipants[payload.index] = participant;
+    const participantsAvatars: ParticipantAvatar[] = [...state.availableAvatars];
+    const idx = participantsAvatars
+      .findIndex((user) => user.userId === payload.userId);
+    console.log(idx, payload);
+    if (idx === -1) {
+      participantsAvatars.push(payload);
+    }
+    state.availableAvatars = [...participantsAvatars];
   },
 
   toggleParticipantSelection(state, payload: Participant) {
