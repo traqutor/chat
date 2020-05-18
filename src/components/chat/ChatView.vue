@@ -49,9 +49,10 @@
 
           <div
             v-if="idx > 0 && post.authorParticipantId !== messages[idx - 1].authorParticipantId"
-            class="ma-3">
-            {{ getParticipant(post.authorParticipantId) &&
-            getParticipant(post.authorParticipantId).userName }}
+          >
+
+            <user-list-item :user="getUserById(post.authorParticipantId)" />
+
           </div>
 
           <div class="ign-post-left-item">
@@ -102,6 +103,7 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import ChatFooter from '@/components/chat/ChatFooter.vue';
 import { CHAT_VIEW_MODE } from '@/store/chat/types';
+import UserListItem from '@/components/user/UserListItem.vue';
 
 export default {
   name: 'ChatView',
@@ -117,6 +119,7 @@ export default {
   },
 
   components: {
+    'user-list-item': UserListItem,
     'chat-footer': ChatFooter,
   },
 
@@ -128,6 +131,7 @@ export default {
       isLoading: 'getMessagesIsLoading',
       currentPage: 'getMessagesCurrentPage',
       pageCount: 'getMessagesPageCount',
+      getUserById: 'getUserById',
     }),
 
     changeConversation() {
@@ -171,10 +175,6 @@ export default {
     getIfNextPeriodToDisplay(createdTimeOffset, nextCreatedTimeOffset) {
       return this.$options.filters.timeDividerFilter(createdTimeOffset)
           !== this.$options.filters.timeDividerFilter(nextCreatedTimeOffset);
-    },
-
-    getParticipant(userId) {
-      return this.conversation.conversationParticipantDtos.find((usr) => usr.id === userId);
     },
 
     onScroll(e) {

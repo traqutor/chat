@@ -7,10 +7,14 @@
 
       <selector-header :menu-items="menuItems" @set-active="setActive" />
 
-      <selector-tabs :menu-items="menuItems" v-show="viewMode === VIEW_MODE.CHAT">
+      <selector-tabs
+        :menu-items="menuItems"
+        v-show="viewMode === VIEW_MODE.CHAT
+        && chatViewMode !== CHAT_VIEW_MODE.ADD_PEOPLE">
       </selector-tabs>
 
-      <selector-participants v-show="viewMode === VIEW_MODE.NEW">
+      <selector-participants v-show="viewMode === VIEW_MODE.NEW ||
+      chatViewMode === CHAT_VIEW_MODE.ADD_PEOPLE">
       </selector-participants>
 
     </div>
@@ -43,6 +47,7 @@ import SelectorTabs from '@/components/selector/SelectorTabs.vue';
 import SelectorParticipants from '@/components/selector/SelectorParticipants.vue';
 import Hello from '@/components/Hello.vue';
 import { VIEW_MODE } from '@/store/conv/types';
+import { CHAT_VIEW_MODE } from '@/store/chat/types';
 
 export default {
   name: 'Conversations',
@@ -50,6 +55,7 @@ export default {
   data() {
     return {
       VIEW_MODE,
+      CHAT_VIEW_MODE,
       menuItems: [
         { name: 'Conversations', isActive: true },
         { name: 'People', isActive: false },
@@ -70,6 +76,7 @@ export default {
   computed: {
     ...mapGetters({
       viewMode: 'getConversationViewMode',
+      chatViewMode: 'getMessagesChatViewMode',
       selectedConversation: 'getSelectedConversation',
     }),
   },

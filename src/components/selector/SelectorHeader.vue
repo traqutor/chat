@@ -13,12 +13,16 @@
       ></v-text-field>
 
       <v-btn @click="toggleConversationMode" small color="blue" class="ml-3" fab>
-        <v-icon v-if="viewMode === VIEW_MODE.CHAT">mdi-plus</v-icon>
+        <v-icon
+          v-if="viewMode === VIEW_MODE.CHAT
+          && chatViewMode !== CHAT_VIEW_MODE.ADD_PEOPLE">mdi-plus</v-icon>
         <v-icon v-else>mdi-account-multiple-check-outline</v-icon>
       </v-btn>
     </hgroup>
 
-    <hgroup v-if="viewMode=== VIEW_MODE.CHAT" class="buttons-wrapper">
+    <hgroup v-if="viewMode=== VIEW_MODE.CHAT
+          && chatViewMode !== CHAT_VIEW_MODE.ADD_PEOPLE"
+            class="buttons-wrapper">
       <div
         v-for="(item, idx) of menuItems"
         @click="setActive(idx)"
@@ -47,6 +51,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { VIEW_MODE } from '@/store/conv/types';
+import { CHAT_VIEW_MODE } from '@/store/chat/types';
 
 export default {
   name: 'SelectorHeader',
@@ -57,12 +62,14 @@ export default {
     return {
       searchText: '',
       VIEW_MODE,
+      CHAT_VIEW_MODE,
     };
   },
 
   computed: {
     ...mapGetters({
       viewMode: 'getConversationViewMode',
+      chatViewMode: 'getMessagesChatViewMode',
       unreadCount: 'getUnreadCount',
     }),
   },

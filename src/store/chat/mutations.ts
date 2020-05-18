@@ -4,7 +4,6 @@ import { ChatState, Message } from '@/store/chat/types';
 const mutations: MutationTree<ChatState> = {
 
   storeMessages: (state, payload) => {
-    console.log('payload', payload);
     if (payload.hasErrors) {
       state.hasErrors = payload.hasErrors;
       state.errors = payload.errors;

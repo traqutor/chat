@@ -1,63 +1,62 @@
 <template>
-  <div>
+  <div class="chat-sub-header-section">
 
-    <perfect-scrollbar
-      id="chat-add-people"
-      v-scroll:#chat-add-people="onScroll"
-      ref="chatAddPeople"
-      class="chat-wrapper"
-      >
+  <perfect-scrollbar class="chat-perfect-scrollbar">
 
-      <div class="pb-3 chat-readable-space">
+    <v-subheader>Add Participants</v-subheader>
 
-        Chat Add People
+    <template v-for="(participant) of selectedParticipants">
+
+      <div
+        @click="toggleParticipantSelection(participant)"
+        class="row mr-6 pl-2 participant-list-item"
+        :key="participant.id">
+
+        <v-icon color="red" class="ma-3">
+          mdi-minus-circle-outline
+        </v-icon>
+
+        <user-list-item :user="participant" />
 
       </div>
 
+    </template>
 
-    </perfect-scrollbar>
+
+  </perfect-scrollbar>
+
+    <footer class="footer-wrapper">
+      <v-btn color="blue">
+        Add to Conversation
+      </v-btn>
+    </footer>
 
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import UserListItem from '@/components/user/UserListItem.vue';
 
 export default {
   name: 'ChatAddPeople',
 
   props: ['conversation'],
 
-  data() {
-    return {
-      isScrollUp: false,
-      tmpScrollTop: 0,
-    };
+  components: {
+    'user-list-item': UserListItem,
   },
 
-
   computed: {
-
     ...mapGetters({
-
+      selectedParticipants: 'getConversationSelectedParticipants',
     }),
-
   },
 
   methods: {
-
-    ...mapActions({
-
+    ...mapMutations({
+      toggleParticipantSelection: 'toggleParticipantSelection',
     }),
-
-
-    getParticipant(userId) {
-      return this.conversation.conversationParticipantDtos.find((usr) => usr.id === userId);
-    },
-
-    onScroll() {
-      const container = this.$refs.chatAddPeople.$el;
-    },
 
   },
 };
@@ -66,16 +65,27 @@ export default {
 <style scoped lang="scss">
   @import "../../assets/styles/variables";
 
-  .chat-wrapper {
-    position: relative;
-    padding: $ign-padding-normal;
-    height: calc(100vh - #{$ign-header-height} - 94px);
+  .chat-sub-header-section {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 170px);
+    max-height: calc(100vh - 170px);
   }
 
-  .chat-readable-space {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: $ign-readable-width;
+  .chat-perfect-scrollbar {
+    flex: auto;
+    position: relative;
+    padding: $ign-padding-normal;
   }
+
+  .footer-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+
 
 </style>
