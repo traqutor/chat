@@ -1,5 +1,8 @@
 import moment from 'moment';
 
+export const messageDetailTimeOffsetFilter = (value: string) => moment(value)
+  .format('h:mm a [ • ] DD/MM/YYYY');
+
 export const timeOffsetFilter = (value: string) => moment(value).fromNow();
 
 export const timeDividerFilter = (value: string) => {

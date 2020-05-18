@@ -33,7 +33,7 @@
             <template v-for="participant of conversation.conversationParticipantDtos">
 
                 <userListItem
-                  :user="participant"
+                  :user-id="participant.userId"
                   :key="participant.id" ></userListItem>
 
             </template>

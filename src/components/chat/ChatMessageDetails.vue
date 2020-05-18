@@ -9,29 +9,46 @@
 
           <v-col cols="6">
 
-        <v-subheader>Message</v-subheader>
+            <v-subheader>Message</v-subheader>
 
-            <div class="dialog-group-message">
-              {{ message.text }}
-            </div>
+            <div class="pl-3">
 
-            <div class="d-flex mt-3">
-              Send <span class="ml-auto">{{ message.createdTimeOffset }}</span>
-            </div>
+              <div class="dialog-group-message">
+                {{ message.text }}
+              </div>
 
-            <div class="d-flex mt-3">
-              Acknowledgement requested?
-              <span class="ml-auto">{{ message.messageAcknowledgeDtos }}</span>
+              <div class="d-flex mt-3">
+                Send
+                <span class="ml-auto">
+                  {{ message.createdTimeOffset | messageDetailTimeOffsetFilter }}
+                </span>
+              </div>
+
+              <div class="d-flex mt-3">
+                Acknowledgement requested?
+                <span class="ml-auto">{{ message.messageAcknowledgeDtos }}</span>
+              </div>
+
             </div>
 
           </v-col>
 
           <v-col cols="6">
 
-            <v-subheader>Message</v-subheader>
+            <v-subheader>Sender</v-subheader>
+              <div class="pl-4">
+                <user-list-item :user="getUserById(message.authorParticipantId)"/>
+              </div>
 
-            <v-subheader>Recipients</v-subheader>
+            <v-subheader>
+              Recipients ({{message.recipientIdListWhoReadMessage.length}})
+            </v-subheader>
 
+            <div class="pl-4">
+              <template v-for="(recipient) of message.recipientIdListWhoReadMessage">
+                <user-list-item :key="recipient.id" :user="getUserById(recipient)" />
+              </template>
+            </div>
 
           </v-col>
 
@@ -44,13 +61,20 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import UserListItem from '@/components/user/UserListItem.vue';
+
 
 export default {
   name: 'ChatMessageDetails',
 
+  components: {
+    'user-list-item': UserListItem,
+  },
+
   computed: {
     ...mapGetters({
       message: 'getSelectedMessage',
+      getUserById: 'getUserById',
     }),
   },
 

@@ -1,6 +1,8 @@
 <template>
 
-  <user-item v-if="loggedUser.userId !== ''" :user="loggedUser">
+  <user-item
+    v-if="loggedUser.userId !== ''"
+    :user="loggedUser">
 
     <v-menu bottom left>
 

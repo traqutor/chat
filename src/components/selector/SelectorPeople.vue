@@ -9,7 +9,9 @@
 
     <template v-for="(participant) of availableParticipants">
 
-       <user-list-item :key="participant.userId" :user="participant" />
+       <user-list-item
+         :key="participant.userId"
+         :user="participant" />
 
     </template>
 

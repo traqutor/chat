@@ -1,5 +1,5 @@
 import { GetterTree } from 'vuex';
-import { ConversationsState } from '@/store/conv/types';
+import { ConversationsState, Participant } from '@/store/conv/types';
 import { RootState } from '@/store/types';
 
 const getters: GetterTree<ConversationsState, RootState> = {
@@ -12,6 +12,15 @@ const getters: GetterTree<ConversationsState, RootState> = {
   getConversationViewMode: (state) => state.viewMode,
   getConversationAvailableParticipants: (state) => state.availableParticipants,
   getConversationSelectedParticipants: (state) => state.selectedParticipants,
+  getUserById: (state) => (userId: string) => {
+    let user = {};
+    state.availableParticipants.forEach((participant) => {
+      if (participant.id === userId) {
+        user = participant;
+      }
+    });
+    return user;
+  },
   getUserAvatarUrlById: (state) => (userId: string) => {
     let url = '';
     state.availableAvatars.forEach((avatar) => {

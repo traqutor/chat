@@ -23,10 +23,7 @@
           mdi-checkbox-blank-circle-outline
         </v-icon>
 
-
-        <userListItem
-          :user="participant"
-        ></userListItem>
+        <userListItem :user="participant" />
 
       </div>
 

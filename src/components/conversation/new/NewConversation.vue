@@ -17,9 +17,7 @@
             mdi-minus-circle-outline
           </v-icon>
 
-          <user-list-item
-            :user="participant"
-          ></user-list-item>
+          <user-list-item :user="participant" />
 
         </div>
 
