@@ -23,6 +23,7 @@ export const CHAT_VIEW_MODE = {
   INFO: 1,
   WHISPER: 2,
   ADD_PEOPLE: 3,
+  MESSAGE_DETAILS: 4,
 };
 
 export interface ChatState {

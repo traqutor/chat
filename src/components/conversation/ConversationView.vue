@@ -1,25 +1,28 @@
 <template>
   <section class="flex-fill chat-section-content">
 
-      <conversation-header
-        :chatViewMode="chatViewMode"
-        :conversation="conversation"/>
+    <conversation-header
+      :chatViewMode="chatViewMode"
+      :conversation="conversation"/>
 
-      <chat-view
-        :conversation="conversation"
-        v-if="chatViewMode === CHAT_VIEW_MODE.CHAT"/>
+    <chat-view
+      :conversation="conversation"
+      v-if="chatViewMode === CHAT_VIEW_MODE.CHAT"/>
 
-      <chat-info
-        :conversation="conversation"
-        v-if="chatViewMode === CHAT_VIEW_MODE.INFO"/>
+    <chat-message-details :conversation="conversation"
+      v-if="chatViewMode === CHAT_VIEW_MODE.MESSAGE_DETAILS"/>
 
-      <chat-whisper
-        :conversation="conversation"
-        v-if="chatViewMode === CHAT_VIEW_MODE.WHISPER"/>
+    <chat-info
+      :conversation="conversation"
+      v-if="chatViewMode === CHAT_VIEW_MODE.INFO"/>
 
-      <chat-add-people
-        :conversation="conversation"
-        v-if="chatViewMode === CHAT_VIEW_MODE.ADD_PEOPLE"/>
+    <chat-whisper
+      :conversation="conversation"
+      v-if="chatViewMode === CHAT_VIEW_MODE.WHISPER"/>
+
+    <chat-add-people
+      :conversation="conversation"
+      v-if="chatViewMode === CHAT_VIEW_MODE.ADD_PEOPLE"/>
 
   </section>
 </template>
@@ -32,6 +35,7 @@ import ChatView from '@/components/chat/ChatView.vue';
 import ChatInfo from '@/components/chat/ChatInfo.vue';
 import ChatWhisper from '@/components/chat/ChatWhisper.vue';
 import ChatAddPeople from '@/components/chat/ChatAddPeople.vue';
+import ChatMessageDetails from '@/components/chat/ChatMessageDetails.vue';
 
 export default {
   name: 'ConversationView',
@@ -53,6 +57,7 @@ export default {
     'conversation-header': ConversationHeader,
     'chat-view': ChatView,
     'chat-info': ChatInfo,
+    'chat-message-details': ChatMessageDetails,
     'chat-whisper': ChatWhisper,
     'chat-add-people': ChatAddPeople,
   },

@@ -31,8 +31,15 @@
           <div class="ign-post-right-item">
             <span>{{ post.text }}</span>
             <span class="ign-post-status icon-mark">
-                <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
+
+              <v-icon class="ml-2" small>mdi-check-all</v-icon>
+
+              <span class="read-mark"> 4/12 </span>
+
+              <span @click="onMessageDetails(post)">
                 {{ post.createdTimeOffset | timeOffsetFilter }}
+              </span>
+
               </span>
           </div>
 
@@ -53,8 +60,14 @@
 
             <span class="ign-post-status icon-mark-active">
 
-              <v-icon>mdi-done-all</v-icon> <span class="read-mark"> 4/12 </span>
-              {{ post.createdTimeOffset | timeOffsetFilter }}
+              <v-icon class="ml-2" small>mdi-check-all</v-icon>
+
+              <span class="read-mark"> 4/12 </span>
+
+              <span class="v-list-item--link" @click="onMessageDetails(post)">
+                {{ post.createdTimeOffset | timeOffsetFilter }}
+              </span>
+
             </span>
 
           </div>
@@ -86,8 +99,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import ChatFooter from '@/components/chat/ChatFooter.vue';
+import { CHAT_VIEW_MODE } from '@/store/chat/types';
 
 export default {
   name: 'ChatView',
@@ -98,6 +112,7 @@ export default {
     return {
       isScrollUp: false,
       tmpScrollTop: 0,
+      CHAT_VIEW_MODE,
     };
   },
 
@@ -139,9 +154,19 @@ export default {
 
   methods: {
 
+    ...mapMutations({
+      setSelectedMessage: 'setSelectedMessage',
+    }),
+
     ...mapActions({
       loadMoreMessages: 'fetchMessages',
+      setChatViewMode: 'setMessagesChatViewMode',
     }),
+
+    onMessageDetails(post) {
+      this.setSelectedMessage(post);
+      this.setChatViewMode(this.CHAT_VIEW_MODE.MESSAGE_DETAILS);
+    },
 
     getIfNextPeriodToDisplay(createdTimeOffset, nextCreatedTimeOffset) {
       return this.$options.filters.timeDividerFilter(createdTimeOffset)

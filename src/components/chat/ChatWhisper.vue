@@ -126,7 +126,7 @@ export default {
     max-height: calc(100vh - 170px);
   }
 
-  .chat-chat-perfect-scrollbar {
+  .chat-perfect-scrollbar {
     flex: auto;
     position: relative;
     padding: $ign-padding-normal;
