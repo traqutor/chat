@@ -1,21 +1,38 @@
 <template>
-  <div class="ign-item">
+  <div class="ign-item d-flex">
 
     <conversation-avatar :conversation="conversation" />
 
-    <div class="ign-item-info-wrap">
+    <div class="pl-5 width-100">
 
-      <div class="ign-item-info-row">
-        <div class="ign-title">{{conversation.topic}}</div>
-        <slot name="ign-status"/>
+      <div class="d-flex">
+        <div class="d-flex body-1 font-weight-regular">{{conversation.topic}}</div>
+        <div
+          v-if="showDetails"
+          class="text--disabled caption ml-auto"
+        >
+          {{ conversation.lastActivityTimeOffset | timeOffsetFilter }}
+        </div>
       </div>
 
-      <div class="ign-item-info-row">
-        <span class="second-line">{{conversation.lastConversationMessageSenderUserName}}</span>
+      <div class="d-flex align-content-start flex-wrap">
+        <span class="body-2 text--secondary">
+          {{conversation.lastConversationMessageSenderUserName}}
+        </span>
         <role-badge :data="conversation.lastConversationMessageSenderRoleName"/>
       </div>
 
-      <slot name="details"/>
+      <div v-if="showDetails" class="d-flex mt-2">
+        <div class="d-flex caption text--secondary">
+          {{conversation.lastConversationMessageText}}
+        </div>
+        <div class="d-flex ml-auto pa-1">
+          <v-badge
+            :value="conversation.unreadConversationMessagesCount"
+            color="blue"
+            :content="conversation.unreadConversationMessagesCount"></v-badge>
+        </div>
+      </div>
 
     </div>
 
@@ -34,12 +51,15 @@ export default {
     'conversation-avatar': ConversationAvatar,
     'role-badge': RoleBadge,
   },
-  props: ['conversation'],
+  props: ['conversation', 'showDetails'],
 };
 </script>
 
 <style scoped lang="scss">
   @import '../../assets/styles/variables';
 
+  .width-100 {
+    width: 100%;
+  }
 
 </style>

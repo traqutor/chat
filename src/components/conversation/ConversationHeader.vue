@@ -1,14 +1,35 @@
 <template>
   <div class="ign-header-wrapper">
     <conversation-list-item
-      :conversation="conversation" />
+      :conversation="conversation" :show-details="false" />
 
     <div class="ign-secondary-wrapper" v-if="chatViewMode === CHAT_VIEW_MODE.CHAT">
+
+      <div
+        v-for="part of conversation.conversationParticipantDtos.slice(0, 4)"
+        :key="part.userId"
+      >
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <div class="small-avatar" v-on="on">
+              <user-avatar :user-id="part.userId" />
+            </div>
+          </template>
+          <span>{{ part.userName }}</span>
+        </v-tooltip>
+      </div>
+
+      <div v-if="conversation.conversationParticipantDtos.length > 4"
+           @click="setChatViewMode(CHAT_VIEW_MODE.INFO)"
+           class="participant-badge">
+        +{{conversation.conversationParticipantDtos.length - 4}}
+      </div>
+
 
       <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.ADD_PEOPLE)" icon v-on="on">
-            <v-icon>mdi-account-plus-outline</v-icon>
+            <v-icon small>mdi-account-plus-outline</v-icon>
           </v-btn>
         </template>
         <span>Add people</span>
@@ -17,7 +38,7 @@
       <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.WHISPER)" icon v-on="on">
-            <v-icon>mdi-access-point</v-icon>
+            <v-icon small>mdi-access-point</v-icon>
           </v-btn>
         </template>
         <span>Whisper to someone</span>
@@ -26,7 +47,7 @@
       <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.INFO)" icon v-on="on">
-            <v-icon>mdi-alert-circle-outline</v-icon>
+            <v-icon small>mdi-alert-circle-outline</v-icon>
           </v-btn>
         </template>
         <span>Conversation info</span>
@@ -47,6 +68,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { CHAT_VIEW_MODE } from '@/store/chat/types';
+import UserAvatar from '@/components/user/UserAvatar.vue';
 import ConversationListItem from './ConversationListItem.vue';
 
 export default {
@@ -62,6 +84,7 @@ export default {
 
   components: {
     'conversation-list-item': ConversationListItem,
+    'user-avatar': UserAvatar,
   },
 
   methods: {
@@ -91,6 +114,39 @@ export default {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+  }
+
+  .small-avatar {
+    height: 24px;
+    width: 24px;
+    background: #5699cd;
+    color: #fff;
+    box-shadow: rgb(24, 34, 45) 0 0 0 2.88px;
+    z-index: 2;
+    transition: all .3s ease;
+    border-radius: 50%;
+    cursor: pointer;
+    .ign-avatar {
+      height: 24px !important;
+      width: 24px !important;
+    }
+  }
+
+  .participant-badge {
+    text-align:center;
+    line-height:28px;
+    width:28px;
+    height:28px;
+    font-size: 12px;
+    background-color: $ign-primary;
+    border-radius: 50%;
+    color: $ign-white;
+    box-shadow: rgb(24, 34, 45) 0 0 0 2.88px;
+    align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    z-index: 2;
+    cursor: pointer;
   }
 
 </style>

@@ -10,16 +10,13 @@
       <conversation-list-item
         :key="conversation.id"
         :conversation="conversation"
+        :show-details="true"
         :class="(selectedConversation
             && conversation.conversationId === selectedConversation.conversationId)
             ? 'ign-active'
             : ''"
         @click.native="setActiveConversation(conversation)"
       >
-
-        <conversation-item-status slot="status" :conversation="conversation"/>
-
-        <conversation-item-details slot="details" :conversation="conversation"/>
 
       </conversation-list-item>
     </template>
@@ -31,8 +28,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import ConversationListItem from '../conversation/ConversationListItem.vue';
-import ConversationItemStatus from '../conversation/ConversationItemStatus.vue';
-import ConversationItemDetails from '../conversation/ConversationItemDetails.vue';
 
 export default {
   name: 'SelectorConversations',
@@ -45,8 +40,6 @@ export default {
 
   components: {
     'conversation-list-item': ConversationListItem,
-    'conversation-item-status': ConversationItemStatus,
-    'conversation-item-details': ConversationItemDetails,
   },
 
   computed: {

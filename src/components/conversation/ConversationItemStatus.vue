@@ -1,5 +1,6 @@
 <template>
   <div class="cli-status">
+
     <v-icon>mdi-check</v-icon>
 
     {{ conversation.lastActivityTimeOffset | timeOffsetFilter }}

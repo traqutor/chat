@@ -1,8 +1,9 @@
 import { ActionTree } from 'vuex';
 import { instance } from '@/axios';
 import { RootState } from '@/store/types';
-import { ConversationsState, Conversation, Participant } from '@/store/conv/types';
+import { ConversationsState, Conversation } from '@/store/conv/types';
 import UserHelper from '@/helpers/UserHelper';
+import { CHAT_VIEW_MODE } from '@/store/chat/types';
 
 
 const actions: ActionTree<ConversationsState, RootState> = {
@@ -35,7 +36,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
       });
   },
 
-  getUsersAvatars: ({ commit, dispatch, rootState }) => {
+  getUsersAvatars: ({ commit, rootState }) => {
     rootState.conv.availableParticipants.forEach((participant) => {
       instance.get(`/Users/GetAvatar?UserId=${participant.userId}`,
         {
@@ -78,6 +79,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
 
 
   setSelectedConversationAction: ({ commit, dispatch }, payload) => {
+    commit('setMessagesChatViewMode', CHAT_VIEW_MODE.CHAT);
     commit('emptyMessages');
     commit('setSelectedConversation', payload);
     dispatch('fetchMessages', { conversationId: payload.conversationId });

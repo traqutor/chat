@@ -29,18 +29,25 @@
           ></div>
 
           <div class="ign-post-right-item">
+
             <span>{{ post.text }}</span>
-            <span class="ign-post-status icon-mark">
 
-              <v-icon class="ml-2" small>mdi-check-all</v-icon>
+            <span class="caption text--disabled">
 
-              <span class="read-mark"> 4/12 </span>
+              <v-icon class="ml-2" color="green" small>mdi-check-all</v-icon>
 
-              <span @click="onMessageDetails(post)">
+              <span class="read-mark">
+                {{post.recipientIdListWhoReadMessage.length}}
+              </span>
+
+              <span
+                class="v-list-item--link "
+                @click="onMessageDetails(post)">
                 {{ post.createdTimeOffset | timeOffsetFilter }}
               </span>
 
-              </span>
+            </span>
+
           </div>
 
         </div>
@@ -59,13 +66,17 @@
 
             <span>{{ post.text }}</span>
 
-            <span class="ign-post-status icon-mark-active">
+            <span class="caption text--disabled">
 
-              <v-icon class="ml-2" small>mdi-check-all</v-icon>
+              <v-icon color="blue" class="ml-2" small>mdi-check-all</v-icon>
 
-              <span class="read-mark"> 4/12 </span>
+              <span class="read-mark">
+                {{post.recipientIdListWhoReadMessage.length}}
+              </span>
 
-              <span class="v-list-item--link" @click="onMessageDetails(post)">
+              <span
+                class="v-list-item--link "
+                @click="onMessageDetails(post)">
                 {{ post.createdTimeOffset | timeOffsetFilter }}
               </span>
 

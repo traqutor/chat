@@ -27,7 +27,7 @@
         v-for="(item, idx) of menuItems"
         @click="setActive(idx)"
         :key="idx"
-        class="button-underline" :class="item.isActive ? 'active-button' : ''">
+        class="button-underline caption" :class="item.isActive ? 'active-button' : ''">
         {{item.name}}
         <span v-if="idx===0 && unreadCount > 0" class="ml-1 mr-5">
           <v-badge

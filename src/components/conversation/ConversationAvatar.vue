@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div
-      class="ign-avatar">
+  <div class="ign-conversation-avatar">
+
       <v-icon>mdi-account-multiple</v-icon>
       <div class="small-avatar">
         <user-avatar :userId="conversation.lastConversationMessageSenderUserId" />
       </div>
-    </div>
 
   </div>
 </template>
@@ -36,7 +34,7 @@ export default {
     display: block;
     background: #5699cd;
     color: #fff;
-    box-shadow: rgb(24, 34, 45) 0px 0px 0px 2.88px;
+    box-shadow: rgb(24, 34, 45) 0 0 0 2.88px;
     z-index: 2;
     transition: all .3s ease;
     transform: translate(50%, 50%);

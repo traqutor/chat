@@ -7,14 +7,15 @@
 
     <v-subheader>Active People</v-subheader>
 
-    <template v-for="(participant) of availableParticipants">
+    <div class="pl-4">
+      <template v-for="(participant) of availableParticipants">
 
-       <user-list-item
-         :key="participant.userId"
-         :user="participant" />
+         <user-list-item
+           :key="participant.userId"
+           :user="participant" />
 
-    </template>
-
+      </template>
+    </div>
 
   </perfect-scrollbar>
 

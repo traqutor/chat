@@ -1,5 +1,5 @@
 <template>
-  <span class="ign-role-badge">
+  <span class="ign-role-badge ml-2 text--disabled body-2 ">
     {{data}}
   </span>
 </template>
@@ -16,16 +16,9 @@ export default {
   @import "src/assets/styles/variables";
 
   .ign-role-badge {
-    height: 20px;
-    font-size: 13px;
-    font-weight: 400;
     background-color: $ign-secondary-dark;
     border-radius: 4px;
-    color: $ign-color-opacity-middle;
-    cursor: pointer;
-    padding: 0 8px;
-    margin: 0 0 4px 8px;
-    text-align: center;
-    white-space: nowrap;
+    padding: 1px 4px;
   }
+
 </style>
