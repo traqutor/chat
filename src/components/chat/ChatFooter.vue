@@ -1,40 +1,90 @@
 <template>
 
-  <div class="chat-text-area-wrapper mt-2">
+  <div>
 
-    <v-textarea
-      v-model="text"
-      solo
-      background-color="#3d464f"
-      rows="1"
-      name="text"
-      label="Type a message..."
-      @keydown.enter.prevent="onNewPost"
-      apend-inner-icon="mdi-send"
-      prepend-inner-icon="mdi-dots-vertical"
-      @click:apend-inner="onNewPost"
-      @click:prepend-inner="onPrependMenuOpen"
-      height="56px"
-    ></v-textarea>
+    <div class="flex-wrap">
+      <input
+        class="ign-file-input"
+        type="file"
+        ref="file"
+        @change="selectFile"
+        multiple
+      />
 
-    <v-btn
-      :disabled="!text"
-      @click="onNewPost"
-      class="ma-2"
-      fab
-      small
-      color="blue">
-      <v-icon dark>mdi-send</v-icon>
-    </v-btn>
+      <template v-for="(item, index) of selectedFiles">
+        <v-chip
+          :key="index"
+          class="ma-2"
+          close
+          color="teal"
+          text-color="white"
+          @click:close="removeFile(index)"
+        >
+          <v-avatar left>
+            <v-icon>mdi-attachment</v-icon>
+          </v-avatar>
+          {{item.name}}
+        </v-chip>
+      </template>
 
+    </div>
+
+    <div class="chat-text-area-wrapper mt-2">
+
+      <v-menu>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            class="ma-2"
+            color="secondary"
+            v-on="on"
+            small
+            fab
+          >
+            <v-icon >mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item @click="onAddFileClick">
+            <v-list-item-title>Add file</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>Request Acknowledgement</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <v-textarea
+        v-model="text"
+        solo
+        background-color="secondary"
+        rows="1"
+        name="text"
+        label="Type a message..."
+        @keydown.enter.prevent="onNewPost"
+        height="56px"
+      ></v-textarea>
+
+      <v-btn
+        :disabled="!text"
+        @click="onNewPost"
+        class="ma-2"
+        fab
+        small
+        color="blue">
+        <v-icon dark>mdi-send</v-icon>
+      </v-btn>
+
+
+    </div>
 
   </div>
-
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { emptyMessage } from '@/store/chat/types';
+import UploadFilesService from '@/services/UploadFilesService';
 
 export default {
   name: 'ChatFooter',
@@ -47,6 +97,10 @@ export default {
   data() {
     return {
       text: '',
+      selectedFiles: [],
+      progress: 0,
+      messageText: '',
+      fileInfos: [],
     };
   },
 
@@ -56,19 +110,58 @@ export default {
     }),
 
     onNewPost() {
-      const newMessage = {
-        ...emptyMessage,
-        text: this.text,
-        conversationId: this.conversation.conversationId,
-        authorParticipantId: this.loggedUser.id,
-      };
-      this.$chatHub.sendMessage(newMessage);
+      if (this.selectedFiles.length > 0) {
+        this.upload();
+      } else {
+        const newMessage = {
+          ...emptyMessage,
+          text: this.text,
+          conversationId: this.conversation.conversationId,
+          authorParticipantId: this.loggedUser.id,
+        };
+        this.$chatHub.sendMessage(newMessage);
+      }
+
       this.text = null;
     },
 
-    onPrependMenuOpen() {
-      console.log('open menu ');
+    onAddFileClick() {
+      this.$refs.file.click();
     },
+
+    selectFile() {
+      this.selectedFiles = this.selectedFiles.concat([...this.$refs.file.files]);
+      console.log(this.selectedFiles[0]);
+    },
+
+    removeFile(index) {
+      console.log(this.selectedFiles, index);
+      this.selectedFiles.splice(index, 1);
+    },
+
+    upload() {
+      this.progress = 0;
+      const currentFile = this.selectedFiles[0];
+      UploadFilesService
+        .sendAttachmentMessage(currentFile,
+          this.conversation.conversationId,
+          this.selectedFiles.length,
+          null,
+          this.text,
+          0,
+          null,
+          (event) => {
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          })
+        .then((response) => {
+          console.log('responseData', response);
+        })
+        .catch(() => {
+          this.progress = 0;
+          this.message = 'Could not upload the file!';
+        });
+    },
+
   },
 };
 </script>
@@ -84,4 +177,11 @@ export default {
     max-width: $ign-readable-width;
   }
 
+  .ign-file-input {
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    max-width: 0;
+    width: 0;
+  }
 </style>

@@ -2,7 +2,6 @@ import { ActionTree } from 'vuex';
 import { instance } from '@/axios';
 import { ChatState } from '@/store/chat/types';
 import { RootState } from '@/store/types';
-import UserHelper from '@/helpers/UserHelper';
 
 const actions: ActionTree<ChatState, RootState> = {
 
@@ -10,10 +9,6 @@ const actions: ActionTree<ChatState, RootState> = {
     { commit, rootState },
     { conversationId, page = 0, len = 20 },
   ) => {
-    if (!rootState.auth.authData?.accessToken || !conversationId) {
-      return;
-    }
-
     commit('setMessagesLoading', true);
     instance.get(`/Messages?ConversationId=${conversationId}&Page=${page}&ItemsPerPage=${len}`)
       .then((resData) => {
@@ -26,9 +21,12 @@ const actions: ActionTree<ChatState, RootState> = {
       });
   },
 
-  postNewMessageAction: ({ commit, rootState }, payload) => {
-    if (rootState.conv.selectedConversation.conversationId === JSON.parse(payload).conversationId) {
+  postNewMessageAction: ({ commit, dispatch, rootState }, payload) => {
+    const { conversationId } = JSON.parse(payload);
+    if (rootState.conv.selectedConversation.conversationId === conversationId) {
       commit('postNewMessage', payload);
+    } else {
+      dispatch('fetchConversationById', conversationId);
     }
   },
 

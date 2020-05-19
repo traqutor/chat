@@ -72,6 +72,14 @@ const mutations: MutationTree<ConversationsState> = {
     state.selectedConversation = payload;
   },
 
+  updateConversation: (state, payload: Conversation) => {
+    const idx = state.conversations.pagedResults
+      .findIndex((con) => con.conversationId === payload.conversationId);
+    if (idx !== -1) {
+      state.conversations.pagedResults.splice(idx, 1, payload);
+    }
+  },
+
   setConversationsLoading: (state, payload: boolean) => {
     state.isLoading = payload;
   },

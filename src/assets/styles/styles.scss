@@ -4,6 +4,10 @@ html {
   overflow: hidden!important;
 }
 
+body {
+  font-family: $ign-font-family-sans-serif;
+}
+
 .ign-drawer-background-dark {
   background-color: $ign-dark!important;
 }

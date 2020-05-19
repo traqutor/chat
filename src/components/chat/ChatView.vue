@@ -36,8 +36,8 @@
 
               <v-icon class="ml-2" color="green" small>mdi-check-all</v-icon>
 
-              <span class="read-mark">
-                {{post.recipientIdListWhoReadMessage.length}}
+              <span v-if="post.recipientIdListWhoReadMessage" class="read-mark">
+                {{ post.recipientIdListWhoReadMessage.length }}
               </span>
 
               <span
@@ -70,7 +70,7 @@
 
               <v-icon color="blue" class="ml-2" small>mdi-check-all</v-icon>
 
-              <span class="read-mark">
+              <span v-if="post.recipientIdListWhoReadMessage" class="read-mark">
                 {{post.recipientIdListWhoReadMessage.length}}
               </span>
 

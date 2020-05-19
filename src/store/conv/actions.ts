@@ -36,6 +36,14 @@ const actions: ActionTree<ConversationsState, RootState> = {
       });
   },
 
+  fetchConversationById: ({ commit }, payload) => {
+    instance.get(`/ConversationById?ConversationId=${payload}`)
+      .then((dataResponse) => {
+        commit('updateConversation', dataResponse.data.value);
+      })
+      .catch((error) => console.error(error));
+  },
+
   getUsersAvatars: ({ commit, rootState }) => {
     rootState.conv.availableParticipants.forEach((participant) => {
       instance.get(`/Users/GetAvatar?UserId=${participant.userId}`,
