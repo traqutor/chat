@@ -3,25 +3,19 @@ import { instance } from '@/axios';
 // eslint class-methods-use-this: "disabled"
 class UploadFilesService {
   sendAttachmentMessage(
-    file: any,
-    conversationId: string,
-    expectedAttachmentsCount: number,
-    whisperRolesIds: string[],
-    text: string,
-    clientMessageId: number,
-    requestAcknowledgeParticipantsRolesIds: string[],
+    form: any,
     onUploadProgress: any,
   ) {
     const formData = new FormData();
 
-    formData.append('File', file);
-    formData.append('ConversationId', conversationId);
-    formData.append('ExpectedAttachmentsCount', JSON.stringify(expectedAttachmentsCount));
-    formData.append('WhisperRolesIds', JSON.stringify(whisperRolesIds));
-    formData.append('Text', text);
-    formData.append('ClientMessageId', JSON.stringify(clientMessageId));
+    formData.append('File', form.file);
+    formData.append('ConversationId', form.conversationId);
+    formData.append('ExpectedAttachmentsCount', JSON.stringify(form.expectedAttachmentsCount));
+    formData.append('WhisperRolesIds', form.whisperRolesIds);
+    formData.append('Text', form.text);
+    formData.append('ClientMessageId', JSON.stringify(form.clientMessageId));
     formData.append('RequestAcknowledgeParticipantsRolesIds',
-      JSON.stringify(requestAcknowledgeParticipantsRolesIds));
+      form.requestAcknowledgeParticipantsRolesIds);
 
     return instance.post('/Messages/SendAttachmentMessage', formData, {
       headers: {
@@ -39,6 +33,22 @@ class UploadFilesService {
       formData,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
+        onUploadProgress,
+      });
+  }
+
+  getMessageAttachment(attachmentId: string, onUploadProgress: any) {
+    return instance.get(`/Messages/GetMessageAttachment?AttachmentId=${attachmentId}`,
+      {
+        onUploadProgress,
+      });
+  }
+
+  getMessageThumbnailAttachment(attachmentId: string, onUploadProgress: any) {
+    return instance.get(`/Messages/GetMessageThumbnailImage?AttachmentId=${attachmentId}`,
+      {
+        responseType: 'blob',
+        headers: { accept: 'application/octet-stream' },
         onUploadProgress,
       });
   }

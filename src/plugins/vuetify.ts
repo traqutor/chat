@@ -18,7 +18,7 @@ export default new Vuetify({
         background: '#fff',
       },
       dark: {
-        primary: '#1976D2',
+        primary: '#3d6a97',
         secondary: '#3b4758',
         accent: '#82B1FF',
         error: '#FF5252',

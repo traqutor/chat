@@ -111,7 +111,7 @@ export default {
 
     onNewPost() {
       if (this.selectedFiles.length > 0) {
-        this.upload();
+        this.postAttachmentMessage();
       } else {
         const newMessage = {
           ...emptyMessage,
@@ -139,22 +139,26 @@ export default {
       this.selectedFiles.splice(index, 1);
     },
 
-    upload() {
+    postAttachmentMessage() {
       this.progress = 0;
-      const currentFile = this.selectedFiles[0];
+      const currentFile = {
+        file: this.selectedFiles[0],
+        conversationId: this.conversation.conversationId,
+        expectedAttachmentsCount: this.selectedFiles.length,
+        whisperRolesIds: [],
+        text: this.text,
+        clientMessageId: 0,
+        requestAcknowledgeParticipantsRolesIds: [],
+      };
+
       UploadFilesService
-        .sendAttachmentMessage(currentFile,
-          this.conversation.conversationId,
-          this.selectedFiles.length,
-          null,
-          this.text,
-          0,
-          null,
-          (event) => {
-            this.progress = Math.round((100 * event.loaded) / event.total);
-          })
+        .sendAttachmentMessage(currentFile, (event) => {
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        })
         .then((response) => {
           console.log('responseData', response);
+          this.text = '';
+          this.selectedFiles = [];
         })
         .catch(() => {
           this.progress = 0;

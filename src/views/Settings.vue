@@ -1,17 +1,17 @@
 <template>
   <div class="about">
-    <hello-world></hello-world>
+    <SettingsSelector />
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue';
+import SettingsSelector from '@/components/SettingsSelector.vue';
 
 export default {
   name: 'Settings',
 
   components: {
-    'hello-world': HelloWorld,
+    SettingsSelector,
   },
 };
 </script>

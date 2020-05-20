@@ -1,7 +1,7 @@
 <template>
   <div v-if="userId !== ''" class="ign-avatar" >
     <img v-if="!getUserAvatarUrlById(userId)" src="../../assets/images/avatar-3.jpg">
-    <img v-else :src="getUserAvatarUrlById(userId) || '../../assets/images/avatar-3.jpg'">
+    <img v-else :src="getUserAvatarUrlById(userId)">
   </div>
 </template>
 

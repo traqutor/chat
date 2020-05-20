@@ -28,7 +28,17 @@
             class="ma-3"
           ></div>
 
-          <div class="ign-post-right-item">
+          <v-card
+            class="ml-auto"
+            color="primary"
+            :max-width="post.attachmentIds && post.attachmentIds.length > 0 ? '400' : null">
+
+            <chat-attachment-thumbnail
+              v-if="post.attachmentIds && post.attachmentIds.length > 0"
+              :attachment-id="post.attachmentIds[0]"
+            />
+
+            <v-card-text class="text--primary">
 
             <span>{{ post.text }}</span>
 
@@ -48,7 +58,8 @@
 
             </span>
 
-          </div>
+            </v-card-text>
+          </v-card>
 
         </div>
 
@@ -62,9 +73,19 @@
 
           </div>
 
-          <div class="ign-post-left-item">
+          <v-card
+            class=""
+            color="secondary"
+            :max-width="post.attachmentIds && post.attachmentIds.length > 0 ? '400' : null">
 
-            <span>{{ post.text }}</span>
+            <chat-attachment-thumbnail
+              v-if="post.attachmentIds && post.attachmentIds.length > 0"
+              :attachment-id="post.attachmentIds[0]"
+            />
+
+            <v-card-text class="text--primary">
+
+              <span>{{ post.text }}</span>
 
             <span class="caption text--disabled">
 
@@ -82,7 +103,9 @@
 
             </span>
 
-          </div>
+            </v-card-text>
+
+          </v-card>
 
         </div>
 
@@ -113,8 +136,9 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import ChatFooter from '@/components/chat/ChatFooter.vue';
-import { CHAT_VIEW_MODE } from '@/store/chat/types';
+import ChatAttachmentThumbnail from '@/components/chat/ChatAttachmentThumbnail.vue';
 import UserListItem from '@/components/user/UserListItem.vue';
+import { CHAT_VIEW_MODE } from '@/store/chat/types';
 
 export default {
   name: 'ChatView',
@@ -132,6 +156,7 @@ export default {
   components: {
     'user-list-item': UserListItem,
     'chat-footer': ChatFooter,
+    'chat-attachment-thumbnail': ChatAttachmentThumbnail,
   },
 
   computed: {
