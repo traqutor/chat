@@ -5,10 +5,10 @@
 
     <div class="pa-3 flex-column">
       <div v-if="user" class="font-weight-regular">
-        {{ user.userName }}
+        {{ user.userName || 'User name' }}
       </div>
-      <div v-if="user.role" class="body-2 text--disabled">{{user.role[0]}}</div>
-      <div v-else class="body-2 text--disabled">{{user.roleName}}</div>
+      <div v-if="user.role" class="body-2 text--disabled">{{ user.role[0] || 'Role' }}</div>
+      <div v-else class="body-2 text--disabled">{{ user.roleName  || 'Role'}}</div>
     </div>
 
     <slot></slot>

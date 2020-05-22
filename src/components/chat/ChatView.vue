@@ -2,8 +2,7 @@
   <div class="chat-sub-header-section">
 
     <perfect-scrollbar
-      id="chat-container"
-      v-scroll:#chat-container="onScroll"
+      @ps-scroll-y="onScroll"
       ref="chatContainer"
       class="chat-chat-perfect-scrollbar"
     >
@@ -215,6 +214,13 @@ export default {
 
     onScroll(e) {
       const container = this.$refs.chatContainer.$el;
+
+      console.log('===========');
+      console.log('this.tmpScrollTop', this.tmpScrollTop);
+      console.log('e.target.scrollTop', e.target.scrollTop);
+      console.log('container.clientHeight', container.clientHeight);
+      console.log('===========');
+
 
       if (e.target.scrollTop !== 0) {
         if (this.tmpScrollTop > e.target.scrollTop) {

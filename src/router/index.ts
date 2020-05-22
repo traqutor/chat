@@ -39,6 +39,30 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
+    path: '/tasks',
+    name: 'Tasks',
+    component: Tasks,
+    beforeEnter(from, to, next) {
+      if (store.state.auth.authData?.accessToken) {
+        next();
+      } else {
+        next('/login');
+      }
+    },
+  },
+  {
+    path: '/gallery',
+    name: 'Gallery',
+    component: Gallery,
+    beforeEnter(from, to, next) {
+      if (store.state.auth.authData?.accessToken) {
+        next();
+      } else {
+        next('/login');
+      }
+    },
+  },
+  {
     path: '/conversations',
     name: 'Conversations',
     component: Conversations,

@@ -45,7 +45,6 @@ export default {
         }).then((response) => {
           this.blob = new Blob([response.data]);
           this.srcUrl = window.URL.createObjectURL(this.blob);
-          console.log('srcUrl', this.srcUrl);
         });
     },
   },

@@ -1,8 +1,7 @@
 <template>
 
   <perfect-scrollbar
-    id="scroll-on-conversations"
-    v-scroll:#scroll-on-conversations="onScroll"
+    @ps-scroll-y="onScroll"
     class="selector-list-section pr-3">
 
     <template v-for="conversation of conversations.pagedResults">
@@ -62,6 +61,7 @@ export default {
         this.tmpScrollTop = e.target.scrollTop;
         if (!this.isLoading
           && this.conversations.pageCount > this.conversations.currentPage) {
+          console.log('loadMoreConversations');
           const page = this.conversations.currentPage + 1;
           this.loadMoreConversations(page);
         }
