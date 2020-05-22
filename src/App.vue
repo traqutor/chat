@@ -3,26 +3,55 @@
 
     <v-navigation-drawer
       v-model="drawer"
-      expand-on-hover
+      :expand-on-hover="true"
+      permanent
       app
-      clipped
       :class="`ign-drawer-background-${theme}`"
     >
-      <v-list dense>
+
+      <v-list-item class="px-2">
+        <v-list-item-avatar>
+          <v-img src="./assets/images/burn.svg"></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-title class="title">IGNITE</v-list-item-title>
+
+        <v-btn
+          icon
+          @click.stop="mini = !mini"
+        >
+          <v-icon>mdi-page-layout-sidebar-left</v-icon>
+        </v-btn>
+      </v-list-item>
+
+      <v-list dense class="mt-2">
+
         <v-list-item link to="/conversations">
-          <v-list-item-action>
+          <v-list-item-action class="d-flex flex-row align-center">
             <v-badge
               :value="unreadCount"
               color="red"
-              :content="unreadCount"
+              overlap
+              left
+              :content="unreadCount > 99 ? '+99' : unreadCount "
             >
             <v-icon>mdi-message-text-outline</v-icon>
             </v-badge>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Conversations</v-list-item-title>
+              <v-list-item-title>Conversations</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item link to="/tasks">
+          <v-list-item-action>
+            <v-icon>mdi-calendar-check-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Tasks</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item link to="/settings">
           <v-list-item-action>
             <v-icon>mdi-cog-outline</v-icon>
@@ -31,6 +60,8 @@
             <v-list-item-title>Settings</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+
       </v-list>
     </v-navigation-drawer>
 

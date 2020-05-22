@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Conversations from '../views/Conversations.vue';
-import Home from '../views/Home.vue';
-import Settings from '../views/Settings.vue';
-import Login from '../views/Login.vue';
-import store from '../store';
+import Tasks from '@/views/Tasks.vue';
+import Gallery from '@/views/Gallery.vue';
+import Conversations from '@/views/Conversations.vue';
+import Home from '@/views/Home.vue';
+import Settings from '@/views/Settings.vue';
+import Login from '@/views/Login.vue';
+import store from '@/store';
 
 Vue.use(VueRouter);
 
