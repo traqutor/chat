@@ -30,6 +30,7 @@ export interface TaskStateColumn {
 
 export interface TaskState {
   data: {
+    tasks: Task[];
     columns: TaskStateColumn[];
   };
 }
@@ -63,5 +64,6 @@ export const taskInitialState: TaskState = {
         tasks: [],
       },
     ],
+    tasks: [],
   },
 };

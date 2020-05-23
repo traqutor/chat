@@ -5,40 +5,42 @@
       class="tasks-perfect-scrollbar"
     >
 
-    <v-col
-      v-for="(column, index) in columns.columns"
-      :key="column.id">
+      <v-col
+        v-for="(column, index) in columns.columns"
+        :key="column.id">
 
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>{{ column.name }}</v-list-item-title>
-        </v-list-item-content>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>{{ column.name }}</v-list-item-title>
+          </v-list-item-content>
 
-        <TaskViewDialog v-if="index === 0" />
+          <TaskViewDialog
+            @taskData="onGetTaskData"
+            v-if="index === 0"
+          />
 
-      </v-list-item>
+        </v-list-item>
 
-      <Container
-        group-name="col"
-        @drop="(e) => onCardDrop(column.id, e)"
-        @drag-start="(e) => log('drag start', e)"
-        @drag-end="(e) => log('drag end', e)"
-        :get-child-payload="getCardPayload(column.id)"
-        drag-class="card-ghost"
-        drop-class="card-ghost-drop"
-      >
-        <div class="column-border">
+        <Container
+          group-name="col"
+          @drop="(e) => onCardDrop(index, column.id, e)"
+          :get-child-payload="getCardPayload(column.id)"
+          drag-class="card-ghost"
+          drop-class="card-ghost-drop"
+          class="column-border pa-3"
+        >
 
-          <Draggable v-for="card in column.children" :key="card.id">
+          <Draggable
+            v-for="task in column.tasks"
+            :key="task.id">
             <task-item
-              :data="card.data"
+              :data="task"
               color="primary">
             </task-item>
           </Draggable>
 
-        </div>
-      </Container>
-    </v-col>
+        </Container>
+      </v-col>
 
     </perfect-scrollbar>
 
@@ -53,12 +55,6 @@ import TaskItem from './TaskItem.vue';
 
 export default {
   name: 'TasksKanbanBoard',
-
-  data() {
-    return {
-      dialog: false,
-    };
-  },
 
   computed: {
     ...mapGetters({
@@ -77,14 +73,35 @@ export default {
 
     ...mapMutations({
       addTask: 'addTask',
+      removeTask: 'removeTask',
+      updateTask: 'updateTask',
     }),
 
-    onCardDrop(columnId, event) {
-      console.log('onCardDrop', columnId, event);
+    onGetTaskData(task) {
+      this.addTask(task);
+    },
+
+    onCardDrop(columnIndex, columnId, dropResult) {
+      if (dropResult.removedIndex !== null && dropResult.addedIndex !== null) {
+        console.log('onCardDrop', columnIndex, dropResult);
+      } else if (dropResult.removedIndex !== null && dropResult.addedIndex === null) {
+        this.removeTask({
+          columnIndex,
+          taskIndex: dropResult.removedIndex,
+        });
+      } else if (dropResult.addedIndex !== null && dropResult.removedIndex === null) {
+        const task = { ...dropResult.payload, status: columnId };
+        this.updateTask({
+          columnIndex,
+          taskIndex: dropResult.removedIndex,
+          task,
+        });
+      }
     },
 
     getCardPayload(columnId) {
-      console.log('getCardPayload', columnId);
+      return (index) => this.columns.columns
+        .filter((column) => column.id === columnId)[0].tasks[index];
     },
 
   },
@@ -92,50 +109,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
+  @import '../../assets/styles/variables';
 
-.tasks-sub-toolbar-section {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 94px);
-  max-height: calc(100vh - 94px);
-}
+  .tasks-sub-toolbar-section {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 94px);
+    max-height: calc(100vh - 94px);
+  }
 
-.tasks-perfect-scrollbar {
-  flex: auto;
-  display: flex;
-  position: relative;
-  flex-direction: row;
-  padding: $ign-padding-normal;
-}
+  .tasks-perfect-scrollbar {
+    flex: auto;
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    padding: $ign-padding-normal;
+  }
 
-.column-border{
-  border: 1px solid $ign-secondary;
-}
+  .column-border {
+    border: 1px solid $ign-secondary;
+    min-height: 64px;
+  }
 
-.card-ghost {
-  transition: transform 0.18s ease;
-  transform: rotateZ(5deg)
-}
+  .card-ghost {
+    transition: transform 0.18s ease;
+    transform: rotateZ(5deg)
+  }
 
-.card-ghost-drop {
-  transition: transform 0.18s ease-in-out;
-  transform: rotateZ(0deg)
-}
+  .card-ghost-drop {
+    transition: transform 0.18s ease-in-out;
+    transform: rotateZ(0deg)
+  }
 
-.opacity-ghost {
-  transition: all .18s ease;
-  opacity: 0.8;
-  /* transform: rotateZ(5deg); */
-  background-color: cornflowerblue;
-  box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.3);
-}
+  .opacity-ghost {
+    transition: all .18s ease;
+    opacity: 0.8;
+    /* transform: rotateZ(5deg); */
+    background-color: cornflowerblue;
+    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.3);
+  }
 
-.opacity-ghost-drop {
-  opacity: 1;
-  /* transform: rotateZ(0deg); */
-  background-color: white;
-  box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.0);
-}
+  .opacity-ghost-drop {
+    opacity: 1;
+    /* transform: rotateZ(0deg); */
+    background-color: white;
+    box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.0);
+  }
 
 </style>

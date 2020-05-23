@@ -10,33 +10,25 @@ const mutations: MutationTree<TaskState> = {
   },
 
   addTask: (state, task: Task) => {
+    const tsk = { ...task };
+    tsk.status = 0;
+    tsk.order = 0;
+    tsk.referenceNumber = 1;
     const { data } = { ...state };
     const idx = data.columns
-      .findIndex((column) => column.id === task.status);
-    if (idx) {
-      data.columns[idx].tasks.splice(0, 0, task);
+      .findIndex((column) => column.id === tsk.status);
+    if (idx !== -1) {
+      state.data.columns[idx].tasks.splice(0, 0, tsk);
     }
-    state.data = data;
   },
 
-  updateTask: (state, task: Task) => {
-    const { data } = { ...state };
+  removeTask: (state, payload) => {
+    state.data.columns[payload.columnIndex].tasks.splice(payload.taskIndex, 1);
+  },
 
-    data.columns.map((column) => {
-      const i = column.tasks.findIndex((item) => item.id === task.id);
-      if (i !== -1) {
-        column.tasks.splice(i, 1);
-      }
-      return column;
-    });
 
-    const idx = data.columns
-      .findIndex((column) => column.id === task.status);
-    if (idx) {
-      data.columns[idx].tasks.splice(task.order, 0, task);
-    }
-
-    state.data = data;
+  updateTask: (state, payload) => {
+    state.data.columns[payload.columnIndex].tasks.splice(payload.taskIndex, 0, payload.task);
   },
 
 };

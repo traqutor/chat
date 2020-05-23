@@ -7,11 +7,7 @@
     <v-menu bottom left>
 
       <template v-slot:activator="{ on }">
-        <v-btn
-          dark
-          icon
-          v-on="on"
-        >
+        <v-btn icon v-on="on">
           <v-icon>mdi-chevron-down</v-icon>
         </v-btn>
       </template>

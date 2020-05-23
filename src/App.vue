@@ -69,7 +69,7 @@
       app
       clipped-left
       elevation="0"
-      :class="`ign-toolbar-background-${theme}`"
+      color="secondary"
     >
       <v-app-bar-nav-icon @click="toggleDrawer" >
         <img
