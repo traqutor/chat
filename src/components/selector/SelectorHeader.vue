@@ -5,6 +5,7 @@
         solo
         dense
         label="Search"
+        background-color="secondary"
         append-icon="mdi-magnify"
         v-model="searchText"
         @click:append="search"
@@ -125,7 +126,6 @@ export default {
   .button-underline {
     cursor: pointer;
     padding: 4px 16px;
-    color: $ign-color-opacity-middle;
   }
 
   .button-underline:hover {
@@ -133,7 +133,6 @@ export default {
   }
 
   .active-button {
-    color: white;
     border-bottom: 3px solid $ign-primary;
   }
 

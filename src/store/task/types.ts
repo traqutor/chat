@@ -2,10 +2,10 @@ import { Participant } from '@/store/conv/types';
 
 export const TASK_STATUS = {
   New: 0,
-  Acknowledged: 1,
-  Resolved: 2,
-  Cancelled: 3,
-  Terminated: 4,
+  Queued: 1,
+  Started: 2,
+  Overdue: 3,
+  Completed: 4,
 };
 
 export interface Task {
@@ -46,28 +46,28 @@ export const taskInitialState: TaskState = {
   data: {
     columns: [
       {
-        id: 0,
+        id: TASK_STATUS.New,
         name: 'New',
         tasks: [],
       },
       {
-        id: TASK_STATUS.Acknowledged,
-        name: 'Acknowledged',
+        id: TASK_STATUS.Queued,
+        name: 'Queued',
         tasks: [],
       },
       {
-        id: TASK_STATUS.Resolved,
-        name: 'Resolved',
+        id: TASK_STATUS.Started,
+        name: 'Started',
         tasks: [],
       },
       {
-        id: TASK_STATUS.Cancelled,
-        name: 'Cancelled',
+        id: TASK_STATUS.Overdue,
+        name: 'Overdue',
         tasks: [],
       },
       {
-        id: TASK_STATUS.Terminated,
-        name: 'Terminated',
+        id: TASK_STATUS.Completed,
+        name: 'Completed',
         tasks: [],
       },
     ],

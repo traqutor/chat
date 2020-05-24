@@ -79,10 +79,10 @@ export default {
     getCardColor(type) {
       switch (type) {
         case TASK_STATUS.New: return '#0F5CB0';
-        case TASK_STATUS.Acknowledged: return '#39af4d';
-        case TASK_STATUS.Resolved: return '#9B9B9B';
-        case TASK_STATUS.Cancelled: return '#F5A625';
-        case TASK_STATUS.Terminated: return '#CF021A';
+        case TASK_STATUS.Queued: return '#4BA4EC';
+        case TASK_STATUS.Started: return '#39af4d';
+        case TASK_STATUS.Overdue: return '#CF021A';
+        case TASK_STATUS.Completed: return '#9B9B9B';
         default: return 'primary';
       }
     },
