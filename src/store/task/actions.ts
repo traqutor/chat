@@ -1,6 +1,6 @@
 import { ActionTree } from 'vuex';
 import { instance } from '@/axios';
-import { TaskState } from '@/store/task/types';
+import { TaskCreate, TaskState } from '@/store/task/types';
 import { RootState } from '@/store/types';
 
 const actions: ActionTree<TaskState, RootState> = {
@@ -9,9 +9,19 @@ const actions: ActionTree<TaskState, RootState> = {
     if (!rootState.auth.authData?.accessToken) {
       return;
     }
-    instance.get('/Tasks')
+    instance.get('/Tasks/GetAllTasks?Amount=100')
       .then((resData) => {
+        console.log('fetch tasks resData', resData.data);
         commit('storeTasks', resData.data);
+      })
+      .catch((error) => console.log(error));
+  },
+
+  createNewTask({ commit }, task: TaskCreate) {
+    instance.post('/Tasks/CreateTask', task)
+      .then((resData) => {
+        console.log('add task res data', resData.data.value);
+        commit('addTask', resData.data.value);
       })
       .catch((error) => console.log(error));
   },

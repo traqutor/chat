@@ -25,6 +25,7 @@ const actions: ActionTree<AuthState, RootState> = {
         commit('setUser', payload.accessToken);
         setJWT(payload.accessToken);
         dispatch('fetchConversations');
+        dispatch('fetchTasks');
         Vue.prototype.startSignalR(payload.accessToken);
       });
   },

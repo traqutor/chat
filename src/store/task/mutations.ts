@@ -1,12 +1,19 @@
 import { MutationTree } from 'vuex';
-import { TaskState, Task } from '@/store/task/types';
+import { TaskState, Task, TaskStateColumn } from '@/store/task/types';
 
 const mutations: MutationTree<TaskState> = {
 
-  storeTasks: (state, payload: TaskState) => {
-    if (payload) {
-      const columns = [...state.data.columns.map((column) => column)];
-      state.data.columns = [...columns];
+  storeTasks: (state, payload) => {
+    console.log('storeTasks payload', payload);
+    if (payload && !payload.hasErrors) {
+      state.data.columns = state.data.columns.map((column) => {
+        const tasks: Task[] = payload.value.results
+          .filter((task: Task) => task.status === column.id);
+        const col: TaskStateColumn = column;
+        col.tasks = tasks;
+        console.log('cols', col);
+        return col;
+      });
     }
   },
 

@@ -70,9 +70,7 @@ const actions: ActionTree<ConversationsState, RootState> = {
     const { newConversation } = rootState.conv;
     instance.post('/Conversations',
       { ...newConversation })
-      .then((resData) => {
-        console.log('Response new conversation:', resData);
-      })
+      .then((resData) => resData)
       .catch((error) => console.error(error));
   },
 

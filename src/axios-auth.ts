@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://dev-auth0.azurewebsites.net',
+  baseURL: process.env.VUE_APP_AUTH_URL,
   headers: { Authorization: 'Basic cm8uY2xpZW50OnNlY3JldA==' },
 });
 

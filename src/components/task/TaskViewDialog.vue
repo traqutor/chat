@@ -25,7 +25,7 @@
 
             <v-textarea
               label="Note"
-              v-model="task.note"
+              v-model="task.notes"
             ></v-textarea>
 
             <v-select
@@ -38,11 +38,10 @@
             <v-autocomplete
               :items="getAllParticipants"
               label="Participants"
-              v-model="task.participants"
+              v-model="task.participantsIds"
               item-text="userName"
-              item-value="userId"
+              item-value="roleId"
               multiple
-              return-object
             ></v-autocomplete>
 
           </v-container>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://dev-1.azurewebsites.net',
+  baseURL: process.env.VUE_APP_HUB,
 });
 
 export default instance;

@@ -6,7 +6,7 @@
     >
 
       <v-col
-        v-for="(column, index) in columns.columns"
+        v-for="(column, index) in columns"
         :key="column.id">
 
         <v-list-item>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { Container, Draggable } from 'vue-smooth-dnd';
 import TaskViewDialog from '@/components/task/TaskViewDialog.vue';
 import TaskItem from './TaskItem.vue';
@@ -70,15 +70,17 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      createNewTask: 'createNewTask',
+    }),
 
     ...mapMutations({
-      addTask: 'addTask',
       removeTask: 'removeTask',
       updateTask: 'updateTask',
     }),
 
     onGetTaskData(task) {
-      this.addTask(task);
+      this.createNewTask(task);
     },
 
     onCardDrop(columnIndex, columnId, dropResult) {
@@ -100,7 +102,7 @@ export default {
     },
 
     getCardPayload(columnId) {
-      return (index) => this.columns.columns
+      return (index) => this.columns
         .filter((column) => column.id === columnId)[0].tasks[index];
     },
 

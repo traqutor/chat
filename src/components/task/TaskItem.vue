@@ -4,27 +4,27 @@
     class="mb-1 pa-3">
     <h3>{{ data.title }}</h3>
     <p>
-      {{ data.note }}
+      {{ data.notes }}
     </p>
     <v-card-subtitle class="pb-3">Priority: {{ data.priority }}</v-card-subtitle>
     <v-card-actions>
       <div
-        v-for="part of data.participants.slice(0, 4)"
-        :key="part.userId"
+        v-for="user of data.participantsIds.slice(0, 4)"
+        :key="user"
       >
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <div class="small-avatar" v-on="on">
-              <user-avatar :user-id="part.userId" />
+              <user-avatar :user-id="user" />
             </div>
           </template>
-          <span>{{ part.userName }}</span>
+          <span>{{ user }}</span>
         </v-tooltip>
       </div>
 
-      <div v-if="data.participants.length > 4"
+      <div v-if="data.participantsIds.length > 4"
            class="participant-badge">
-        +{{data.participants.length - 4}}
+        +{{data.participantsIds.length - 4}}
       </div>
     </v-card-actions>
   </v-card>

@@ -14,12 +14,19 @@ export interface Task {
   title: string;
   priority: number;
   notes: string;
-  raisedBy: Participant;
-  participants: Participant[];
+  requestorSystemRoleId: string;
+  participantsIds: string[];
   status: number;
-  createdDate: string;
-  modifiedDate: string;
+  createdTimeOffset: string;
+  modifiedTimeOffset: string;
   order: number;
+}
+
+export interface TaskCreate {
+  title: string;
+  priority: 0;
+  notes: string;
+  participantsIds: string[];
 }
 
 export interface TaskStateColumn {
