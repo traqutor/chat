@@ -87,14 +87,16 @@ export default {
     onCardDrop(columnIndex, columnId, dropResult) {
       if (dropResult.removedIndex !== null && dropResult.addedIndex !== null) {
         const task = { ...dropResult.payload };
+
+        this.removeTask({
+          columnIndex,
+          taskIndex: dropResult.removedIndex,
+        });
+
         this.updateTask({
           columnIndex,
           taskIndex: dropResult.addedIndex,
           task,
-        });
-        this.removeTask({
-          columnIndex,
-          taskIndex: dropResult.removedIndex,
         });
       } else if (dropResult.removedIndex !== null && dropResult.addedIndex === null) {
         this.removeTask({
