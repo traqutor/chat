@@ -1,9 +1,9 @@
 <template>
   <v-card
-    class="mb-1 pb-3 task-card"
-    :color="getCardColor(item.priority)">
+    class="mb-1 task-card"
+    :color="getCardColor(item.status)">
 
-    <v-list-item>
+    <v-list-item dense>
       <v-list-item-avatar>
         <user-avatar :user-id="getUserByRoleId(item.requestorSystemRoleId).userId" />
       </v-list-item-avatar>
@@ -26,9 +26,7 @@
       </v-list-item-action>
     </v-list-item>
 
-    <v-card-text>
-      <p v-text="item.notes"></p>
-    </v-card-text>
+     <div class="font-weight-light body-2 pl-3 pr-3" v-text="item.notes"></div>
 
     <v-card-actions class="ml-3">
       <div
@@ -55,6 +53,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { TASK_STATUS } from '@/store/task/types';
 import UserAvatar from '@/components/user/UserAvatar.vue';
 
 export default {
@@ -77,13 +76,13 @@ export default {
       this.$emit('done', this.data);
     },
 
-    getCardColor(priority) {
-      switch (priority) {
-        case 0: return 'info';
-        case 1: return 'accent';
-        case 2: return 'warning';
-        case 3: return 'error';
-        case 4: return 'success';
+    getCardColor(type) {
+      switch (type) {
+        case TASK_STATUS.New: return '#0F5CB0';
+        case TASK_STATUS.Acknowledged: return '#39af4d';
+        case TASK_STATUS.Resolved: return '#9B9B9B';
+        case TASK_STATUS.Cancelled: return '#F5A625';
+        case TASK_STATUS.Terminated: return '#CF021A';
         default: return 'primary';
       }
     },
