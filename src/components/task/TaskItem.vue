@@ -1,42 +1,72 @@
 <template>
   <v-card
-    color="secondary"
-    class="mb-1 pa-3">
-    <h3>{{ data.title }}</h3>
-    <p>
-      {{ data.notes }}
-    </p>
-    <v-card-subtitle class="pb-3">Priority: {{ data.priority }}</v-card-subtitle>
-    <v-card-actions>
+    class="mb-1 pb-3 task-card"
+    :color="getCardColor(item.priority)">
+
+    <v-list-item>
+      <v-list-item-avatar>
+        <user-avatar :user-id="getUserByRoleId(item.requestorSystemRoleId).userId" />
+      </v-list-item-avatar>
+
+      <v-list-item-content>
+        <v-list-item-title v-text="item.title"></v-list-item-title>
+        <v-list-item-subtitle class="text--primary">
+          {{getUserByRoleId(item.requestorSystemRoleId).userName}}
+        </v-list-item-subtitle>
+      </v-list-item-content>
+
+      <v-list-item-action>
+        <v-list-item-action-text>
+          {{ item.createdTimeOffset | timeOffsetFilter }}
+        </v-list-item-action-text>
+        <v-list-item-action-text>
+          {{ item.priority }}
+        </v-list-item-action-text>
+
+      </v-list-item-action>
+    </v-list-item>
+
+    <v-card-text>
+      <p v-text="item.notes"></p>
+    </v-card-text>
+
+    <v-card-actions class="ml-3">
       <div
-        v-for="user of data.participantsIds.slice(0, 4)"
-        :key="user"
+        v-for="roleId of item.participantsIds.slice(0, 4)"
+        :key="roleId"
       >
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <div class="small-avatar" v-on="on">
-              <user-avatar :user-id="user" />
+              <user-avatar :user-id="getUserByRoleId(roleId).userId" />
             </div>
           </template>
-          <span>{{ user }}</span>
+          <span>{{ getUserByRoleId(roleId).userName }}</span>
         </v-tooltip>
       </div>
 
-      <div v-if="data.participantsIds.length > 4"
+      <div v-if="item.participantsIds.length > 4"
            class="participant-badge">
-        +{{data.participantsIds.length - 4}}
+        +{{item.participantsIds.length - 4}}
       </div>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import UserAvatar from '@/components/user/UserAvatar.vue';
 
 export default {
   name: 'TaskItem',
 
-  props: ['data'],
+  props: ['item'],
+
+  computed: {
+    ...mapGetters({
+      getUserByRoleId: 'getUserByRoleId',
+    }),
+  },
 
   components: {
     'user-avatar': UserAvatar,
@@ -46,12 +76,26 @@ export default {
     markDone() {
       this.$emit('done', this.data);
     },
+
+    getCardColor(priority) {
+      switch (priority) {
+        case 0: return 'info';
+        case 1: return 'accent';
+        case 2: return 'warning';
+        case 3: return 'error';
+        case 4: return 'success';
+        default: return 'primary';
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../../assets/styles/variables';
+.task-card {
+  max-width: 400px;
+}
 
 .small-avatar {
   height: 24px;

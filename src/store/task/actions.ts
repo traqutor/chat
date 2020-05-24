@@ -1,6 +1,6 @@
 import { ActionTree } from 'vuex';
 import { instance } from '@/axios';
-import { TaskCreate, TaskState } from '@/store/task/types';
+import { Task, TaskCreate, TaskState } from '@/store/task/types';
 import { RootState } from '@/store/types';
 
 const actions: ActionTree<TaskState, RootState> = {
@@ -25,6 +25,13 @@ const actions: ActionTree<TaskState, RootState> = {
       })
       .catch((error) => console.log(error));
   },
+
+  updateTaskStatus({ commit }, task: Task) {
+    instance.patch(`/Tasks/UpdateStatus?Id=${task.id}`, { status: task.status })
+      .then((resData) => resData)
+      .catch((error) => console.log(error));
+  },
+
 
 };
 

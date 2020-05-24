@@ -19,8 +19,6 @@ const mutations: MutationTree<TaskState> = {
 
   addTask: (state, task: Task) => {
     const tsk = { ...task };
-    console.log('robie taks:', tsk);
-
     tsk.status = 0;
     tsk.order = 0;
     tsk.referenceNumber = 1;
@@ -36,8 +34,8 @@ const mutations: MutationTree<TaskState> = {
     state.data.columns[payload.columnIndex].tasks.splice(payload.taskIndex, 1);
   },
 
-
   updateTask: (state, payload) => {
+    console.log('updateTask payload', payload);
     state.data.columns[payload.columnIndex].tasks.splice(payload.taskIndex, 0, payload.task);
   },
 

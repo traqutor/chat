@@ -34,7 +34,7 @@
             v-for="task in column.tasks"
             :key="task.id">
             <task-item
-              :data="task"
+              :item="task"
               color="primary">
             </task-item>
           </Draggable>
@@ -72,6 +72,7 @@ export default {
   methods: {
     ...mapActions({
       createNewTask: 'createNewTask',
+      updateTaskStatus: 'updateTaskStatus',
     }),
 
     ...mapMutations({
@@ -85,7 +86,16 @@ export default {
 
     onCardDrop(columnIndex, columnId, dropResult) {
       if (dropResult.removedIndex !== null && dropResult.addedIndex !== null) {
-        console.log('onCardDrop', columnIndex, dropResult);
+        const task = { ...dropResult.payload };
+        this.updateTask({
+          columnIndex,
+          taskIndex: dropResult.addedIndex,
+          task,
+        });
+        this.removeTask({
+          columnIndex,
+          taskIndex: dropResult.removedIndex,
+        });
       } else if (dropResult.removedIndex !== null && dropResult.addedIndex === null) {
         this.removeTask({
           columnIndex,
@@ -95,9 +105,10 @@ export default {
         const task = { ...dropResult.payload, status: columnId };
         this.updateTask({
           columnIndex,
-          taskIndex: dropResult.removedIndex,
+          taskIndex: dropResult.addedIndex,
           task,
         });
+        this.updateTaskStatus(task);
       }
     },
 
