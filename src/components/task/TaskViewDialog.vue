@@ -23,10 +23,10 @@
               v-model="task.title"
               required></v-text-field>
 
-            <v-text-field
+            <v-textarea
               label="Note"
               v-model="task.note"
-              required></v-text-field>
+            ></v-textarea>
 
             <v-select
               :items="[1, 2, 3, 4, 5]"
@@ -77,6 +77,7 @@ export default {
     submitDialogForm() {
       this.dialog = false;
       this.$emit('taskData', this.task);
+      this.task = {};
     },
   },
 };

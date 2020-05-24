@@ -128,7 +128,7 @@ export default {
 
   .column-border {
     border: 1px solid $ign-secondary;
-    min-height: 64px;
+    min-height: 124px;
   }
 
   .card-ghost {

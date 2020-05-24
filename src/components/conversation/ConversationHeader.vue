@@ -28,7 +28,10 @@
 
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.ADD_PEOPLE)" icon v-on="on">
+          <v-btn @click="setChatViewMode(CHAT_VIEW_MODE.ADD_PEOPLE)"
+                 class="ml-3"
+                 icon
+                 v-on="on">
             <v-icon small>mdi-account-plus-outline</v-icon>
           </v-btn>
         </template>

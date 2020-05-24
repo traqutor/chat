@@ -5,12 +5,15 @@ const mutations: MutationTree<TaskState> = {
 
   storeTasks: (state, payload: TaskState) => {
     if (payload) {
-      state.data.columns = payload.data.columns;
+      const columns = [...state.data.columns.map((column) => column)];
+      state.data.columns = [...columns];
     }
   },
 
   addTask: (state, task: Task) => {
     const tsk = { ...task };
+    console.log('robie taks:', tsk);
+
     tsk.status = 0;
     tsk.order = 0;
     tsk.referenceNumber = 1;

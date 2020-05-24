@@ -3,7 +3,6 @@
     <hgroup class="actions-wrapper">
       <v-text-field
         solo
-        background-color="#3d464f"
         dense
         label="Search"
         append-icon="mdi-magnify"
