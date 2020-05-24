@@ -130,6 +130,10 @@ export default Vue.extend({
       this.isDrawerOpen = !this.isDrawerOpen;
     },
   },
+
+  mounted() {
+    console.log(process.env);
+  },
 });
 </script>
 
