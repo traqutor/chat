@@ -4,7 +4,7 @@ export const instance = axios.create({
   baseURL: 'https://stage-1.azurewebsites.net/api',
 });
 
-export function setJWT(jwt: string) {
+export function setAxiosJWT(jwt: string) {
   instance.defaults.headers.common.Authorization = `Bearer ${jwt}`;
 }
 

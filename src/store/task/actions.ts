@@ -11,7 +11,6 @@ const actions: ActionTree<TaskState, RootState> = {
     }
     instance.get('/Tasks/GetAllTasks?Amount=100')
       .then((resData) => {
-        console.log('fetch tasks resData', resData.data);
         commit('storeTasks', resData.data);
       })
       .catch((error) => console.log(error));
@@ -20,7 +19,6 @@ const actions: ActionTree<TaskState, RootState> = {
   createNewTask({ commit }, task: TaskCreate) {
     instance.post('/Tasks/CreateTask', task)
       .then((resData) => {
-        console.log('add task res data', resData.data.value);
         commit('addTask', resData.data.value);
       })
       .catch((error) => console.log(error));

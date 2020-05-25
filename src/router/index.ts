@@ -16,7 +16,7 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: Home,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData?.accessToken) {
+      if (store.state.auth.authData.accessToken) {
         next();
       } else {
         next('/login');
@@ -24,16 +24,11 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-  },
-  {
     path: '/settings',
     name: 'Settings',
     component: Settings,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData?.accessToken) {
+      if (store.state.auth.authData.accessToken) {
         next();
       } else {
         next('/login');
@@ -45,7 +40,7 @@ const routes: Array<RouteConfig> = [
     name: 'Tasks',
     component: Tasks,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData?.accessToken) {
+      if (store.state.auth.authData.accessToken) {
         next();
       } else {
         next('/login');
@@ -53,11 +48,11 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: '/gallery',
-    name: 'Gallery',
+    path: '/media',
+    name: 'Media Library',
     component: Gallery,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData?.accessToken) {
+      if (store.state.auth.authData.accessToken) {
         next();
       } else {
         next('/login');
@@ -69,12 +64,16 @@ const routes: Array<RouteConfig> = [
     name: 'Conversations',
     component: Conversations,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData?.accessToken) {
-        next();
-      } else {
-        next('/login');
-      }
+      console.log('beforeEnter accessToken', store.state.auth.authData.accessToken);
+      console.log('beforeEnter from', from);
+      console.log('beforeEnter to', to);
+      next();
     },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
 ];
 

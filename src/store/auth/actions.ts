@@ -3,7 +3,8 @@ import { ActionTree } from 'vuex';
 import { AuthState, AuthData, LoginData } from '@/store/auth/types';
 import { RootState } from '@/store/types';
 import axios from '@/axios-auth';
-import { setJWT } from '@/axios';
+import { setAxiosJWT } from '@/axios';
+
 
 const actions: ActionTree<AuthState, RootState> = {
   login({ commit, dispatch }, authData: LoginData): any {
@@ -21,16 +22,31 @@ const actions: ActionTree<AuthState, RootState> = {
           scope: res.data.scope,
           tokenType: res.data.token_type,
         };
+        localStorage.setItem('authData', JSON.stringify(payload));
         commit('authUser', payload);
         commit('setUser', payload.accessToken);
-        setJWT(payload.accessToken);
+        setAxiosJWT(payload.accessToken);
         dispatch('fetchConversations');
         dispatch('fetchTasks');
         Vue.prototype.startSignalR(payload.accessToken);
       });
   },
 
+  onAutoLogin({ commit, dispatch }) {
+    const authData = JSON.parse(localStorage.getItem('authData') || '');
+    if (!authData) return;
+    // todo expiration token check
+
+    commit('authUser', authData);
+    commit('setUser', authData.accessToken);
+    setAxiosJWT(authData.accessToken);
+    dispatch('fetchConversations');
+    dispatch('fetchTasks');
+    Vue.prototype.startSignalR(authData.accessToken);
+  },
+
   logout({ commit }): any {
+    localStorage.removeItem('authData');
     commit('logOut');
   },
 };

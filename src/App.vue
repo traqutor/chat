@@ -11,7 +11,7 @@
 
       <v-list-item class="px-2">
         <v-list-item-avatar>
-          <v-img src="./assets/images/burn.svg"></v-img>
+          <v-img src="./assets/images/Meddy-App-Logo-2.png"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-title class="title">IGNITE</v-list-item-title>
@@ -52,6 +52,16 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item link to="/media">
+          <v-list-item-action>
+            <v-icon>mdi-folder-multiple-image</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Media Library</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+
         <v-list-item link to="/settings">
           <v-list-item-action>
             <v-icon>mdi-cog-outline</v-icon>
@@ -73,7 +83,7 @@
     >
       <v-app-bar-nav-icon @click="toggleDrawer" >
         <img
-          src="./assets/images/burn.svg"
+          src="./assets/images/Meddy-App-Logo-2.png"
           class="ign-toolbar-logo"
           alt="Burn Logo"/>
       </v-app-bar-nav-icon>
@@ -122,7 +132,9 @@ export default Vue.extend({
   }),
 
   created() {
+    console.log('APP created');
     this.$vuetify.theme.dark = true;
+    this.$store.dispatch('onAutoLogin');
   },
 
   methods: {
@@ -132,8 +144,9 @@ export default Vue.extend({
   },
 
   mounted() {
-    // console.log(process.env);
+    console.log(process.env);
   },
+
 });
 </script>
 

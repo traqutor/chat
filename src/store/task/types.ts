@@ -1,4 +1,3 @@
-import { Participant } from '@/store/conv/types';
 
 export const TASK_STATUS = {
   New: 0,
