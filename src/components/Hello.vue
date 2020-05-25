@@ -5,7 +5,7 @@
 
       <v-col cols="12">
         <v-img
-          :src="require('../assets/images/image_logo_name.png')"
+          :src="require('../assets/images/Meddy-Logo_Portrait.png')"
           contain
           height="200"
         />
