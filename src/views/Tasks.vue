@@ -26,7 +26,7 @@
 <script>
 import TasksKanbanBoard from '@/components/task/TasksKanbanBoard.vue';
 import TaskProgressTab from '@/components/task/TaskProgressTab.vue';
-import RaiseTask from '@/components/task/RaiseTask.vue';
+import RaiseTaskTab from '@/components/task/RaiseTaskTab.vue';
 
 export default {
   name: 'Tasks',
@@ -36,7 +36,7 @@ export default {
       items: [
         { tab: 'Task List', content: 'TasksKanbanBoard' },
         { tab: 'Map', content: 'SettingsSelector' },
-        { tab: 'Raise Task', content: 'RaiseTask' },
+        { tab: 'Raise Task', content: 'RaiseTaskTab' },
         { tab: 'Manage', content: 'SettingsSelector' },
         { tab: 'Progress', content: 'TaskProgressTab' },
       ],
@@ -44,7 +44,7 @@ export default {
   },
   components: {
     TasksKanbanBoard,
-    RaiseTask,
+    RaiseTaskTab,
     TaskProgressTab,
   },
 };

@@ -3,7 +3,7 @@
 
     <v-col class="ma-3" cols="4">
 
-      <div>
+      <div class="task-types-list-section">
         <v-text-field
           solo
           dense
@@ -15,7 +15,7 @@
           hide-details
         ></v-text-field>
 
-        <div class="mt-1 space-between">
+        <div class="ma-3 ">
           <v-btn
             v-for="(btn, idx) in taskFilterButtons"
             :key="btn.item"
@@ -27,11 +27,26 @@
           </v-btn>
         </div>
 
-        <div>
-          <template v-for="item of taskTypes">
-            <div :key="item.TaskTypeCode" > {{ item.ShortName }}</div>
-          </template>
-        </div>
+        <perfect-scrollbar class="task-list-wrapper">
+
+          <v-list dense>
+            <v-list-item-group color="primary">
+              <v-list-item
+                v-for="(item) in taskTypes"
+                :key="item.TaskTypeCode"
+              >
+                <v-list-item-icon>
+                  <div class="task-indicator"
+                       :style="{ 'background-color': item.BackgroundColor }"> </div>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.ShortName"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+
+        </perfect-scrollbar>
 
       </div>
 
@@ -46,7 +61,7 @@
 import { constTaskTypes } from '@/consts';
 
 export default {
-  name: 'RaiseTask',
+  name: 'RaiseTaskTab',
 
   data() {
     return {
@@ -80,5 +95,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "../../assets/styles/variables";
+
+  .task-types-list-section {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 170px);
+    max-height: calc(100vh - 170px);
+  }
+
+  .task-list-wrapper {
+    flex: auto;
+    position: relative;
+    padding: $ign-padding-normal;
+  }
+
+  .task-indicator {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+  }
 
 </style>
