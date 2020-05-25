@@ -3,7 +3,9 @@
 
     <v-col class="ma-3" cols="4">
 
-      <div class="task-types-list-section">
+      <div v-if="!isNewTaskAdd"
+           class="task-types-list-section">
+
         <v-text-field
           solo
           dense
@@ -32,6 +34,7 @@
           <v-list dense class="background-styled">
             <v-list-item-group color="primary">
               <v-list-item
+                @click="selectTastType(item)"
                 v-for="(item) in taskTypes"
                 :key="item.TaskTypeCode"
               >
@@ -50,9 +53,33 @@
 
       </div>
 
+      <div v-else class="ma-3">
+        <v-btn small @click="isNewTaskAdd=false">
+          <v-icon>mdi-arrow-back</v-icon>
+          Back
+        </v-btn>
+
+        <v-list class="background-styled">
+            <v-list-item>
+              <v-list-item-icon>
+                <div class="task-indicator"
+                     :style="{ 'background-color': taskTypeSelected.BackgroundColor }"> </div>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="taskTypeSelected.ShortName"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          <v-divider />
+
+        </v-list>
+
+
+        <v-form ></v-form>
+
+      </div>
+
     </v-col>
     <v-col cols="8">
-
 
     </v-col>
   </div>
@@ -73,10 +100,16 @@ export default {
         { item: 'porter', active: false },
       ],
       taskTypes: constTaskTypes,
+      taskTypeSelected: null,
     };
   },
 
   methods: {
+
+    selectTastType(item) {
+      this.isNewTaskAdd = true;
+      this.taskTypeSelected = item;
+    },
 
     search() {
       console.log('search');
