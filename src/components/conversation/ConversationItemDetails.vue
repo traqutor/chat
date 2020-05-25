@@ -21,6 +21,7 @@ export default {
   .cid-text-wrap {
     flex: 1;
     color: $ign-color-opacity-more;
+    background-color: pink;
     margin-top: 4px;
     font-size: 13px;
     font-weight: 400;
