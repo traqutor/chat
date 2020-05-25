@@ -16,9 +16,15 @@
         ></v-text-field>
 
         <div class="mt-1 space-between">
-          <v-btn text small >Clinical</v-btn>
-          <v-btn text small >Maintenance</v-btn>
-          <v-btn text small >Porter</v-btn>
+          <v-btn
+            v-for="(btn, idx) in taskFilterButtons"
+            :key="btn.item"
+            @click="filterItems(idx)"
+            text small
+            :color="btn.active ? 'primary' : ''"
+          >
+            {{btn.item}}
+          </v-btn>
         </div>
 
       </div>
@@ -28,19 +34,38 @@
   </div>
 </template>
 <script>
+import { constTaskTypes } from '@/consts';
+
 export default {
   name: 'RaiseTask',
 
   data() {
     return {
       searchText: '',
+      isNewTaskAdd: false,
+      taskFilterButtons: [
+        { item: 'clinical', active: true },
+        { item: 'maintenance', active: false },
+        { item: 'porter', active: false },
+      ],
+      taskTypes: constTaskTypes,
     };
   },
 
   methods: {
+
     search() {
       console.log('search');
     },
+
+    filterItems(index) {
+      this.taskFilterButtons.forEach((item) => {
+        // eslint-disable-next-line no-param-reassign
+        item.active = false;
+      });
+      this.taskFilterButtons[index].active = true;
+    },
+
   },
 };
 </script>
