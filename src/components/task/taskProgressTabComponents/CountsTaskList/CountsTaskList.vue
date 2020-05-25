@@ -1,5 +1,5 @@
 <template>
-<v-card color="#18222d" elevation="0">
+<v-card elevation="0">
   <v-container>
     <v-row no-gutters>
       <v-col>
@@ -11,14 +11,14 @@
         <v-col>
           <v-card>
             <v-btn
-            style="width: 100%; background-color: #18222d"
+            style="width: 100%"
             depressed>Maint</v-btn>
           </v-card>
         </v-col>
 
         <v-col>
           <v-card>
-            <v-btn style="width: 100%; background-color: #18222d" depressed >Porter</v-btn>
+            <v-btn style="width: 100%" depressed >Porter</v-btn>
           </v-card>
       </v-col>
     </v-row>

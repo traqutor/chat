@@ -1,15 +1,15 @@
 <template>
-<v-card class="mx-auto" color="#18222d">
+<v-card class="mx-auto">
   <v-container>
     <v-row>
               <v-col>
-                    <v-card outlined tile color="#18222d">
+                    <v-card outlined tile >
                       <CountsTaskList />
                     </v-card>
                 </v-col>
 
                 <v-col>
-                    <v-card outlined tile color="#18222d">
+                    <v-card outlined tile >
                       <div>
                         <div
                           style="display: flex;
