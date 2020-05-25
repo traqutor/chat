@@ -12,11 +12,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-  @import "src/assets/styles/variables";
+<style scoped>
 
   .ign-role-badge {
-    background-color: $ign-secondary-dark;
+    background-color: var(--v-secondary-base);
     border-radius: 4px;
     padding: 1px 4px;
   }

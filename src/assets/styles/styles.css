@@ -1,0 +1,14 @@
+.ign-item {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.ign-item:hover:not(.ign-active) {
+    background-color: var(--v-secondary-base);
+}
+
+.ign-active {
+    background-color: var(--v-primary-base);
+}

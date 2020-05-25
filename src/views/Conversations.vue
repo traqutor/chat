@@ -113,5 +113,4 @@ export default {
     border-right: 1px solid $ign-secondary;
   }
 
-
 </style>

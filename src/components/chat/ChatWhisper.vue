@@ -143,8 +143,12 @@ export default {
     cursor: pointer;
   }
 
-  .participant-list-item:hover {
-    background-color: $ign-secondary-dark;
+</style>
+
+<style scoped>
+
+  .participant-list-item :hover {
+    background-color: var(--v-secondary-base);
   }
 
 </style>
