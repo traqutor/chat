@@ -74,7 +74,16 @@
         </v-list>
 
 
-        <v-form ></v-form>
+        <v-form >
+
+          <div v-for="item of taskTypeSelected.ExtensibleFields"
+               :key="item.Code">
+            <v-text-field
+              :label="item.Name"
+            ></v-text-field>
+          </div>
+
+        </v-form>
 
       </div>
 
