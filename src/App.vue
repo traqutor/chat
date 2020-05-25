@@ -14,7 +14,15 @@
           <v-img src="./assets/images/Meddy-App-Logo-2.png"></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-title class="title">Linq</v-list-item-title>
+        <v-list-item-title class="title">
+          <div style="{width: 100px; height: 56px;}">
+            <img style="{
+              width: 100px;
+              height: 50px;
+              margin-top: 6px;
+            }" src="./assets/images/Meddy-Logo-Name.png" />
+          </div>
+        </v-list-item-title>
 
         <v-btn
           icon

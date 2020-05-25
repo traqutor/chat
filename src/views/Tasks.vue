@@ -15,6 +15,8 @@
     <v-tab-item
       v-for="item in items"
       :key="item.tab"
+      :transition="false"
+      :reverse-transition="false"
     >
       <component v-bind:is="item.content"></component>
     </v-tab-item>

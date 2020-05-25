@@ -37,7 +37,7 @@
               >
                 <v-list-item-icon>
                   <div class="task-indicator"
-                       :style="{ 'background-color': item.BackgroundColor }"> </div>
+                      :style="{ 'background-color': item.BackgroundColor }"> </div>
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title v-text="item.ShortName"></v-list-item-title>
