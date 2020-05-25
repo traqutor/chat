@@ -1,5 +1,5 @@
 <template>
-<v-card class="mx-auto">
+<v-card class="mx-auto background-styled">
   <v-container>
     <v-row>
               <v-col>

@@ -1,5 +1,5 @@
 <template>
-  <div class="tasks-sub-toolbar-section">
+  <div class="tasks-sub-toolbar-section background-styled">
 
     <perfect-scrollbar
       class="tasks-perfect-scrollbar"

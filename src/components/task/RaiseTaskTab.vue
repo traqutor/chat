@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content background-styled">
 
     <v-col class="ma-3" cols="4">
 
@@ -29,7 +29,7 @@
 
         <perfect-scrollbar class="task-list-wrapper">
 
-          <v-list dense>
+          <v-list dense class="background-styled">
             <v-list-item-group color="primary">
               <v-list-item
                 v-for="(item) in taskTypes"

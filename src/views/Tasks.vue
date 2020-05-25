@@ -2,6 +2,7 @@
   <section>
 
     <v-tabs
+      background-color="background"
       fixed-tabs
       v-model="tab"
     >
