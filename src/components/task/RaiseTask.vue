@@ -27,10 +27,19 @@
           </v-btn>
         </div>
 
+        <div>
+          <template v-for="item of taskTypes">
+            <div :key="item.TaskTypeCode" > {{ item.ShortName }}</div>
+          </template>
+        </div>
+
       </div>
 
     </v-col>
+    <v-col cols="8">
 
+
+    </v-col>
   </div>
 </template>
 <script>

@@ -14,7 +14,7 @@
           <v-img src="./assets/images/Meddy-App-Logo-2.png"></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-title class="title">IGNITE</v-list-item-title>
+        <v-list-item-title class="title">Linq</v-list-item-title>
 
         <v-btn
           icon
