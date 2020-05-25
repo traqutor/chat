@@ -9,9 +9,11 @@
       :class="`ign-drawer-background-${theme}`"
     >
 
-      <v-list-item class="px-2">
+      <v-list-item class="px-1">
+        <v-list-item-avatar>
           <v-img style="width: 48px; height: 48px"
                  src="./assets/images/Meddy-App-Logo-2.png"></v-img>
+        </v-list-item-avatar>
 
         <v-list-item-title class="title">Linq</v-list-item-title>
 
