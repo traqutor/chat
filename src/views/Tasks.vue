@@ -4,8 +4,7 @@
     <v-tabs
     fixed-tabs
     v-model="tab"
-    background-color="#18222d"
-    dark
+    background-color="secondary"
   >
       <v-tab v-for="item in items" :key="item.tab">
         {{ item.tab }}
@@ -27,7 +26,7 @@
 
 <script>
 import TasksKanbanBoard from '@/components/task/TasksKanbanBoard.vue';
-import SettingsSelector from '@/components/SettingsSelector.vue';
+import RaiseTask from '@/components/task/RaiseTask.vue';
 
 export default {
   name: 'Tasks',
@@ -37,7 +36,7 @@ export default {
       items: [
         { tab: 'Task List', content: 'TasksKanbanBoard' },
         { tab: 'Map', content: 'SettingsSelector' },
-        { tab: 'Raise Task', content: 'SettingsSelector' },
+        { tab: 'Raise Task', content: 'RaiseTask' },
         { tab: 'Manage', content: 'SettingsSelector' },
         { tab: 'Progress', content: 'SettingsSelector' },
       ],
@@ -45,6 +44,7 @@ export default {
   },
   components: {
     TasksKanbanBoard,
+    RaiseTask,
   },
 };
 </script>

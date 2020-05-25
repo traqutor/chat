@@ -43,7 +43,7 @@ const routes: Array<RouteConfig> = [
       if (store.state.auth.authData.accessToken) {
         next();
       } else {
-        next('/login');
+        next();
       }
     },
   },
@@ -64,10 +64,11 @@ const routes: Array<RouteConfig> = [
     name: 'Conversations',
     component: Conversations,
     beforeEnter(from, to, next) {
-      console.log('beforeEnter accessToken', store.state.auth.authData.accessToken);
-      console.log('beforeEnter from', from);
-      console.log('beforeEnter to', to);
-      next();
+      if (store.state.auth.authData.accessToken) {
+        next();
+      } else {
+        next('/login');
+      }
     },
   },
   {

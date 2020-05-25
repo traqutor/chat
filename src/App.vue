@@ -26,6 +26,16 @@
 
       <v-list dense class="mt-2">
 
+        <v-list-item link to="/tasks">
+          <v-list-item-action>
+            <v-icon>mdi-calendar-check-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Tasks</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+
         <v-list-item link to="/conversations">
           <v-list-item-action class="d-flex flex-row align-center">
             <v-badge
@@ -43,14 +53,6 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/tasks">
-          <v-list-item-action>
-            <v-icon>mdi-calendar-check-outline</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Tasks</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
 
         <v-list-item link to="/media">
           <v-list-item-action>
@@ -132,8 +134,7 @@ export default Vue.extend({
   }),
 
   created() {
-    console.log('APP created');
-    this.$vuetify.theme.dark = true;
+    this.$vuetify.theme.dark = false;
     this.$store.dispatch('onAutoLogin');
   },
 
