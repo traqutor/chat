@@ -63,7 +63,7 @@
             <v-list-item>
               <v-list-item-icon>
                 <div class="task-indicator"
-                     :style="{ 'background-color': taskTypeSelected.BackgroundColor }"> </div>
+                     :style="{ 'background-color': taskTypeSelected.BackgroundColor }"></div>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title v-text="taskTypeSelected.ShortName"></v-list-item-title>
@@ -72,7 +72,6 @@
           <v-divider />
 
         </v-list>
-
 
         <v-form >
 

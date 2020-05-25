@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="mt-3">
 
     <v-tabs
       background-color="background"

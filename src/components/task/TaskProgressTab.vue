@@ -1,61 +1,59 @@
 <template>
-<v-card class="mx-auto background-styled">
-  <v-container>
-    <v-row>
-              <v-col>
-                    <v-card outlined tile >
-                      <CountsTaskList />
-                    </v-card>
-                </v-col>
+  <div class="content background-styled">
 
-                <v-col>
-                    <v-card outlined tile >
-                      <div>
-                        <div
-                          style="display: flex;
-                          align-items: center;
-                          justify-content: center;">
-                          <div>
-                            <div style="justify-content: center;
-                            display: flex;
-                            margin-bottom: 10px">
-                              Tasks by Type
-                            </div>
-                            <TaskBarChart
-                              v-bind:chartdata="chartBarOne"
-                            />
-                          </div>
-                        </div>
+    <v-col class="ma-3" cols="4">
+          <CountsTaskList/>
+    </v-col>
 
-                        <br/>
+    <v-col cols="4">
+      <v-card class="background-styled"
+              outlined
+              tile>
+        <div>
+          <div
+            style="display: flex;
+                      align-items: center;
+                      justify-content: center;">
+            <div>
+              <div style="justify-content: center;
+                        display: flex;
+                        margin-bottom: 10px">
+                Tasks by Type
+              </div>
+              <TaskBarChart
+                v-bind:chartdata="chartBarOne"
+              />
+            </div>
+          </div>
 
-                        <div
-                          style="display: flex;
-                          align-items: center;
-                          justify-content: center;">
-                          <div>
-                            <div style="justify-content: center;
-                            display: flex;
-                            margin-bottom: 10px">
-                              Tasks by Status
-                            </div>
-                            <TaskBarChart
-                              v-bind:chartdata="chartBarTwo"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </v-card>
-                </v-col>
+          <br/>
 
-                <v-col>
-                    <v-card outlined tile>
+          <div
+            style="display: flex;
+                      align-items: center;
+                      justify-content: center;">
+            <div>
+              <div style="justify-content: center;
+                        display: flex;
+                        margin-bottom: 10px">
+                Tasks by Status
+              </div>
+              <TaskBarChart
+                v-bind:chartdata="chartBarTwo"
+              />
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </v-col>
 
-                    </v-card>
-                </v-col>
-            </v-row>
-  </v-container>
-</v-card>
+    <v-col cols="4">
+      <v-card outlined tile>
+
+      </v-card>
+    </v-col>
+
+  </div>
 </template>
 
 <script>
@@ -64,7 +62,8 @@ import {
   mapMutations,
   mapActions,
 } from 'vuex';
-import CountsTaskList from '@/components/task/taskProgressTabComponents/CountsTaskList/CountsTaskList.vue';
+import CountsTaskList
+  from '@/components/task/taskProgressTabComponents/CountsTaskList/CountsTaskList.vue';
 import TaskBarChart from '@/components/task/taskProgressTabComponents/TaskBarChart.vue';
 
 export default {
@@ -86,7 +85,7 @@ export default {
         datasets: [
           {
             backgroundColor: '#f87979',
-            data: [40, 20],
+            data: [40, 20, 30, 49],
           },
         ],
       },
@@ -94,9 +93,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-
-    }),
+    ...mapGetters({}),
   },
 
   components: {
@@ -113,5 +110,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/variables';
+  @import '../../assets/styles/variables';
+
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+  }
+
 </style>
