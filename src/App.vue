@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app class="background-styled">
 
     <v-navigation-drawer
       v-model="drawer"
@@ -156,4 +156,10 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "assets/styles/styles";
+@import './assets/styles/styles.css';
+
+  .background-styled {
+    background-color: var(--v-background-base) !important;
+  }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="tasks-sub-toolbar-section ma-3">
+  <div class="tasks-sub-toolbar-section">
 
     <perfect-scrollbar
       class="tasks-perfect-scrollbar"

@@ -15,7 +15,7 @@ export default new Vuetify({
         info: colors.cyan.darken1,
         success: colors.grey.base,
         warning: colors.deepPurple.lighten2,
-        background: '#fff',
+        background: '#fcffff',
       },
       dark: {
         primary: '#3d6a97',
@@ -27,6 +27,9 @@ export default new Vuetify({
         warning: '#FFC107',
         background: '#18222d',
       },
+    },
+    options: {
+      customProperties: true,
     },
   },
 });

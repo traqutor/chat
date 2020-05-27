@@ -97,13 +97,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-  @import '../../assets/styles/variables';
+<style scoped>
 
   .wrapper {
     flex: 1;
     height: $ign-header-height;
-    border-bottom: 1px solid $ign-secondary;
+    border-bottom: 1px solid var(--v-secondary-base);
     display: flex;
     flex-direction: column;
   }
@@ -128,12 +127,8 @@ export default {
     padding: 4px 16px;
   }
 
-  .button-underline:hover {
-    color: white;
-  }
-
   .active-button {
-    border-bottom: 3px solid $ign-primary;
+    border-bottom: 3px solid var(--v-secondary-base);
   }
 
 </style>
