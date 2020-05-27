@@ -20,7 +20,15 @@
               alt="Burn Logo"/>
           </v-app-bar-nav-icon>
 
-        <v-toolbar-title>IGNITE</v-toolbar-title>
+        <v-toolbar-title>
+          <div style="{width: 100px; height: 56px;}">
+            <img style="{
+              width: 100px;
+              height: 50px;
+              margin-top: 6px;
+            }" src="./assets/images/Meddy-Logo-Name.png" />
+          </div>
+        </v-toolbar-title>
 
       </v-app-bar>
 

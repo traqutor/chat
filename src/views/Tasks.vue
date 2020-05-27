@@ -1,7 +1,8 @@
 <template>
-  <section>
+  <section class="mt-3">
 
     <v-tabs
+      background-color="background"
       fixed-tabs
       v-model="tab"
     >
@@ -15,6 +16,8 @@
     <v-tab-item
       v-for="item in items"
       :key="item.tab"
+      :transition="false"
+      :reverse-transition="false"
     >
       <component v-bind:is="item.content"></component>
     </v-tab-item>
@@ -25,7 +28,8 @@
 
 <script>
 import TasksKanbanBoard from '@/components/task/TasksKanbanBoard.vue';
-import RaiseTask from '@/components/task/RaiseTask.vue';
+import TaskProgressTab from '@/components/task/TaskProgressTab.vue';
+import RaiseTaskTab from '@/components/task/RaiseTaskTab.vue';
 import SettingsSelector from '@/components/SettingsSelector.vue';
 
 export default {
@@ -36,16 +40,17 @@ export default {
       items: [
         { tab: 'Task List', content: 'TasksKanbanBoard' },
         { tab: 'Map', content: 'SettingsSelector' },
-        { tab: 'Raise Task', content: 'RaiseTask' },
+        { tab: 'Raise Task', content: 'RaiseTaskTab' },
         { tab: 'Manage', content: 'SettingsSelector' },
-        { tab: 'Progress', content: 'SettingsSelector' },
+        { tab: 'Progress', content: 'TaskProgressTab' },
       ],
     };
   },
   components: {
     TasksKanbanBoard,
-    RaiseTask,
     SettingsSelector,
+    RaiseTaskTab,
+    TaskProgressTab,
   },
 };
 </script>
