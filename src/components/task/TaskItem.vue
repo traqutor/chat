@@ -1,7 +1,7 @@
 <template>
   <v-card
     class="ma-1 task-card background-styled"
-    :style="{ borderColor: getCardColor('AssistPatient')}">
+    :style="{ borderColor: getColor(item.typeName)}">
 
     <v-list-item dense>
       <v-list-item-avatar>
@@ -76,7 +76,7 @@ export default {
       this.$emit('done', this.data);
     },
 
-    getCardColor(type) {
+    getColor(type) {
       return constTaskTypes.find((item) => item.TaskTypeCode === type)
         ? constTaskTypes.find((item) => item.TaskTypeCode === type).BackgroundColor
         : '';

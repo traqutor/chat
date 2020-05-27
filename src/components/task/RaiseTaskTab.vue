@@ -34,7 +34,7 @@
           <v-list dense class="background-styled">
             <v-list-item-group color="primary">
               <v-list-item
-                @click="selectTastType(item)"
+                @click="selectTaskType(item)"
                 v-for="(item) in taskTypes"
                 :key="item.TaskTypeCode"
               >
@@ -53,13 +53,15 @@
 
       </div>
 
-      <div v-else class="ma-3">
+      <div v-else class="ma-3 task-types-list-section">
+
         <v-btn small @click="isNewTaskAdd=false">
           <v-icon>mdi-arrow-back</v-icon>
           Back
         </v-btn>
 
         <v-list class="background-styled">
+
             <v-list-item>
               <v-list-item-icon>
                 <div class="task-indicator"
@@ -73,7 +75,36 @@
 
         </v-list>
 
-        <v-form >
+        <perfect-scrollbar class="task-list-wrapper">
+
+        <v-form class="pr-3">
+
+          <v-text-field
+            label="Title"
+            v-model="task.title"
+            required></v-text-field>
+
+          <v-textarea
+            label="Note"
+            v-model="task.notes"
+          ></v-textarea>
+
+          <v-select
+            :items="[1, 2, 3, 4, 5]"
+            label="Priority"
+            v-model="task.priority"
+            required
+          ></v-select>
+
+          <v-autocomplete
+            :items="getAllParticipants"
+            label="Participants"
+            v-model="task.participantsIds"
+            item-text="userName"
+            item-value="roleId"
+            multiple
+          ></v-autocomplete>
+
 
           <div v-for="item of taskTypeSelected.ExtensibleFields"
                :key="item.Code">
@@ -82,7 +113,14 @@
             ></v-text-field>
           </div>
 
+          <v-btn text @click="onCreateNewTask">
+            <v-icon>mdi-arrow-back</v-icon>
+            Submit
+          </v-btn>
+
         </v-form>
+
+        </perfect-scrollbar>
 
       </div>
 
@@ -94,6 +132,7 @@
 </template>
 <script>
 import { constTaskTypes } from '@/consts';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'RaiseTaskTab',
@@ -109,14 +148,33 @@ export default {
       ],
       taskTypes: constTaskTypes,
       taskTypeSelected: null,
+      task: {},
     };
   },
 
-  methods: {
+  computed: {
+    ...mapGetters({
+      getAllParticipants: 'getConversationAvailableParticipants',
+    }),
+  },
 
-    selectTastType(item) {
+  methods: {
+    ...mapActions({
+      createNewTask: 'createNewTask',
+    }),
+
+    onCreateNewTask() {
+      console.log('this.createNewTask(this.task)', this.task);
+      this.createNewTask(this.task);
+    },
+
+    selectTaskType(item) {
       this.isNewTaskAdd = true;
       this.taskTypeSelected = item;
+      this.task = {
+        typeName: this.taskTypeSelected.TaskTypeCode,
+        typeShortName: this.taskTypeSelected.ShortName,
+      };
     },
 
     search() {
