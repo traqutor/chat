@@ -55,7 +55,7 @@
 
       <div v-else class="ma-3 task-types-list-section">
 
-        <v-btn small @click="isNewTaskAdd=false">
+        <v-btn small @click="onCancelNewTask">
           <v-icon>mdi-arrow-back</v-icon>
           Back
         </v-btn>
@@ -113,13 +113,13 @@
             ></v-text-field>
           </div>
 
-          <v-btn text @click="onCreateNewTask">
+          <v-btn class="d-flex flex-grow-1" color="blue" @click="onCreateNewTask">
             <v-icon>mdi-arrow-back</v-icon>
             Submit
           </v-btn>
 
-        </v-form>
 
+        </v-form>
         </perfect-scrollbar>
 
       </div>
@@ -163,9 +163,14 @@ export default {
       createNewTask: 'createNewTask',
     }),
 
+    onCancelNewTask() {
+      this.isNewTaskAdd = false;
+    },
+
     onCreateNewTask() {
       console.log('this.createNewTask(this.task)', this.task);
       this.createNewTask(this.task);
+      this.onCancelNewTask();
     },
 
     selectTaskType(item) {
