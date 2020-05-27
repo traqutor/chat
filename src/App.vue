@@ -6,7 +6,7 @@
       :permanent="!isDrawerMini"
       :mini-variant="isDrawerMini"
       app
-      :class="`ign-drawer-background-${theme}`"
+      color="background"
     >
 
       <v-app-bar
@@ -23,10 +23,10 @@
         <v-toolbar-title>
           <div style="{width: 100px; height: 56px;}">
             <img style="{
-              width: 100px;
-              height: 50px;
+              width: 80px;
+              height: 45px;
               margin-top: 6px;
-            }" src="./assets/images/Meddy-Logo-Name.png" />
+            }" src="./assets/images/Meddy-Logo_Text.png" />
           </div>
         </v-toolbar-title>
 
@@ -50,7 +50,6 @@
               :value="unreadCount"
               color="red"
               overlap
-              left
               :content="unreadCount > 99 ? '+99' : unreadCount"
             >
             <v-icon>mdi-message-text-outline</v-icon>

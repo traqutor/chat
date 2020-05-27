@@ -1,7 +1,7 @@
 <template>
   <v-card
-    class="mb-1 task-card"
-    :color="getCardColor(item.status)">
+    class="ma-1 task-card background-styled"
+    :style="{ borderColor: getCardColor('AssistPatient')}">
 
     <v-list-item dense>
       <v-list-item-avatar>
@@ -53,7 +53,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { TASK_STATUS } from '@/store/task/types';
+import { constTaskTypes } from '@/consts';
 import UserAvatar from '@/components/user/UserAvatar.vue';
 
 export default {
@@ -77,14 +77,9 @@ export default {
     },
 
     getCardColor(type) {
-      switch (type) {
-        case TASK_STATUS.New: return '#0F5CB0';
-        case TASK_STATUS.Queued: return '#4BA4EC';
-        case TASK_STATUS.Started: return '#39af4d';
-        case TASK_STATUS.Overdue: return '#CF021A';
-        case TASK_STATUS.Completed: return '#9B9B9B';
-        default: return 'primary';
-      }
+      return constTaskTypes.find((item) => item.TaskTypeCode === type)
+        ? constTaskTypes.find((item) => item.TaskTypeCode === type).BackgroundColor
+        : '';
     },
   },
 };
@@ -92,8 +87,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/styles/variables';
+
 .task-card {
   max-width: 400px;
+  border-left: solid 8px;
 }
 
 .small-avatar {

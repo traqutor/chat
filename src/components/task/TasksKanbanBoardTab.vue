@@ -5,42 +5,42 @@
       class="tasks-perfect-scrollbar"
     >
 
-      <v-col
-        v-for="(column, index) in columns"
-        :key="column.id">
+      <div class="flex-grow-1 mr-1"
+           v-for="(column, index) in columns"
+           :key="column.id">
 
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>{{ column.name }}</v-list-item-title>
-          </v-list-item-content>
+        <v-card :color="column.color">
+          <v-list-item dense>
+            <v-list-item-content>
+              <v-list-item-title>{{ column.name }}</v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-action>
+              {{ column.tasks.length }}
+            </v-list-item-action>
+          </v-list-item>
+        </v-card>
 
-          <TaskViewDialog
-            @taskData="onGetTaskData"
-            v-if="index === 0"
-          />
+          <Container
+            group-name="col"
+            @drop="(e) => onCardDrop(index, column.id, e)"
+            :get-child-payload="getCardPayload(column.id)"
+            drag-class="card-ghost"
+            drop-class="card-ghost-drop"
+            class="column-border pa-3"
+          >
 
-        </v-list-item>
+            <Draggable
+              v-for="task in column.tasks"
+              :key="task.id">
+              <task-item
+                :item="task"
+                color="primary">
+              </task-item>
+            </Draggable>
 
-        <Container
-          group-name="col"
-          @drop="(e) => onCardDrop(index, column.id, e)"
-          :get-child-payload="getCardPayload(column.id)"
-          drag-class="card-ghost"
-          drop-class="card-ghost-drop"
-          class="column-border pa-3"
-        >
+          </Container>
 
-          <Draggable
-            v-for="task in column.tasks"
-            :key="task.id">
-            <task-item
-              :item="task"
-              color="primary">
-            </task-item>
-          </Draggable>
-
-        </Container>
-      </v-col>
+      </div>
 
     </perfect-scrollbar>
 
@@ -54,7 +54,7 @@ import TaskViewDialog from '@/components/task/TaskViewDialog.vue';
 import TaskItem from './TaskItem.vue';
 
 export default {
-  name: 'TasksKanbanBoard',
+  name: 'TasksKanbanBoardTab',
 
   computed: {
     ...mapGetters({
@@ -64,7 +64,6 @@ export default {
 
   components: {
     TaskItem,
-    TaskViewDialog,
     Container,
     Draggable,
   },
@@ -104,7 +103,10 @@ export default {
           taskIndex: dropResult.removedIndex,
         });
       } else if (dropResult.addedIndex !== null && dropResult.removedIndex === null) {
-        const task = { ...dropResult.payload, status: columnId };
+        const task = {
+          ...dropResult.payload,
+          status: columnId,
+        };
         this.updateTask({
           columnIndex,
           taskIndex: dropResult.addedIndex,
@@ -127,14 +129,13 @@ export default {
   @import '../../assets/styles/variables';
 
   .tasks-sub-toolbar-section {
-    display: flex;
-    flex-direction: column;
     height: calc(100vh - 94px);
     max-height: calc(100vh - 94px);
   }
 
   .tasks-perfect-scrollbar {
-    flex: auto;
+    height: calc(100vh - 94px - 32px);
+    max-height: calc(100vh - 94px - 32px);
     display: flex;
     position: relative;
     flex-direction: row;
@@ -142,9 +143,8 @@ export default {
   }
 
   .column-border {
-    border: 1px solid $ign-secondary;
-    min-height: 124px;
-    min-width: 200px;
+    min-height: 90%;
+    min-width: 300px;
   }
 
   .card-ghost {

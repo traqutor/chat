@@ -19,6 +19,8 @@ export interface Task {
   createdTimeOffset: string;
   modifiedTimeOffset: string;
   order: number;
+  typeName: string;
+  typeShortName: string;
 }
 
 export interface TaskCreate {
@@ -26,11 +28,14 @@ export interface TaskCreate {
   priority: 0;
   notes: string;
   participantsIds: string[];
+  typeName: string;
+  typeShortName: string;
 }
 
 export interface TaskStateColumn {
   id: number;
   name: string;
+  color: string;
   tasks: Task[];
 }
 
@@ -47,26 +52,31 @@ export const taskInitialState: TaskState = {
       {
         id: TASK_STATUS.New,
         name: 'New',
+        color: '#0F5CB0',
         tasks: [],
       },
       {
         id: TASK_STATUS.Queued,
         name: 'Queued',
+        color: '#4BA4EC',
         tasks: [],
       },
       {
         id: TASK_STATUS.Started,
         name: 'Started',
+        color: '#39af4d',
         tasks: [],
       },
       {
         id: TASK_STATUS.Overdue,
         name: 'Overdue',
+        color: '#CF021A',
         tasks: [],
       },
       {
         id: TASK_STATUS.Completed,
         name: 'Completed',
+        color: '#9B9B9B',
         tasks: [],
       },
     ],

@@ -3,7 +3,7 @@ import moment from 'moment';
 export const messageDetailTimeOffsetFilter = (value: string) => moment(value)
   .format('h:mm a [ • ] DD/MM/YYYY');
 
-export const timeOffsetFilter = (value: string) => moment(value).format('hh:mm');
+export const timeOffsetFilter = (value: string) => moment(value).format('hh:mm a');
 
 export const timeDividerFilter = (value: string) => {
   let text = '';

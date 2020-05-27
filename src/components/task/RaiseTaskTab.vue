@@ -148,7 +148,6 @@ export default {
   .task-list-wrapper {
     flex: auto;
     position: relative;
-    padding: $ign-padding-normal;
   }
 
   .task-indicator {

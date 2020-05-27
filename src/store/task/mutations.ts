@@ -5,6 +5,7 @@ const mutations: MutationTree<TaskState> = {
 
   storeTasks: (state, payload) => {
     if (payload && !payload.hasErrors) {
+      state.data.tasks = payload.value.results;
       state.data.columns = state.data.columns.map((column) => {
         const tasks: Task[] = payload.value.results
           .filter((task: Task) => task.status === column.id);
@@ -26,12 +27,15 @@ const mutations: MutationTree<TaskState> = {
     if (idx !== -1) {
       state.data.columns[idx].tasks.splice(0, 0, tsk);
     }
+    state.data.tasks.splice(0, 0, tsk);
   },
 
+  // this mutation is only for dragging between kanban board columns
   removeTask: (state, payload) => {
     state.data.columns[payload.columnIndex].tasks.splice(payload.taskIndex, 1);
   },
 
+  // this mutation is only for dragging between kanban board columns
   updateTask: (state, payload) => {
     state.data.columns[payload.columnIndex].tasks.splice(payload.taskIndex, 0, payload.task);
   },

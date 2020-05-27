@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import TasksKanbanBoard from '@/components/task/TasksKanbanBoard.vue';
+import TasksKanbanBoardTab from '@/components/task/TasksKanbanBoardTab.vue';
+import TasksListTab from '@/components/task/TasksListTab.vue';
 import TaskProgressTab from '@/components/task/TaskProgressTab.vue';
 import RaiseTaskTab from '@/components/task/RaiseTaskTab.vue';
 import SettingsSelector from '@/components/SettingsSelector.vue';
@@ -38,16 +39,18 @@ export default {
     return {
       tab: null,
       items: [
-        { tab: 'Task List', content: 'TasksKanbanBoard' },
-        { tab: 'Map', content: 'SettingsSelector' },
+        { tab: 'Board', content: 'TasksKanbanBoardTab' },
+        { tab: 'Task List', content: 'TasksListTab' },
         { tab: 'Raise Task', content: 'RaiseTaskTab' },
+        { tab: 'Map', content: 'SettingsSelector' },
         { tab: 'Manage', content: 'SettingsSelector' },
         { tab: 'Progress', content: 'TaskProgressTab' },
       ],
     };
   },
   components: {
-    TasksKanbanBoard,
+    TasksKanbanBoardTab,
+    TasksListTab,
     SettingsSelector,
     RaiseTaskTab,
     TaskProgressTab,

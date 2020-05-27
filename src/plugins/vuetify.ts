@@ -15,7 +15,7 @@ export default new Vuetify({
         success: colors.grey.base,
         warning: colors.deepPurple.lighten2,
         error: colors.amber.base,
-        background: '#fcffff',
+        background: '#ffffff',
       },
       dark: {
         primary: '#3d6a97',

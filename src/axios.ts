@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'https://stage-1.azurewebsites.net/api',
+  baseURL: 'https://dev-1.azurewebsites.net/api',
 });
 
 export function setAxiosJWT(jwt: string) {

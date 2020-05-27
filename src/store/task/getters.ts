@@ -5,6 +5,7 @@ import { RootState } from '@/store/types';
 const getters: GetterTree<TaskState, RootState> = {
 
   getAllColumns: (state) => state.data.columns,
+  getAllTasks: (state) => state.data.tasks,
 
 };
 
