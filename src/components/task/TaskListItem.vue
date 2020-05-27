@@ -9,7 +9,7 @@
     >
       <v-row class="d-flex" dense>
         <div class="align-self-center">
-          {{ item.title }}
+          {{ item.typeShortName }}
         </div>
         <div class="ml-auto caption text--disabled">
           #{{ item.referenceNumber }}

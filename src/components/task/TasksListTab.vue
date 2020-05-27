@@ -22,9 +22,41 @@
 
     </div>
 
-    <perfect-scrollbar
-      class="tasks-perfect-scrollbar"
-    >
+    <v-row no-gutters class="mr-3 pa-3">
+
+      <v-col
+        cols="3"
+        class="flex-grow-0 flex-shrink-0 body-2"
+      >
+        Type
+      </v-col>
+
+      <v-col
+        cols="1"
+        class="flex-grow-1 flex-shrink-0 body-2"
+      >
+        Raised At
+      </v-col>
+
+      <v-col
+        cols="3"
+        class="flex-grow-1 flex-shrink-0 body-2"
+      >
+        Raised By
+      </v-col>
+
+      <v-col
+        cols="5"
+        style="min-width: 100px;"
+        class="flex-grow-0 flex-shrink-1 body-2"
+      >
+        Status
+      </v-col>
+
+    </v-row>
+
+    <perfect-scrollbar class="tasks-perfect-scrollbar">
+
       <v-expansion-panels >
         <v-expansion-panel class="background-styled"
           v-for="(item) of tasks"
@@ -34,7 +66,7 @@
             <task-list-item :item="item"/>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit {{ item }}
+             {{ item }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
