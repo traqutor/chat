@@ -3,24 +3,26 @@
 
     <v-navigation-drawer
       v-model="drawer"
+      :permanent="!isDrawerMini"
+      :mini-variant="isDrawerMini"
       app
       :class="`ign-drawer-background-${theme}`"
     >
 
-      <v-list-item class="px-2">
-        <v-list-item-avatar>
-          <v-img src="./assets/images/Meddy-App-Logo-2.png"></v-img>
-        </v-list-item-avatar>
+      <v-app-bar
+        elevation="0"
+        color="secondary">
 
-        <v-list-item-title class="title">IGNITE</v-list-item-title>
+          <v-app-bar-nav-icon @click="toggleDrawer" >
+            <img
+              src="./assets/images/Meddy-App-Logo-2.png"
+              class="ign-toolbar-logo"
+              alt="Burn Logo"/>
+          </v-app-bar-nav-icon>
 
-        <v-btn
-          icon
-          @click.stop="toggleMini"
-        >
-          <v-icon>mdi-page-layout-sidebar-left</v-icon>
-        </v-btn>
-      </v-list-item>
+        <v-toolbar-title>IGNITE</v-toolbar-title>
+
+      </v-app-bar>
 
       <v-list dense class="mt-2">
 
@@ -77,16 +79,9 @@
 
     <v-app-bar
       app
-      clipped-left
       elevation="0"
       color="secondary"
     >
-      <v-app-bar-nav-icon @click="toggleDrawer" >
-        <img
-          src="./assets/images/Meddy-App-Logo-2.png"
-          class="ign-toolbar-logo"
-          alt="Burn Logo"/>
-      </v-app-bar-nav-icon>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
 
       <v-spacer />
@@ -112,6 +107,11 @@ export default Vue.extend({
     'logged-user': LoggedUser,
   },
 
+  data: () => ({
+    drawer: null,
+    isDrawerMini: true,
+  }),
+
   computed: {
     ...mapGetters({
       unreadCount: 'getUnreadCount',
@@ -126,24 +126,15 @@ export default Vue.extend({
     },
   },
 
-  data: () => ({
-    drawer: null,
-    mini: true,
-    isDrawerOpen: true,
-  }),
-
   created() {
     this.$vuetify.theme.dark = false;
     this.$store.dispatch('onAutoLogin');
   },
 
   methods: {
-    toggleMini() {
-      this.mini = !this.mini;
-    },
 
     toggleDrawer() {
-      this.isDrawerOpen = !this.isDrawerOpen;
+      this.isDrawerMini = !this.isDrawerMini;
     },
   },
 
