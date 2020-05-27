@@ -4,6 +4,7 @@ import { AuthState, AuthData, LoginData } from '@/store/auth/types';
 import { RootState } from '@/store/types';
 import axios from '@/axios-auth';
 import { setAxiosJWT } from '@/axios';
+import AuthHelper from '@/helpers/AuthHelper';
 
 
 const actions: ActionTree<AuthState, RootState> = {
@@ -33,7 +34,8 @@ const actions: ActionTree<AuthState, RootState> = {
   },
 
   onAutoLogin({ commit, dispatch }) {
-    const authData = JSON.parse(localStorage.getItem('authData') || '');
+    const authData = AuthHelper.isAuthenticated();
+    console.log('authData', authData);
     if (!authData) return;
     // todo expiration token check
 

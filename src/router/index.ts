@@ -7,6 +7,7 @@ import Home from '@/views/Home.vue';
 import Settings from '@/views/Settings.vue';
 import Login from '@/views/Login.vue';
 import store from '@/store';
+import AuthHelper from '@/helpers/AuthHelper';
 
 Vue.use(VueRouter);
 
@@ -16,7 +17,7 @@ const routes: Array<RouteConfig> = [
     name: 'Home',
     component: Home,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData.accessToken) {
+      if (AuthHelper.isAuthenticated()) {
         next();
       } else {
         next('/login');
@@ -28,7 +29,7 @@ const routes: Array<RouteConfig> = [
     name: 'Settings',
     component: Settings,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData.accessToken) {
+      if (AuthHelper.isAuthenticated()) {
         next();
       } else {
         next('/login');
@@ -40,7 +41,7 @@ const routes: Array<RouteConfig> = [
     name: 'Tasks',
     component: Tasks,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData.accessToken) {
+      if (AuthHelper.isAuthenticated()) {
         next();
       } else {
         next();
@@ -52,7 +53,7 @@ const routes: Array<RouteConfig> = [
     name: 'Media Library',
     component: Gallery,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData.accessToken) {
+      if (AuthHelper.isAuthenticated()) {
         next();
       } else {
         next('/login');
@@ -64,7 +65,7 @@ const routes: Array<RouteConfig> = [
     name: 'Conversations',
     component: Conversations,
     beforeEnter(from, to, next) {
-      if (store.state.auth.authData.accessToken) {
+      if (AuthHelper.isAuthenticated()) {
         next();
       } else {
         next('/login');
