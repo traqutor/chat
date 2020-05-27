@@ -3,8 +3,6 @@
 
     <v-navigation-drawer
       v-model="drawer"
-      :expand-on-hover="true"
-      permanent
       app
       :class="`ign-drawer-background-${theme}`"
     >
@@ -18,7 +16,7 @@
 
         <v-btn
           icon
-          @click.stop="mini = !mini"
+          @click.stop="toggleMini"
         >
           <v-icon>mdi-page-layout-sidebar-left</v-icon>
         </v-btn>
@@ -43,7 +41,7 @@
               color="red"
               overlap
               left
-              :content="unreadCount > 99 ? '+99' : unreadCount "
+              :content="unreadCount > 99 ? '+99' : unreadCount"
             >
             <v-icon>mdi-message-text-outline</v-icon>
             </v-badge>
@@ -130,6 +128,7 @@ export default Vue.extend({
 
   data: () => ({
     drawer: null,
+    mini: true,
     isDrawerOpen: true,
   }),
 
@@ -139,6 +138,10 @@ export default Vue.extend({
   },
 
   methods: {
+    toggleMini() {
+      this.mini = !this.mini;
+    },
+
     toggleDrawer() {
       this.isDrawerOpen = !this.isDrawerOpen;
     },
