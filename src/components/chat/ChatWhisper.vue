@@ -7,9 +7,23 @@
       class="chat-perfect-scrollbar"
     >
 
-        <v-subheader>Whisper to someone</v-subheader>
+        <v-subheader>Whisper to someone
+          <span class="spacer"></span>
 
-        <template v-for="(participant) of conversation.conversationParticipantDtos">
+          <v-text-field
+            solo
+            dense
+            label="Search"
+            background-color="secondary"
+            append-icon="mdi-magnify"
+            v-model="searchText"
+            @click:append="onParticipantSearch"
+            hide-details
+          ></v-text-field>
+
+        </v-subheader>
+
+        <template v-for="(participant) of filterItems()" >
 
           <div
             @click="toggleParticipantSelection(participant)"
@@ -63,6 +77,7 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import UserListItem from '@/components/user/UserListItem.vue';
 import UserAvatar from '@/components/user/UserAvatar.vue';
+import { CHAT_VIEW_MODE } from '@/store/chat/types';
 
 export default {
   name: 'ChatWhisper',
@@ -74,6 +89,7 @@ export default {
       isScrollUp: false,
       tmpScrollTop: 0,
       selectedParticipants: [],
+      searchText: '',
     };
   },
 
@@ -92,12 +108,26 @@ export default {
 
   methods: {
 
-    ...mapActions({}),
+    ...mapActions({
+      setChatViewMode: 'setMessagesChatViewMode',
+    }),
 
     ...mapMutations({
       addToWhisperToParticipants: 'addToWhisperToParticipants',
       removeFromWhisperToParticipants: 'removeFromWhisperToParticipants',
     }),
+
+    filterItems() {
+      return this.conversation.conversationParticipantDtos.filter((preset) => {
+        const regex = new RegExp(`(${this.searchText})`, 'i');
+        console.log('regex', regex);
+        return preset.userName && preset.userName.match(regex);
+      });
+    },
+
+    onParticipantSearch() {
+      console.log('onParticipantSearch', this.searchText);
+    },
 
     toggleParticipantSelection(participant) {
       const idx = this.getWhisperToParticipants.findIndex((prt) => prt.id === participant.id);
@@ -115,7 +145,7 @@ export default {
     },
 
     onSetWhisperToParticipants() {
-      console.log('onSetWhisperToParticipants', this.getWhisperToParticipants);
+      this.setChatViewMode(CHAT_VIEW_MODE.CHAT);
     },
 
   },

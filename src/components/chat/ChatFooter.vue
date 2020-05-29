@@ -2,8 +2,29 @@
 
   <div>
 
+    <div v-if="getWhisperToParticipants.length > 0" class="flex-wrap">
+      <v-divider></v-divider>
+      <span  class="caption">Whispering to:</span>
+      <template v-for="(item, index) of getWhisperToParticipants">
+        <v-chip
+          :key="item.id"
+          pill
+          class="ma-2"
+          color="primary"
+          close
+          @click:close="removeFromWhisperToParticipants(index)"
+        >
+          <v-avatar left>
+            <v-img :src="getUserAvatarUrlById(item.userId)"></v-img>
+          </v-avatar>
+          {{ item.userName }}
+        </v-chip>
+      </template>
+    </div>
+
     <div class="flex-wrap">
       <v-divider></v-divider>
+
       <input
         class="ign-file-input"
         type="file"
@@ -83,7 +104,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { emptyMessage } from '@/store/chat/types';
 import UploadFilesService from '@/services/UploadFilesService';
 
@@ -93,6 +114,8 @@ export default {
     ...mapGetters({
       loggedUser: 'loggedUser',
       conversation: 'getSelectedConversation',
+      getWhisperToParticipants: 'getWhisperToParticipants',
+      getUserAvatarUrlById: 'getUserAvatarUrlById',
     }),
   },
   data() {
@@ -110,6 +133,10 @@ export default {
       postMessage: 'postNewMessageAction',
     }),
 
+    ...mapMutations({
+      removeFromWhisperToParticipants: 'removeFromWhisperToParticipants',
+    }),
+
     onNewPost() {
       if (this.selectedFiles.length > 0) {
         this.postAttachmentMessage();
@@ -119,6 +146,7 @@ export default {
           text: this.text,
           conversationId: this.conversation.conversationId,
           authorParticipantId: this.loggedUser.id,
+
         };
         this.$chatHub.sendMessage(newMessage);
       }
