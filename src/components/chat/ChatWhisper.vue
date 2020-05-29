@@ -3,7 +3,6 @@
 
     <perfect-scrollbar
       id="chat-whisper"
-      v-scroll:#chat-whisper="onScroll"
       ref="chatWhisper"
       class="chat-perfect-scrollbar"
     >
@@ -17,7 +16,7 @@
             class="row mr-6 pl-2 participant-list-item"
             :key="participant.id">
 
-            <v-icon v-if="selectedParticipants.find(prt => participant.id === prt.id)"
+            <v-icon v-if="getWhisperToParticipants.find(prt => participant.id === prt.id)"
                     color="green" class="ma-3">
               mdi-check-circle-outline
             </v-icon>
@@ -35,10 +34,10 @@
 
     </perfect-scrollbar>
 
-    <section v-if="selectedParticipants.length > 0" class="footer-wrapper mt-2">
+    <section v-if="getWhisperToParticipants.length > 0" class="footer-wrapper mt-2">
 
       <div
-        v-for="sel of selectedParticipants"
+        v-for="sel of getWhisperToParticipants"
         @click="toggleParticipantSelection(sel)"
         class="pa-2 participant-list-item"
         :key="sel.id">
@@ -54,14 +53,14 @@
     </section>
 
     <footer class="footer-wrapper pa-3">
-      <v-btn color="blue">Whisper</v-btn>
+      <v-btn color="blue" @click="onSetWhisperToParticipants">Whisper</v-btn>
     </footer>
 
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import UserListItem from '@/components/user/UserListItem.vue';
 import UserAvatar from '@/components/user/UserAvatar.vue';
 
@@ -85,7 +84,9 @@ export default {
 
   computed: {
 
-    ...mapGetters({}),
+    ...mapGetters({
+      getWhisperToParticipants: 'getWhisperToParticipants',
+    }),
 
   },
 
@@ -93,12 +94,19 @@ export default {
 
     ...mapActions({}),
 
+    ...mapMutations({
+      addToWhisperToParticipants: 'addToWhisperToParticipants',
+      removeFromWhisperToParticipants: 'removeFromWhisperToParticipants',
+    }),
+
     toggleParticipantSelection(participant) {
-      const idx = this.selectedParticipants.findIndex((prt) => prt.id === participant.id);
-      if (idx !== -1) {
-        this.selectedParticipants.splice(idx, 1);
+      const idx = this.getWhisperToParticipants.findIndex((prt) => prt.id === participant.id);
+      console.log('participant', participant);
+      console.log('idx', idx);
+      if (idx === -1) {
+        this.addToWhisperToParticipants(participant);
       } else {
-        this.selectedParticipants.push(participant);
+        this.removeFromWhisperToParticipants(idx);
       }
     },
 
@@ -106,8 +114,8 @@ export default {
       return this.conversation.conversationParticipantDtos.find((usr) => usr.id === userId);
     },
 
-    onScroll() {
-      const container = this.$refs.chatWhisper.$el;
+    onSetWhisperToParticipants() {
+      console.log('onSetWhisperToParticipants', this.getWhisperToParticipants);
     },
 
   },

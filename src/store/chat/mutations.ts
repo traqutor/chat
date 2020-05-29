@@ -1,5 +1,6 @@
 import { MutationTree } from 'vuex';
 import { ChatState, Message } from '@/store/chat/types';
+import { Participant } from '@/store/conv/types';
 
 const mutations: MutationTree<ChatState> = {
 
@@ -43,6 +44,21 @@ const mutations: MutationTree<ChatState> = {
     state.chatViewMode = payload;
   },
 
+  setWhisperToParticipants: (state, payload: Participant[]) => {
+    state.whisperToParticipants = [...payload];
+  },
+
+  addToWhisperToParticipants: (state, payload: Participant) => {
+    state.whisperToParticipants = [...state.whisperToParticipants, { ...payload }];
+  },
+
+  removeFromWhisperToParticipants: (state, index: number) => {
+    state.whisperToParticipants.splice(index, 1);
+  },
+
+  emptyWhisperToParticipants: (state) => {
+    state.whisperToParticipants = [];
+  },
 };
 
 export default mutations;

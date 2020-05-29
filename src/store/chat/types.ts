@@ -1,3 +1,5 @@
+import { Participant } from '@/store/conv/types';
+
 export interface Message {
   messageId: string;
   conversationId: string;
@@ -37,6 +39,7 @@ export interface ChatState {
     pageSize: number;
     rowCount: number;
   };
+  whisperToParticipants: Participant[];
   errors: [];
   hasErrors: boolean;
 }
@@ -67,6 +70,7 @@ export const chatInitial: ChatState = {
     pageSize: 0,
     rowCount: 0,
   },
+  whisperToParticipants: [],
   errors: [],
   hasErrors: false,
 };

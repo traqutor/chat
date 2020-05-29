@@ -10,7 +10,7 @@ const getters: GetterTree<ChatState, RootState> = {
   getMessagesPageCount: (state) => state.value.pageCount,
   getMessagesChatViewMode: (state) => state.chatViewMode,
   getSelectedMessage: (state) => state.selectedMessage,
-
+  getWhisperToParticipants: (state) => state.whisperToParticipants,
 };
 
 export default getters;

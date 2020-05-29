@@ -3,6 +3,7 @@
   <div>
 
     <div class="flex-wrap">
+      <v-divider></v-divider>
       <input
         class="ign-file-input"
         type="file"

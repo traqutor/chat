@@ -2,19 +2,20 @@
   <v-dialog
     @click:outside="onAttachmentClose()"
     v-model="showDialog"
-    scrollable
-    max-width="90%">
-
+    scrollable>
     <v-card>
-      <v-card-actions>
-        <v-btn @click.stop="onAttachmentClose">Close</v-btn>
+      <v-card-actions class="align-self-end">
+        <v-btn icon @click.stop="onAttachmentClose">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </v-card-actions>
-      <v-divider></v-divider>
-      <v-img v-if="srcUrl"
-             class="white--text align-end"
-             :src="srcUrl"
-      >
-      </v-img>
+      <perfect-scrollbar>
+        <v-img v-if="srcUrl"
+               class="white--text align-end"
+               :src="srcUrl"
+        >
+        </v-img>
+      </perfect-scrollbar>
 
     </v-card>
 
