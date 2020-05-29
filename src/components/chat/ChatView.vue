@@ -221,7 +221,6 @@ export default {
       console.log('container.clientHeight', container.clientHeight);
       console.log('===========');
 
-
       if (e.target.scrollTop !== 0) {
         if (this.tmpScrollTop > e.target.scrollTop) {
           if (this.tmpScrollTop > e.target.scrollTop) {

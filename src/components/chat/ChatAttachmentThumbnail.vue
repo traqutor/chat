@@ -1,5 +1,16 @@
 <template>
-  <div>
+  <div
+    class="attachment-thumbnail"
+    @mouseover="active = true"
+    @mouseleave="active = false">
+
+    <div
+      @click.stop="onAttachmentOpen"
+      class="thumbnail-shield"
+      v-if="active">
+      <v-icon class="thumbnail-icon">mdi-checkbox-multiple-blank-outline</v-icon>
+    </div>
+
     <v-img v-if="srcUrl"
       class="white--text align-end"
       width="400px"
@@ -14,11 +25,17 @@
       src="../../assets/images/placeholder-image.png"
     >
     </v-img>
+    <ChatAttachmentPreviewDialog
+      :attachment-id="attachmentId"
+      :is-dialog-open="showAttachmentPreview"
+      @close="showAttachmentPreview = false"
+    />
   </div>
 </template>
 
 <script>
 import UploadFilesService from '@/services/UploadFilesService';
+import ChatAttachmentPreviewDialog from '@/components/chat/ChatAttachmentPreviewDialog.vue';
 
 export default {
   name: 'ChartAttachmentThumbnail',
@@ -30,7 +47,13 @@ export default {
       blob: null,
       srcUrl: '',
       progress: 0,
+      active: false,
+      showAttachmentPreview: false,
     };
+  },
+
+  components: {
+    ChatAttachmentPreviewDialog,
   },
 
   created() {
@@ -38,6 +61,11 @@ export default {
   },
 
   methods: {
+
+    onAttachmentOpen() {
+      this.showAttachmentPreview = true;
+    },
+
     getSrcUrl() {
       UploadFilesService
         .getMessageThumbnailAttachment(this.attachmentId, (event) => {
@@ -54,13 +82,24 @@ export default {
 
 <style lang="scss" scoped>
   .attachment-thumbnail {
+    position: relative;
+  }
 
+  .thumbnail-shield {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 200px;
+    background-color: rgba(106, 114, 115, 0.5);
+    z-index: 9;
   }
-  .rotate90 {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+
+  .thumbnail-icon {
+    position: absolute;
+    top: 100px;
+    left: 200px;
   }
+
 </style>

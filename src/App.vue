@@ -134,7 +134,7 @@ export default Vue.extend({
   },
 
   created() {
-    this.$vuetify.theme.dark = false;
+    this.$vuetify.theme.dark = true;
     this.$store.dispatch('onAutoLogin');
   },
 

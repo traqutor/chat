@@ -40,6 +40,8 @@ class UploadFilesService {
   getMessageAttachment(attachmentId: string, onUploadProgress: any) {
     return instance.get(`/Messages/GetMessageAttachment?AttachmentId=${attachmentId}`,
       {
+        responseType: 'blob',
+        headers: { accept: 'application/octet-stream' },
         onUploadProgress,
       });
   }
