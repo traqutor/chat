@@ -2,24 +2,43 @@
 
   <div>
 
-    <div v-if="getWhisperToParticipants.length > 0" class="flex-wrap">
+    <div v-if="getWhisperToParticipants.length > 0">
+
       <v-divider></v-divider>
-      <span  class="caption">Whispering to:</span>
-      <template v-for="(item, index) of getWhisperToParticipants">
-        <v-chip
-          :key="item.id"
-          pill
-          class="ma-2"
-          color="primary"
-          close
-          @click:close="removeFromWhisperToParticipants(index)"
-        >
-          <v-avatar left>
-            <v-img :src="getUserAvatarUrlById(item.userId)"></v-img>
-          </v-avatar>
-          {{ item.userName }}
-        </v-chip>
-      </template>
+
+      <div class="d-flex flex-row">
+
+        <div class="flex-wrap">
+          <span  class="caption">Whispering to:</span>
+          <template v-for="(item, index) of getWhisperToParticipants">
+            <v-chip
+              :key="item.id"
+              pill
+              class="ma-2"
+              color="primary"
+              close
+              @click:close="removeFromWhisperToParticipants(index)"
+            >
+              <v-avatar left>
+                <v-img :src="getUserAvatarUrlById(item.userId)"></v-img>
+              </v-avatar>
+              {{ item.userName }}
+            </v-chip>
+          </template>
+        </div>
+
+        <div class="ma-4">
+          <v-btn
+            @click="emptyWhisperToParticipants"
+            class="ml-auto"
+            icon
+            small>
+            <v-icon>mdi-access-point</v-icon>
+          </v-btn>
+        </div>
+
+      </div>
+
     </div>
 
     <div class="flex-wrap" v-show="selectedFiles.length > 0">
@@ -112,14 +131,7 @@ import UploadFilesService from '@/services/UploadFilesService';
 
 export default {
   name: 'ChatFooter',
-  computed: {
-    ...mapGetters({
-      loggedUser: 'loggedUser',
-      conversation: 'getSelectedConversation',
-      getWhisperToParticipants: 'getWhisperToParticipants',
-      getUserAvatarUrlById: 'getUserAvatarUrlById',
-    }),
-  },
+
   data() {
     return {
       text: '',
@@ -130,6 +142,15 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters({
+      loggedUser: 'loggedUser',
+      conversation: 'getSelectedConversation',
+      getWhisperToParticipants: 'getWhisperToParticipants',
+      getUserAvatarUrlById: 'getUserAvatarUrlById',
+    }),
+  },
+
   methods: {
     ...mapActions({
       postMessage: 'postNewMessageAction',
@@ -137,6 +158,7 @@ export default {
 
     ...mapMutations({
       removeFromWhisperToParticipants: 'removeFromWhisperToParticipants',
+      emptyWhisperToParticipants: 'emptyWhisperToParticipants',
     }),
 
     onNewPost() {
@@ -148,8 +170,9 @@ export default {
           text: this.text,
           conversationId: this.conversation.conversationId,
           authorParticipantId: this.loggedUser.id,
-
+          whisperParticipantIds: this.getWhisperToParticipants.map((item) => item.id),
         };
+        console.log('newMessage', newMessage);
         this.$chatHub.sendMessage(newMessage);
       }
 

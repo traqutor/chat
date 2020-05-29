@@ -1,6 +1,6 @@
 <template>
   <v-card
-    color="secondary"
+    color="primary"
     height="200"
     width="200"
     class="d-inline-block mx-auto pa-3">
