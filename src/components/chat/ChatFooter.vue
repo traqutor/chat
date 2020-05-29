@@ -22,7 +22,7 @@
       </template>
     </div>
 
-    <div class="flex-wrap">
+    <div class="flex-wrap" v-show="selectedFiles.length > 0">
       <v-divider></v-divider>
 
       <input
@@ -32,6 +32,8 @@
         @change="selectFile"
         multiple
       />
+
+      <span  class="caption">Attachments:</span>
 
       <template v-for="(item, index) of selectedFiles">
         <v-chip
