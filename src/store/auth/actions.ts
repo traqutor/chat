@@ -24,6 +24,7 @@ const actions: ActionTree<AuthState, RootState> = {
           tokenType: res.data.token_type,
         };
         localStorage.setItem('authData', JSON.stringify(payload));
+        localStorage.setItem('authTime', JSON.stringify(new Date()));
         commit('authUser', payload);
         commit('setUser', payload.accessToken);
         setAxiosJWT(payload.accessToken);
@@ -49,6 +50,7 @@ const actions: ActionTree<AuthState, RootState> = {
 
   logout({ commit }): any {
     localStorage.removeItem('authData');
+    localStorage.removeItem('authTime');
     commit('logOut');
   },
 };

@@ -20,6 +20,12 @@ export interface Message {
   attachmentIds: [];
 }
 
+export interface TypingModel {
+  isTyping: boolean;
+  participantId: string;
+  conversationId: string;
+}
+
 export const CHAT_VIEW_MODE = {
   CHAT: 0,
   INFO: 1,

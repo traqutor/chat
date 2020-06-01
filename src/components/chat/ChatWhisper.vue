@@ -120,7 +120,6 @@ export default {
     filterItems() {
       return this.conversation.conversationParticipantDtos.filter((preset) => {
         const regex = new RegExp(`(${this.searchText})`, 'i');
-        console.log('regex', regex);
         return preset.userName && preset.userName.match(regex);
       });
     },
@@ -131,8 +130,6 @@ export default {
 
     toggleParticipantSelection(participant) {
       const idx = this.getWhisperToParticipants.findIndex((prt) => prt.id === participant.id);
-      console.log('participant', participant);
-      console.log('idx', idx);
       if (idx === -1) {
         this.addToWhisperToParticipants(participant);
       } else {
